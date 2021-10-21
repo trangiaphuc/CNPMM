@@ -28,6 +28,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/foodCategory.routes')(app);
 require('./app/routes/productCategory.routes')(app);
+require('./app/routes/food.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {

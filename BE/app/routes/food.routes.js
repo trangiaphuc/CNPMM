@@ -1,4 +1,5 @@
-const controller = require('../controllers/foodCategory.controller');
+const controller = require('../controllers/food.controller');
+
 
 module.exports = function(app){
     app.use(function(req, res, next) {
@@ -9,7 +10,7 @@ module.exports = function(app){
         next();
     });
     
-    app.get('/api/foodcategory/', controller.getAll);
-    app.get('/api/foodcategory/foods/', controller.getAllWithCatId);
+    app.get('/api/foods/', controller.getAll);
+    app.get('/api/foods/detail/', controller.getOneWithDetail);
     
 }

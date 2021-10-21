@@ -4,8 +4,8 @@ module.exports = (sequelize, Sequelize) => {
         foodMaterialName:{
             type: Sequelize.STRING
         },
-        quantity:{
-            type: Sequelize.FLOAT
+        quantityDescription:{
+            type: Sequelize.STRING
         }
     });
 

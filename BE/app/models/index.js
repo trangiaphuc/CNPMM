@@ -61,7 +61,6 @@ db.foodCategory.belongsToMany(db.user,{
 db.user.hasOne(db.address);
 db.foodCategory.hasMany(db.food);
 db.food.hasMany(db.foodMaterial);
-db.quantity.hasOne(db.foodMaterial);
 db.food.hasMany(db.foodCookStep);
 db.productCategory.hasMany(db.product);
 db.quantity.hasOne(db.product);

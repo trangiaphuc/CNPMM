@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
         foodName:{
             type: Sequelize.STRING,
         },
-        foodDesc:{
+        foodDescription:{
             type: Sequelize.STRING,
         },
         foodCalories:{
