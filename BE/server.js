@@ -26,6 +26,7 @@ db.sequelize.sync({force: true}).then(() => {
 //routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
+require('./app/routes/foodCategory.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
