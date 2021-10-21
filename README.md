@@ -1,7 +1,7 @@
 # CNPMM
 Project Công nghệ phần mềm mới
 
-**#Install **
+# Install
 - BackEnd:
   . cd be/app
   . yarn start  - with yarn/ npm start   - with npm
