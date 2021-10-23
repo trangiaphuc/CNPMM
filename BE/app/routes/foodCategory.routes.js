@@ -10,6 +10,6 @@ module.exports = function(app){
     });
     
     app.get('/api/foodcategory/', controller.getAll);
-    app.get('/api/foodcategory/foods/', controller.getAllWithCatId);
+    //app.get('/api/foodcategory/foods/', controller.getAllWithCatId);
     
 }

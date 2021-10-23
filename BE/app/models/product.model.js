@@ -18,7 +18,10 @@ module.exports = (sequelize, Sequelize) => {
         brand: {
             type : Sequelize.STRING,
         },
-        productionIn: {
+        origin: {
+            type : Sequelize.STRING
+        },//noi san xuat
+        productAt:{
             type : Sequelize.DATEONLY
         },
         expireAt: {

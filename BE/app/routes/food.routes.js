@@ -12,5 +12,6 @@ module.exports = function(app){
     
     app.get('/api/foods/', controller.getAll);
     app.get('/api/foods/detail/', controller.getOneWithDetail);
+    app.get('/api/foods/category/', controller.getAllWithCatId);
     
 }

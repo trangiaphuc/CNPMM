@@ -12,4 +12,7 @@ exports.getAll = (req, res) => {
             err.message || "Some error occurred while retrieving tutorials."
         });
       });
-  };
+};
+
+
+
