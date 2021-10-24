@@ -10,6 +10,11 @@ module.exports = function(app) {
     next();
   });
 
+  app.get("/api/auth/user/information/:id", [authJwt.verifyToken], controller.information);
+  app.put("/api/auth/user/updateinfor/:id", [authJwt.verifyToken], controller.updateinfor);
+  app.get("/api/auth/user/changepassword/:id", [authJwt.verifyToken], controller.changepassword);
+
+
   app.get("/api/test/all", controller.allAccess);
 
   app.get(
