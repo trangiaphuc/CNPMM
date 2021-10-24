@@ -1,6 +1,7 @@
 const db = require('../models');
 const ProductCategory = db.productCategory;
 
+//get all products category
 exports.getAll = (req, res) => {
     ProductCategory.findAll({attributes: ['id', 'catName']})
       .then(data => {

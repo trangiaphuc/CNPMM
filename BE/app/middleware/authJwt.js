@@ -12,6 +12,7 @@ verifyToken = (req, res, next) => {
     });
   }
 
+  //is user authenticated
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({

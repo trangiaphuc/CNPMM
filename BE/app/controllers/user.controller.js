@@ -1,6 +1,7 @@
 const db = require('../models');
 const User = db.user;
 
+//get all information about the user with an id from req.params
   exports.information = (req, res) => {
     const id = req.params.id;
     User.findByPk(id)
@@ -17,6 +18,7 @@ const User = db.user;
     })
   };
 
+  //update user information with req.body and req.params.id
   exports.updateinfor = (req, res) => {
     // update require:
     // - x-access-tokens
@@ -40,6 +42,7 @@ const User = db.user;
     });
   };
 
+  //change user password
   exports.changepassword = (req, res) => {
     const id = req.params.id;
     User.update(req.body, {

@@ -1,6 +1,7 @@
 const db = require('../models');
 const Product = db.product;
 
+//get all products
 exports.getAll = (req, res) => {
     Product.findAll(
       {attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
@@ -17,6 +18,7 @@ exports.getAll = (req, res) => {
       });
   };
 
+  //get all products with category id
 exports.getAllProWithCatId = (req, res) => {
     const id = req.query.id;
     Product.findAll({
@@ -35,6 +37,7 @@ exports.getAllProWithCatId = (req, res) => {
       });
   };
 
+  //get a product with an id from req.query
   exports.getOneWithDetail = (req, res) => {
     const id = req.query.id;
     Product.findAll({

@@ -10,8 +10,11 @@ module.exports = function(app){
         next();
     });
     
+    //gete alal products
     app.get('/api/products/', controller.getAll);
+    //get a product detail
     app.get('/api/products/detail', controller.getOneWithDetail);
+    //get all products with category id
     app.get('/api/products/category/', controller.getAllProWithCatId);
     
 }

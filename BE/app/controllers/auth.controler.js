@@ -8,6 +8,7 @@ const Op = db.Sequelize.Op;
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 
+//sign up function
 exports.signup = (req, res) => {
   // Save User to Database
   User.create({
@@ -40,6 +41,7 @@ exports.signup = (req, res) => {
     });
 };
 
+//sign in function
 exports.signin = (req, res) => {
   User.findOne({
     where: {
@@ -51,11 +53,13 @@ exports.signin = (req, res) => {
         return res.status(404).send({ message: "User Not found."});
       }
 
+      //compare password
       var passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
       );
 
+      //invalid password
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
@@ -64,6 +68,7 @@ exports.signin = (req, res) => {
         });
       }
 
+      //create token
       var token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: 86400 // 24 hours
       });

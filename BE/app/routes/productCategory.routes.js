@@ -9,6 +9,7 @@ module.exports = function(app){
         next();
     });
 
+    //get all categories
     app.get('/api/productcategory/', controller.getAll);
     
 }

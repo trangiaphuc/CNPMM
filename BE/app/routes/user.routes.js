@@ -10,8 +10,11 @@ module.exports = function(app) {
     next();
   });
 
+  //get user profile
   app.get("/api/auth/user/information/:id", [authJwt.verifyToken], controller.information);
+  //update user information
   app.put("/api/auth/user/updateinfor/:id", [authJwt.verifyToken], controller.updateinfor);
+  //change user password
   app.get("/api/auth/user/changepassword/:id", [authJwt.verifyToken], controller.changepassword);
 
 

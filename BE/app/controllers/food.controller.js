@@ -3,6 +3,8 @@ const Food = db.food;
 const FoodMaterial = db.foodMaterial;
 const FoodCookStep = db.foodCookStep;
 
+
+//get all food objects
 exports.getAll = (req, res) => {
     Food.findAll({attributes: ['id', 'foodName', 'foodPic', 'foodDescription', 'foodCalories']})
       .then(data => {
@@ -16,6 +18,7 @@ exports.getAll = (req, res) => {
       });
   };
 
+  //get a food detail from databse with a id from req.query
 exports.getOneWithDetail = (req, res) => {
   const id = req.query.id;
   Food.findOne({
@@ -42,6 +45,7 @@ exports.getOneWithDetail = (req, res) => {
   });
 };
 
+//get all food with a category id
 exports.getAllWithCatId = (req, res) => {
   const id = req.query.id;
   Food.findAll({

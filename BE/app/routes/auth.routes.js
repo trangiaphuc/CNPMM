@@ -10,6 +10,7 @@ module.exports = function(app) {
     next();
   });
 
+  //sign up function
   app.post(
     "/api/auth/signup",
     [
@@ -19,5 +20,6 @@ module.exports = function(app) {
     controller.signup
   );
 
+  //sign in function
   app.post("/api/auth/signin", controller.signin);
 };
