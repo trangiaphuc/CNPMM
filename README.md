@@ -11,5 +11,10 @@ Install include running Front End project and Back End project. Please Install f
  ## Run Seeder:
     - cd be/app
     - npx sequelize-cli db:seed:all
+ ## Front - End
+    - cd FE/FoodApp
+    - run cmd with Adminnistrator
+    - expo start
+    - Scan QR 
   
   
