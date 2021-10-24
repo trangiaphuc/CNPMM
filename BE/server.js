@@ -1,9 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-
 const app = express();
 const db = require("./app/models");
-const Role = db.role;
+const logger = require('./app/winston/winston')
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -18,8 +17,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //sequelize
-db.sequelize.sync({force: true, logging: false}).then(() => {
-    console.log('Drop and Resync Db');
+db.sequelize.sync({
+  logging: (sql, queryObject) =>{
+    logger.info(sql, queryObject);
+  }, 
+  force: true 
+}).then(() => {
+  logger.info("Dropped and Resync database");
     // initial();
 });
 
@@ -39,12 +43,14 @@ require('./app/routes/product.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  logger.info("Wellcome to food and cook application")
+  res.json({ message: "Welcome to food and cook application." });
 });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
+  logger.info(`Server is running on port ${PORT}`);
   console.log(`Server is running on port ${PORT}.`);
 });
 

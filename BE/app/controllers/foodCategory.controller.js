@@ -1,10 +1,16 @@
 const db = require('../models');
 const FoodCategory = db.foodCategory;
-const Food = db.food;
+const logger = require('../winston/winston');
+
 
 //get all food categories
   exports.getAll = (req, res) => {
-    FoodCategory.findAll({attributes: ['id', 'catName']})
+    FoodCategory.findAll({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      attributes: ['id', 'catName']
+    })
       .then(data => {
         res.send(data);
       })

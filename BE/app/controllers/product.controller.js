@@ -1,10 +1,14 @@
 const db = require('../models');
 const Product = db.product;
+const logger = require('../winston/winston');
 
 //get all products
 exports.getAll = (req, res) => {
-    Product.findAll(
-      {attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
+    Product.findAll({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+        attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
      "productAt", "expireAt", "manual", "preserve", "productCategoryId"]}
      )
       .then(data => {
@@ -22,6 +26,9 @@ exports.getAll = (req, res) => {
 exports.getAllProWithCatId = (req, res) => {
     const id = req.query.id;
     Product.findAll({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
       where: {productCategoryId: id},  
       attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
         "productAt", "expireAt", "manual", "preserve", "productCategoryId"]
@@ -41,6 +48,9 @@ exports.getAllProWithCatId = (req, res) => {
   exports.getOneWithDetail = (req, res) => {
     const id = req.query.id;
     Product.findAll({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
       where: {id: id},  
       attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
         "productAt", "expireAt", "manual", "preserve", "productCategoryId"]

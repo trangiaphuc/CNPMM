@@ -2,11 +2,16 @@ const db = require('../models');
 const Food = db.food;
 const FoodMaterial = db.foodMaterial;
 const FoodCookStep = db.foodCookStep;
-
+const logger = require('../winston/winston');
 
 //get all food objects
 exports.getAll = (req, res) => {
-    Food.findAll({attributes: ['id', 'foodName', 'foodPic', 'foodDescription', 'foodCalories']})
+    Food.findAll({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      attributes: ['id', 'foodName', 'foodPic', 'foodDescription', 'foodCalories']
+    })
       .then(data => {
         res.send(data);
       })
@@ -22,6 +27,9 @@ exports.getAll = (req, res) => {
 exports.getOneWithDetail = (req, res) => {
   const id = req.query.id;
   Food.findOne({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
     where: {id: id},
     include:[
       {
@@ -49,6 +57,9 @@ exports.getOneWithDetail = (req, res) => {
 exports.getAllWithCatId = (req, res) => {
   const id = req.query.id;
   Food.findAll({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
     where: {foodCategoryId: id},
     attributes: ['id', 'foodName', 'foodPic', 'foodDescription', 'foodCalories']
   })

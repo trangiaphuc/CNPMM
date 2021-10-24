@@ -1,10 +1,15 @@
 const db = require('../models');
 const User = db.user;
+const logger = require('../winston/winston');
 
 //get all information about the user with an id from req.params
   exports.information = (req, res) => {
     const id = req.params.id;
-    User.findByPk(id)
+    User.findByPk(id, {
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+    })
     .then(data => {
       if(data){
         res.send(data);
@@ -30,7 +35,12 @@ const User = db.user;
     const id = req.params.id;
 
     User.update(req.body, 
-      {where: {id: id}}
+      {
+        logging: (sql, queryObject) =>{
+          logger.info(sql, queryObject);
+        },
+        where: {id: id}
+      }
     )
     .then(number => {
       if (number ==1)
@@ -46,6 +56,9 @@ const User = db.user;
   exports.changepassword = (req, res) => {
     const id = req.params.id;
     User.update(req.body, {
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
       where: {id: id}
     })
     .then(number => {

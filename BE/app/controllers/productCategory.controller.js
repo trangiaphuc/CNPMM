@@ -1,9 +1,15 @@
 const db = require('../models');
 const ProductCategory = db.productCategory;
+const logger = require('../winston/winston');
 
 //get all products category
 exports.getAll = (req, res) => {
-    ProductCategory.findAll({attributes: ['id', 'catName']})
+    ProductCategory.findAll({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      attributes: ['id', 'catName']
+    })
       .then(data => {
         res.send(data);
       })
