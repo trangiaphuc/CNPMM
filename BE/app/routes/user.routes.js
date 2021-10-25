@@ -15,7 +15,13 @@ module.exports = function(app) {
   //update user information
   app.put("/api/auth/user/updateinfor/:id", [authJwt.verifyToken], controller.updateinfor);
   //change user password
-  app.get("/api/auth/user/changepassword/:id", [authJwt.verifyToken], controller.changepassword);
+  app.put("/api/auth/user/changepassword/:id", [authJwt.verifyToken], controller.changepassword);
+  //insert or update user address
+  app.post("/api/auth/user/insertaddress/", [authJwt.verifyToken], controller.insertaddress);
+  //update or update user address
+  app.put("/api/auth/user/updateaddress/:id", [authJwt.verifyToken], controller.updateaddress);
+
+
 
 
   app.get("/api/test/all", controller.allAccess);

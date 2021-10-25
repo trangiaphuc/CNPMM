@@ -32,15 +32,15 @@ exports.signup = (req, res) => {
           }
         }).then(roles => {
           user.setRoles(roles).then(() => {
-            logger.info(`User ${req.body.username} is logged in to system at ${new Date().getTime()}`); 
-            res.send({ message: "User was registered successfully!", success: true });
+            logger.info(`User ${req.body.username} is registered to system at ${new Date().getTime()}`); 
+            res.status(201).send({ message: "User was registered successfully!", success: true });
           });
         });
       } else {
         // user role = 1
         user.setRoles([1]).then(() => {
-          logger.info(`User ${req.body.username} logged in to system at ${new Date()}`); 
-          res.send({ message: "User was registered successfully!", success: true });
+          logger.info(`User ${req.body.username} registered to system at ${new Date()}`); 
+          res.status(200).send({ message: "User was registered successfully!", success: true });
         });
       }
     })

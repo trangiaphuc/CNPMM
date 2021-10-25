@@ -13,9 +13,11 @@ exports.getAll = (req, res) => {
       attributes: ['id', 'foodName', 'foodPic', 'foodDescription', 'foodCalories']
     })
       .then(data => {
-        res.send(data);
+        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+        res.status(200).send(data);
       })
       .catch(err => {
+        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving tutorials."
@@ -43,9 +45,11 @@ exports.getOneWithDetail = (req, res) => {
     ]
   })
     .then(data => {
-      res.send(data);
+      logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+      res.status(200).send(data);
   })
   .catch(err => {
+    logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
     res.status(500).send({
       message:
       err.message || "Some error occurred while retrieving tutorials."
@@ -64,9 +68,11 @@ exports.getAllWithCatId = (req, res) => {
     attributes: ['id', 'foodName', 'foodPic', 'foodDescription', 'foodCalories']
   })
     .then(data => {
-      res.send(data);
+      logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+      res.status(200).send(data);
   })
   .catch(err => {
+    logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
     res.status(500).send({
       message:
       err.message || "Some error occurred while retrieving tutorials."

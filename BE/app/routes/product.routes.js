@@ -11,10 +11,10 @@ module.exports = function(app){
     });
     
     //gete alal products
-    app.get('/api/products/', controller.getAll);
+    app.get('/api/products/',[authJwt.verifyToken],  controller.getAll);
     //get a product detail
-    app.get('/api/products/detail', controller.getOneWithDetail);
+    app.get('/api/products/detail',[authJwt.verifyToken],  controller.getOneWithDetail);
     //get all products with category id
-    app.get('/api/products/category/', controller.getAllProWithCatId);
+    app.get('/api/products/category/', [authJwt.verifyToken], controller.getAllProWithCatId);
     
 }

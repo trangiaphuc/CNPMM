@@ -1,5 +1,6 @@
 const db = require('../models');
 const User = db.user;
+const Address = db.address;
 const logger = require('../winston/winston');
 
 //get all information about the user with an id from req.params
@@ -12,13 +13,16 @@ const logger = require('../winston/winston');
     })
     .then(data => {
       if(data){
-        res.send(data);
+        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+        res.status(200).send(data);
       }
       else{
+        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
         res.status(404).send({message: 'Can not find with id ' + id });
       }
     })
     .catch(err => {
+      logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
       res.status(500).send({message: err.message});
     })
   };
@@ -44,11 +48,19 @@ const logger = require('../winston/winston');
     )
     .then(number => {
       if (number ==1)
-      res.send({message: 'User Information updated successful!', success: true});
+      {
+        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+        res.status(200).send({message: 'User Information updated successful!', success: true});
+      }
       else
       {
-        res.send({message: 'User Information updated Error. Check your Request.body or your user is empty!', success: false});
+        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
+        res.status(404).send({message: 'User Information updated Error. Check your Request.body or your user is empty!', success: false});
       }
+    })
+    .catch(err => {
+      logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+      res.status(500).send({message: err.message});
     });
   };
 
@@ -63,16 +75,111 @@ const logger = require('../winston/winston');
     })
     .then(number => {
       if (number ==1)
-      res.send({message: 'User Password updated successful!', success: true});
+      {
+        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+        res.status(200).send({message: 'User Password updated successful!', success: true});
+      }
       else
       {
+        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
         res.send({message: 'User Password updated Error. Check your Request.body or your user is empty!', success: false});
       }
     })
+    .catch(err => {
+      logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+      res.status(500).send({message: err.message});
+    });
 
   };
   
-  
+  exports.insertaddress = (req, res) =>{
+    //user identifier
+    const id = req.body.userId
+    User.findByPk(id,  {
+      logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+      }})
+      .then(data => {
+        if(data){
+          logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+          //add address if had user
+          Address.create({
+            logging: (sql, queryObject) =>{
+              logger.info(sql, queryObject);
+            },
+            userId: req.body.userId,
+            province: req.query.province,
+            district: req.query.district,
+            ward: req.query.ward,
+            flatNumber: req.query.flatNumber,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })
+          .then(() =>{
+              logger.info(`Request: status: ${res.status(201)} at ${new Date()} data ${data}`);
+              res.status(200).send({message: 'Address added successful!', success: true});
+          })
+          .catch(err => {
+            logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+            res.status(500).send({message: err.message});
+          });
+        }
+        else{
+          //didn't have user
+          logger.error(`Request: status: ${res.status(404)} at ${new Date()} User not found`);
+          res.status(500).send({message: err.message});
+        }
+      })
+      .catch(err => {
+        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+        res.status(500).send({message: err.message});
+    });
+  }
+
+  exports.updateaddress = (req, res) => {
+    //address identifier
+    const id = req.params.id;
+    Address.findByPk(id,{      
+      logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    }} 
+    )
+    .then(data =>{
+      if (data){
+        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+
+        //update if address existed
+        Address.update(req.body, {
+          logging: (sql, queryObject) =>{
+            logger.info(sql, queryObject);
+          },
+          where: {id: id}
+        })
+        .then(number => {
+          if (number ==1)
+          {
+            logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+            res.status(200).send({message: 'Address updated successful!', success: true});
+          }
+          else
+          {
+            logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
+            res.status(404).send({message: 'Address updated Error. Check your addressId!', success: false});
+          }
+        })
+        .catch(err => {
+          logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+          res.status(500).send({message: err.message});
+        });
+
+      }
+      else{
+         //didn't have user
+         logger.error(`Request: status: ${res.status(404)} at ${new Date()} Address not found`);
+         res.status(500).send({message: err.message});
+      }
+    })
+  }
   
   
   

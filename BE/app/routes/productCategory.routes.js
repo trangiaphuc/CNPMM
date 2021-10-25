@@ -10,6 +10,6 @@ module.exports = function(app){
     });
 
     //get all categories
-    app.get('/api/productcategory/', controller.getAll);
+    app.get('/api/productcategory/', [authJwt.verifyToken], controller.getAll);
     
 }

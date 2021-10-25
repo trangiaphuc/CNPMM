@@ -10,7 +10,7 @@ module.exports = function(app){
     });
     
     //get all categories
-    app.get('/api/foodcategory/', controller.getAll);
+    app.get('/api/foodcategory/',[authJwt.verifyToken], controller.getAll);
     //app.get('/api/foodcategory/foods/', controller.getAllWithCatId);
     
 }
