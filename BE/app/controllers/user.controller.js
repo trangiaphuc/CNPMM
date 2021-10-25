@@ -139,46 +139,29 @@ const logger = require('../winston/winston');
   exports.updateaddress = (req, res) => {
     //address identifier
     const id = req.params.id;
-    Address.findByPk(id,{      
+        //update if address existed
+    Address.update(req.body, {
       logging: (sql, queryObject) =>{
       logger.info(sql, queryObject);
-    }} 
-    )
-    .then(data =>{
-      if (data){
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-
-        //update if address existed
-        Address.update(req.body, {
-          logging: (sql, queryObject) =>{
-            logger.info(sql, queryObject);
-          },
-          where: {id: id}
-        })
-        .then(number => {
-          if (number ==1)
-          {
-            logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-            res.status(200).send({message: 'Address updated successful!', success: true});
-          }
-          else
-          {
-            logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
-            res.status(404).send({message: 'Address updated Error. Check your addressId!', success: false});
-          }
-        })
-        .catch(err => {
-          logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
-          res.status(500).send({message: err.message});
-        });
-
-      }
-      else{
-         //didn't have user
-         logger.error(`Request: status: ${res.status(404)} at ${new Date()} Address not found`);
-         res.status(500).send({message: err.message});
-      }
+    },
+      where: {id: id}
     })
+    .then(number => {
+      if (number ==1)
+      {
+        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+        res.status(200).send({message: 'Address updated successful!', success: true});
+      }
+      else
+      {
+        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
+        res.status(404).send({message: 'Address updated Error. Check your addressId!', success: false});
+      }
+      })
+      .catch(err => {
+        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+        res.status(500).send({message: err.message});
+      });
   }
   
   
