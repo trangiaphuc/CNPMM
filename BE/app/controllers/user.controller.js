@@ -1,4 +1,5 @@
 const db = require('../models');
+const { data } = require('../winston/winston');
 const User = db.user;
 const Address = db.address;
 const logger = require('../winston/winston');
@@ -108,10 +109,10 @@ const logger = require('../winston/winston');
               logger.info(sql, queryObject);
             },
             userId: req.body.userId,
-            province: req.query.province,
-            district: req.query.district,
-            ward: req.query.ward,
-            flatNumber: req.query.flatNumber,
+            province: req.body.province,
+            district: req.body.district,
+            ward: req.body.ward,
+            flatNumber: req.body.flatNumber,
             createdAt: new Date(),
             updatedAt: new Date(),
           })
@@ -164,7 +165,34 @@ const logger = require('../winston/winston');
       });
   }
   
-  
+  exports.getaddress = (req, res) =>{
+    const userId = req.params.id;
+        //update if address existed
+    Address.findOne(
+    {
+      logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
+      where: {userId: userId}
+    })
+    .then(data => {
+      if (data)
+      {
+        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
+        res.status(200).send(data);
+      }
+      else
+      {
+        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
+        res.status(404).send({message: 'Address found Error. Check your addressId!', success: false});
+      }
+      })
+      .catch(err => {
+        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+        res.status(500).send({message: err.message});
+      });
+  }
+
   
   //test
   exports.allAccess = (req, res) => {

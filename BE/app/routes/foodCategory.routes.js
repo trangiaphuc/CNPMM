@@ -1,4 +1,5 @@
 const controller = require('../controllers/foodCategory.controller');
+const { authJwt } = require('../middleware');
 
 module.exports = function(app){
     app.use(function(req, res, next) {
@@ -10,7 +11,9 @@ module.exports = function(app){
     });
     
     //get all categories
-    app.get('/api/foodcategory/',[authJwt.verifyToken], controller.getAll);
+    app.get('/api/foodcategory/',
+    [authJwt.verifyToken], 
+    controller.getAll);
     //app.get('/api/foodcategory/foods/', controller.getAllWithCatId);
     
 }

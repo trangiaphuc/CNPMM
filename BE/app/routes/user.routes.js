@@ -20,6 +20,8 @@ module.exports = function(app) {
   app.post("/api/auth/user/insertaddress/", [authJwt.verifyToken], controller.insertaddress);
   //update or update user address
   app.put("/api/auth/user/updateaddress/:id", [authJwt.verifyToken], controller.updateaddress);
+  //update or update user address
+  app.get("/api/auth/user/getaddress/:id", [authJwt.verifyToken], controller.getaddress);
 
 
 

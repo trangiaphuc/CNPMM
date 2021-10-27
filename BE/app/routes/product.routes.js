@@ -1,5 +1,5 @@
 const controller = require('../controllers/product.controller');
-
+const { authJwt } = require('../middleware');
 
 module.exports = function(app){
     app.use(function(req, res, next) {
@@ -11,10 +11,16 @@ module.exports = function(app){
     });
     
     //gete alal products
-    app.get('/api/products/',[authJwt.verifyToken],  controller.getAll);
+    app.get('/api/products/',
+    [authJwt.verifyToken],  
+    controller.getAll);
     //get a product detail
-    app.get('/api/products/detail',[authJwt.verifyToken],  controller.getOneWithDetail);
+    app.get('/api/products/detail',
+    [authJwt.verifyToken],  
+    controller.getOneWithDetail);
     //get all products with category id
-    app.get('/api/products/category/', [authJwt.verifyToken], controller.getAllProWithCatId);
+    app.get('/api/products/category/', 
+    [authJwt.verifyToken], 
+    controller.getAllProWithCatId);
     
 }
