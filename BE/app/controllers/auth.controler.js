@@ -40,12 +40,12 @@ exports.signup = (req, res) => {
         // user role = 1
         user.setRoles([1]).then(() => {
           logger.info(`User ${req.body.username} registered to system at ${new Date()}`); 
-          res.status(200).send({ message: "User was registered successfully!", success: true });
+          res.status(201).send({ message: "User was registered successfully!", success: true });
         });
       }
     })
     .catch(err => {
-      logger.error(`Error when user ${req.body.username} logged at ${new Date()}. Err:  ${err}`)
+      logger.error(`Error when user ${req.body.username} signed up at ${new Date()}. Err:  ${err}`)
       res.status(500).send({ message: err.message });
     });
 };
