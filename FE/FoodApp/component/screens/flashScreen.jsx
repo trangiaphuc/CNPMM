@@ -17,7 +17,7 @@ export default function flashScreen({navigation}) {
   return (
     <View style={styles.container}>
             <View style={styles.header}>
-                <Image source={require('../assets/logo.png')}>
+                <Image source={require('../images/logo.png')}>
                 </Image>
             </View>
             <View style={styles.footer}>
