@@ -15,10 +15,11 @@ import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import axios from "axios";
+import darBoardScreen from "./darBoardScreen";
 //import { error } from "../../../../BE/app/winston/winston";
 //import authServices from "../../services/authServices";
 
-export default function signIn(){
+export default function signIn({navigation}){
 
 
     const[data, setData]=React.useState({
@@ -35,13 +36,24 @@ export default function signIn(){
             if(data.password.length !== 0)
             {
                 
-                axios.post("http://192.168.1.3:8080/api/auth/signin/", {username:data.username, password:data.password}).then(response => {
-                    if (response.accessToken === null){
-                        Alert.alert("Login Failed");
+                axios.post("http://192.168.1.3:8080/api/auth/signin", {username:data.username, password:data.password},
+                {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + data.accessToken,
+                    },
+                })
+                .then(response => {
+                    if (response.accessToken !== null){
+                        navigation.navigate(darBoardScreen, response);
+                        //alert("Login Successfully");
                     }
-                    else{
-                        Alert.alert("Login Successful");
+                    else if (response.accessToken === null){
+                        alert("Login Failed");
                     }
+                }).catch(error => {
+                        alert('Error', error.response);
+                    
                 });
             }
             else {
@@ -51,8 +63,6 @@ export default function signIn(){
         else{
             Alert.alert("Please enter your username");
         }
-        
-        
     }
 
     const textInputChange=(val)=>{
@@ -158,7 +168,7 @@ export default function signIn(){
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                    // onPress={()=>navigation.navigate('signUpScreen')}
+                    onPress={()=>navigation.navigate('signUpScreen')}
                     style={[styles.signIn,{
                         borderColor:'#ff4700',
                         borderWidth: 1,
