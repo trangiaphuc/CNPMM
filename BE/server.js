@@ -5,7 +5,7 @@ const db = require("./app/models");
 const logger = require('./app/winston/winston')
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:19006"
 };
 //use cors middleware
 app.use(cors(corsOptions));
@@ -55,20 +55,20 @@ app.listen(PORT, () => {
 });
 
 
-// //initial data in role
-// function initial() {
-//     Role.create({
-//       id: 1,
-//       name: "user"
-//     });
+//initial data in role
+function initial() {
+    Role.create({
+      id: 1,
+      name: "user"
+    });
    
-//     Role.create({
-//       id: 2,
-//       name: "moderator"
-//     });
+    Role.create({
+      id: 2,
+      name: "moderator"
+    });
    
-//     Role.create({
-//       id: 3,
-//       name: "admin"
-//     });
-//   }
+    Role.create({
+      id: 3,
+      name: "admin"
+    });
+  }

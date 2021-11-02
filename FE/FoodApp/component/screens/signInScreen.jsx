@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect ,useContext} from 'react';
 import {
     StyleSheet,
     View,
@@ -7,33 +8,64 @@ import {
     Dimensions,
     Platform,
     TextInput,
-    Form
+    Form,
+    Alert
 } from "react-native";
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import axios from "axios";
+//import { error } from "../../../../BE/app/winston/winston";
+//import authServices from "../../services/authServices";
 
-export default function signIn({navigation}){
+export default function signIn(){
 
 
     const[data, setData]=React.useState({
-        email: '',
+        username: '',
         password: '',
         check_TextInput: false,
         secureTextEntry: true
     });
+
+   
+  
+    const signInButton=()=>{
+        if(data.username.length !== 0){
+            if(data.password.length !== 0)
+            {
+                
+                axios.post("http://192.168.1.3:8080/api/auth/signin/", {username:data.username, password:data.password}).then(response => {
+                    if (response.accessToken === null){
+                        Alert.alert("Login Failed");
+                    }
+                    else{
+                        Alert.alert("Login Successful");
+                    }
+                });
+            }
+            else {
+                Alert.alert("Please enter your password");
+            }
+        }
+        else{
+            Alert.alert("Please enter your username");
+        }
+        
+        
+    }
+
     const textInputChange=(val)=>{
         if( val.length !==0){
             setData({
                 ...data,
-                email: val,
+                username: val,
                 check_TextInput: true
             });
         } else {
             setData({
                 ...data,
-                email: val,
+                username: val,
                 check_TextInput: false
             });
         }
@@ -60,7 +92,7 @@ export default function signIn({navigation}){
                 <Text style={styles.textheader}>Đăng nhập</Text>
             </View>
             <View style={styles.footer}>
-                <Text style={styles.textfooter}>Email</Text>
+                <Text style={styles.textfooter}>Username</Text>
                 <View style={styles.action}>
                     <FontAwesome
                             name="user-o"
@@ -68,7 +100,7 @@ export default function signIn({navigation}){
                             size={20}
                     />
                     <TextInput
-                            placeholder="Your email"
+                            placeholder="Username"
                             style={styles.textInput}
                             autoCapitalize='none'
                             onChangeText={(val)=>textInputChange(val)}
@@ -116,7 +148,7 @@ export default function signIn({navigation}){
 
                 <View style={styles.button}>
                     <TouchableOpacity
-                        onPress={()=>navigation.navigate('signUpScreen')}
+                        onPress={signInButton}
                         style={[styles.signIn,{
                             borderColor:'#ff4700',
                             borderWidth: 1,
@@ -126,7 +158,7 @@ export default function signIn({navigation}){
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                    onPress={()=>navigation.navigate('signUpScreen')}
+                    // onPress={()=>navigation.navigate('signUpScreen')}
                     style={[styles.signIn,{
                         borderColor:'#ff4700',
                         borderWidth: 1,
