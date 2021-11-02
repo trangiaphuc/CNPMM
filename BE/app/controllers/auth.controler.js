@@ -50,57 +50,112 @@ exports.signup = (req, res) => {
     });
 };
 
-//sign in function
+// //sign in function
+// exports.signin = (req, res) => {
+//   User.findOne({
+//     logging: (sql, queryObject) =>{
+//       logger.info(sql, queryObject);
+//     },
+//     where: {
+//       username: req.body.username
+//     }
+//   })
+//     .then(user => {
+//       if (!user) {
+//         logger.alert(`Could not find user ${req.body.username} when loggin at ${new Date()}`);
+//         return res.status(404).send({ message: "User Not found."});
+//       }
+
+//       //compare password
+//       var passwordIsValid = bcrypt.compareSync(
+//         req.body.password,
+//         user.password
+//       );
+
+//       //invalid password
+//       if (!passwordIsValid) {
+//         logger.alert(`Invalid Password when user ${req.body.username} logged with ${req.body.password} at ${new Date()}`);
+//         return res.status(401).send({
+//           accessToken: null,
+//           message: "Invalid Password!", 
+//           success: false
+//         });
+//       }
+
+//       //create token
+//       var token = jwt.sign({ id: user.id }, config.secret, {
+//         expiresIn: 86400 // 24 hours
+//       });
+
+//       var authorities = [];
+//       user.getRoles().then(roles => {
+//         for (let i = 0; i < roles.length; i++) {
+//           authorities.push("ROLE_" + roles[i].name.toUpperCase());
+//         }
+//         logger.info(`User ${req.body.username} logged successfully at ${new Date()}`)
+//         res.status(200).send({
+//           id: user.id,
+//           username: user.username,
+//           email: user.email,
+//           roles: authorities,
+//           accessToken: token
+//         });
+//       });
+//     })
+//     .catch(err => {
+//       logger.error(`Error when user ${req.user.username} logged at ${new Date()}. Error: ${err}`);
+//       res.status(500).send({ message: err.message });
+//     });
+// };
 exports.signin = (req, res) => {
   User.findOne({
-    logging: (sql, queryObject) =>{
-      logger.info(sql, queryObject);
-    },
+          logging: (sql, queryObject) =>{
+            logger.info(sql, queryObject);
+          },
     where: {
       username: req.body.username
     }
   })
     .then(user => {
       if (!user) {
-        logger.alert(`Could not find user ${req.body.username} when loggin at ${new Date()}`);
-        return res.status(404).send({ message: "User Not found."});
+        // logger.alert(`Could not find user ${req.body.username} when loggin at ${new Date()}`);
+        res.status(404).send({ message: "User Not found." });
       }
+      else{
 
-      //compare password
-      var passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        user.password
-      );
+        var passwordIsValid = bcrypt.compareSync(
+          req.body.password,
+          user.password
+        );
 
-      //invalid password
-      if (!passwordIsValid) {
-        logger.alert(`Invalid Password when user ${req.body.username} logged with ${req.body.password} at ${new Date()}`);
-        return res.status(401).send({
-          accessToken: null,
-          message: "Invalid Password!", 
-          success: false
-        });
-      }
-
-      //create token
-      var token = jwt.sign({ id: user.id }, config.secret, {
-        expiresIn: 86400 // 24 hours
-      });
-
-      var authorities = [];
-      user.getRoles().then(roles => {
-        for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].name.toUpperCase());
+        if (!passwordIsValid) {
+          // logger.alert(`Invalid Password when user ${req.body.username} logged with ${req.body.password} at ${new Date()}`);
+          res.status(401).send({
+            accessToken: null,
+            message: "Invalid Password!"
+          });
         }
-        logger.info(`User ${req.body.username} logged successfully at ${new Date()}`)
-        res.status(200).send({
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          roles: authorities,
-          accessToken: token
-        });
-      });
+        else{
+          var token = jwt.sign({ id: user.id }, config.secret, {
+            expiresIn: 86400 // 24 hours
+          });
+
+          var authorities = [];
+          // logger.info(`User ${req.body.username} logged successfully at ${new Date()}`)
+          user.getRoles().then(roles => {
+            for (let i = 0; i < roles.length; i++) {
+              authorities.push("ROLE_" + roles[i].name.toUpperCase());
+            }
+            res.status(200).send({
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              roles: authorities,
+              accessToken: token
+            });
+          });
+        }
+      }
     })
     .catch(err => {
       logger.error(`Error when user ${req.user.username} logged at ${new Date()}. Error: ${err}`);
