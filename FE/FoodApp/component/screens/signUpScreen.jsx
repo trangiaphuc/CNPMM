@@ -272,17 +272,10 @@ export default function signUp({navigation}){
                        marginTop: 0
                    }]}>
                        <Text style={[styles.textSign,{color:'#ff4700'}]}>Đăng Ký</Text>
-                   </TouchableOpacity>
+                </TouchableOpacity>
+                
+                    <Text style={[styles.textSignIn,{color:'#ff4700'}]} onPress={()=>navigation.goBack()}>Bạn đã có tài khoản! Đăng nhập</Text>
 
-                   <TouchableOpacity
-                   onPress={()=>navigation.goBack()}
-                   style={[styles.signIn,{
-                       borderColor:'#ff4700',
-                       borderWidth: 1,
-                       marginTop: 10
-                   }]}>
-                       <Text style={[styles.textSign,{color:'#ff4700'}]}>Đăng nhập</Text>
-                   </TouchableOpacity>
                </View>
            </View>
         </View>
@@ -292,7 +285,7 @@ export default function signUp({navigation}){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'#ff4700',
+        backgroundColor:'#FF4B3A',
     },
     header: {
         flex: 1,
@@ -344,5 +337,9 @@ const styles = StyleSheet.create({
     textSign: {
         fontSize: 18,
         fontWeight: 'bold'
+    },
+    textSignIn:{
+        fontSize: 15,
+        marginTop: 15
     }
 });

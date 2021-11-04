@@ -17,16 +17,17 @@ export default function flashScreen({navigation}) {
   return (
     <View style={styles.container}>
             <View style={styles.header}>
-                <Image source={require('../images/logo.png')}>
+                <Image source={require('../images/logo1.png')} style={{width: 250, height: 250}}>
                 </Image>
             </View>
             <View style={styles.footer}>
-                <Text style={styles.title}>Stay connected with everyone</Text>
+              
+                <Text style={styles.title}>Food for everyone</Text>
                 <Text style={styles.text}>Sign in with account</Text>
                 <View style={styles.button}>
                   <TouchableOpacity onPress={()=>navigation.navigate('signInScreen')}>
                         <LinearGradient
-                            colors={['#08d4c4','#01ab9d']}
+                            colors={['#FF4B3A','#FF4B3A']}
                             style={styles.signIn}>
                             <Text style={styles.textSign}>Get Started</Text>
                         </LinearGradient>
@@ -44,7 +45,7 @@ export default function flashScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#009387',
+    backgroundColor: '#FF4B3A',
   },
   header: {
     flex: 2,
@@ -77,11 +78,12 @@ const styles = StyleSheet.create({
 },
   title: {
     color: '#05375a',
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: 'bold'
   },
   text: {
     color: 'grey',
-    marginTop:5
+    marginTop:5,
+    fontSize: 20
   },
 });

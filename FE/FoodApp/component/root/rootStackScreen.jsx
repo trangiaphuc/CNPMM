@@ -11,10 +11,10 @@ const RootStack = createStackNavigator();
 
 const rootStackScreen = () => (
     <RootStack.Navigator headerShown={false}>
-        <RootStack.Screen name="flashScreen" component={flashScreen}/>
-        <RootStack.Screen name="signInScreen" component={signInScreen}/>
-        <RootStack.Screen name="signUpScreen" component={signUpScreen}/>
-        <RootStack.Screen name="darBoardScreen" component={darBoardScreen}/>
+        <RootStack.Screen name="flashScreen" component={flashScreen} options={{headerShown: false}} />
+        <RootStack.Screen name="signInScreen" component={signInScreen} options={{headerShown: false}} />
+        <RootStack.Screen name="signUpScreen" component={signUpScreen} options={{headerShown: false}} />
+        <RootStack.Screen name="darBoardScreen" component={darBoardScreen} options={{headerShown: false}} />
         
     </RootStack.Navigator>
 );
