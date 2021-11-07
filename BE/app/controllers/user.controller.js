@@ -192,6 +192,12 @@ const logger = require('../winston/winston');
         res.status(500).send({message: err.message});
       });
   }
+  exports.addFavorites = (req, res) =>{
+    const favorites = req.body.favorites;
+    favorites.forEach(element => {
+      
+    });
+  }
 
   
   //test

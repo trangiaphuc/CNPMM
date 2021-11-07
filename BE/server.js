@@ -26,6 +26,7 @@ db.sequelize.sync({
   logger.info("Dropped and Resync database");
     // initial();
 });
+db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
 
 //routes
 //authentication and author routes
