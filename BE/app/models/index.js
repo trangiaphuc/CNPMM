@@ -84,13 +84,13 @@ db.product.hasOne(db.foodMaterial);
 //ver 2
 db.user.hasOne(db.cart);
 db.cart.hasMany(db.cartDetail);
-db.product.hasOne(db.cartDetail);
+db.cartDetail.belongsTo(db.product);
 db.user.hasMany(db.order);
 db.deliveryStatusType.hasMany(db.order);
 db.shipper.hasMany(db.order);
 db.paymentMethod.hasMany(db.order);
 db.order.hasMany(db.orderDetail);
-db.product.hasOne(db.orderDetail);
+db.product.hasMany(db.orderDetail);
 db.shipper.hasOne(db.address);
 
 db.ROLES = ["user", "admin", "moderator"];

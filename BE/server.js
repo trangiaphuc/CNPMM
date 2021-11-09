@@ -41,6 +41,8 @@ require('./app/routes/productCategory.routes')(app);
 require('./app/routes/food.routes')(app);
 //product routes
 require('./app/routes/product.routes')(app);
+//cart routes
+require('./app/routes/cart.routes')(app);
 
 // simple route
 app.get("/", (req, res) => {
