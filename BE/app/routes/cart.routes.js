@@ -19,9 +19,13 @@ module.exports = function(app){
     [authJwt.verifyToken],
     controller.addCartItem);
     //get edit cart detail  
-    app.put('/api/cart/:userId/editCartItem/:cartDetailId', 
+    app.put('/api/cart/:userId/editCartItem/:cartItemId', 
     [authJwt.verifyToken], 
-    controller.editCartDetail);
+    controller.editCartItem);
+    //delete cart detail 
+    app.put('/api/cart/:userId/deleteCartItem/:cartItemId', 
+    [authJwt.verifyToken], 
+    controller.deleteCartItem);
     //get all food with a category id
   
     
