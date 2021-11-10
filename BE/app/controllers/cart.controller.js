@@ -197,60 +197,74 @@ exports.addCartItem = (req, res) => {
     });
 }
 
-// exports.editCartDetail = (req, res) => {
-//     const userId = req.params.userId;
-//     const cartDetailId = req.params.cartDetailId;
+exports.editCartDetail = (req, res) => {
+    const userId = req.params.userId;
+    const cartDetailId = req.params.cartDetailId;
 
-//     //check thong tin gio hang cua khach hang
-//     Cart.findOne({ 
-//         logging: (sql, queryObject) =>{
-//             logger.info(sql, queryObject);
-//         },
-//           where: {userId: userId},
-//     })
-//     .then(cart =>{
-//         //neu gio hang const
-//         //thong tin khach hang dung
-//         if(cart)
-//         {
-//             //update gio hang
-//             CartDetail.update({
-//                 logging: (sql, queryObject) =>{
-//                     logger.info(sql, queryObject);
-//                 },
-//                 quantity: req.body.quantity,
-//                 where: {id: cartDetailId}
-//             })
-//             .then(cartDetail =>{
-//                 //neu update thanh 0 item
-//                 //delete cart item
-//                 if(cartDetail.quantity == 0){
-//                     CartDetail.destroy({
-//                         logging: (sql, queryObject) =>{
-//                             logger.info(sql, queryObject);
-//                         },
-//                         where : {id: cartDetailId}
-//                     })
-//                     .then((desItem) =>{
-//                         if(desItem ==1)
-//                         {
-//                             res.status(200).send({message: "Descrease to zero. Delete Cart Item!"});
-//                         }
-//                         else{
-//                             res.status(200).send({message: "Success!"});
-//                         }
-//                     })
-//                     .catch(err => {
-//                         logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
-//                         res.status(500).send({
-//                             message:
-//                             err.message
-//                         });
-//                     });
-//                 }
-//                 res.status(404).send({message: "User not found!"})
-//             })
-//         }
-//     })
+    // console.log({userId, cartDetailId});
 
-// }
+    //check thong tin gio hang cua khach hang
+    Cart.findOne({ 
+        logging: (sql, queryObject) =>{
+            logger.info(sql, queryObject);
+        },
+          where: {userId: userId},
+    })
+    .then(cart =>{
+        //neu gio hang const
+        //thong tin khach hang dung
+        if(cart)
+        {
+            CartDetail.findOne( {
+                    logging: (sql, queryObject) =>{
+                    logger.info(sql, queryObject);
+                },
+                    where: {id: cartDetailId}},
+            )
+            .then(cartDetail=>{
+            //update gio hang
+                cartDetail.update({
+                    logging: (sql, queryObject) =>{
+                        logger.info(sql, queryObject);
+                    },
+                    quantity: req.body.quantity
+                })
+                .then(updatedItem =>{
+                    //neu update thanh 0 item
+                    //delete cart item
+                    if(updatedItem.quantity == 0){
+                        CartDetail.destroy({
+                            logging: (sql, queryObject) =>{
+                                logger.info(sql, queryObject);
+                            },
+                            where : {id: updatedItem.id}
+                        })
+                        .then((desItem) =>{
+                            if(desItem ==1)
+                            {
+                                res.status(200).send({message: "Descrease to zero. Delete Cart Item!"});
+                            }
+                            else{
+                                res.status(200).send({message: "Success!"});
+                            }
+                        })
+                        .catch(err => {
+                            logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+                            res.status(500).send({
+                                message:
+                                err.message
+                            });
+                        });
+                    }
+                    else{
+                        res.status(200).send({message: "Success!"});
+                    }
+                })
+            })
+        }
+        else{
+            res.status(404).send({message: "User not found!"})
+        }
+    })
+
+}
