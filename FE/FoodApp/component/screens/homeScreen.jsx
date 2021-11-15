@@ -7,7 +7,7 @@ export default function homeScreen({navigation, route}){
     //console.log(response);
 
 
-    axios.get("http://192.168.1.30:8080/api/productcategory/",
+    axios.get("http://192.168.1.43:8080/api/productcategory/",
                 {
                     headers:{
                         'Content-Type': 'application/json',

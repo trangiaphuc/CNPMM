@@ -12,11 +12,6 @@ const Tab =createBottomTabNavigator();
 const darBoardScreen=({route, navigation})=>{
     const{response}=route.params;
     //console.log(response);
-
-    
-
-
-
     return(
        
             <Tab.Navigator>
