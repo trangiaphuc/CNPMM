@@ -14,7 +14,7 @@ export default function userScreen({navigation, route}){
 
     
         const fetchdata = async() => {
-            const result = await axios.get(`http://192.168.1.43:8080/api/auth/user/information/${response.id}`,
+            const result = await axios.get(`http://192.168.1.4:8080/api/auth/user/information/${response.id}`,
             {
                 headers:{
                     'Content-Type': 'application/json',
@@ -51,8 +51,8 @@ export default function userScreen({navigation, route}){
                         <Title style={[styles.title,{
                             marginTop: 15,
                             marginBottom: 5,
-                        }]}>Nguyen Huy</Title>
-                        <Caption style={styles.caption}>@{JSON.stringify(data.username)}</Caption>
+                        }]}>{data.firstname + ' ' + data.lastname}</Title>
+                        <Caption style={styles.caption}>@{data.username}</Caption>
                     </View>
                 </View>
             </View>
@@ -63,15 +63,15 @@ export default function userScreen({navigation, route}){
                 </View>
                 <View style={styles.row}>
                     <Icon name="phone" size={20}/>
-                    <Text style={styles.text}>{JSON.stringify(data.phone)}</Text>
+                    <Text style={styles.text}>{data.phone}</Text>
                 </View>
                 <View style={styles.row}>
                     <Icon name="email" size={20}/>
-                    <Text style={styles.text}>{JSON.stringify(data.email)}</Text>
+                    <Text style={styles.text}>{data.email}</Text>
                 </View>
                 <View style={styles.row}>
                     <Icon name="calendar-account" size={20}/>
-                    <Text style={styles.text}>{JSON.stringify(data.birthday)}</Text>
+                    <Text style={styles.text}>{data.birthday}</Text>
                 </View>
             </View>
             <View style={styles.infoBoxWrapper}>
