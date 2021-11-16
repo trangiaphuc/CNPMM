@@ -11,38 +11,35 @@ module.exports = function(app) {
   });
 
   //get user profile
-  app.get("/api/auth/user/information/:id", [authJwt.verifyToken], controller.information);
+  app.get("/api/user/information/:id", [authJwt.verifyToken], controller.information);
   //update user information
-  app.put("/api/auth/user/updateinfor/:id", [authJwt.verifyToken], controller.updateinfor);
+  app.put("/api/user/updateinfor/:id", [authJwt.verifyToken], controller.updateinfor);
   //change user password
-  app.put("/api/auth/user/changepassword/:id", [authJwt.verifyToken], controller.changepassword);
-  //insert or update user address
-  app.post("/api/auth/user/insertaddress/", [authJwt.verifyToken], controller.insertaddress);
-  //update or update user address
-  app.put("/api/auth/user/updateaddress/:id", [authJwt.verifyToken], controller.updateaddress);
-  //update or update user address
-  app.get("/api/auth/user/getaddress/:id", [authJwt.verifyToken], controller.getaddress);
+  app.put("/api/user/changepassword/:id", [authJwt.verifyToken], controller.changepassword);
+  //New
+  //insert user favorite food categories
+  app.post("/api/user/addFavorite/", [authJwt.verifyToken], controller.addFavorites);
+  //insert user favorite food categories
+  app.post("/api/user/updateFavorite/", [authJwt.verifyToken], controller.updateFavorites);
 
+//test ROLE
+  // app.get("/api/test/all", controller.allAccess);
 
+  // app.get(
+  //   "/api/test/user",
+  //   [authJwt.verifyToken],
+  //   controller.userBoard
+  // );
 
+  // app.get(
+  //   "/api/test/mod",
+  //   [authJwt.verifyToken, authJwt.isModerator],
+  //   controller.moderatorBoard
+  // );
 
-  app.get("/api/test/all", controller.allAccess);
-
-  app.get(
-    "/api/test/user",
-    [authJwt.verifyToken],
-    controller.userBoard
-  );
-
-  app.get(
-    "/api/test/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
-    controller.moderatorBoard
-  );
-
-  app.get(
-    "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
-  );
+  // app.get(
+  //   "/api/test/admin",
+  //   [authJwt.verifyToken, authJwt.isAdmin],
+  //   controller.adminBoard
+  // );
 };

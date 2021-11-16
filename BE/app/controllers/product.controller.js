@@ -1,3 +1,4 @@
+const { product } = require('../models');
 const db = require('../models');
 const Product = db.product;
 const logger = require('../winston/winston');
@@ -11,22 +12,22 @@ exports.getAll = (req, res) => {
         attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
      "productAt", "expireAt", "manual", "preserve", "productCategoryId"]}
      )
-      .then(data => {
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send(data);
+      .then(products => {
+        logger.info(`Request status: ${res.status(200)} data ${products}`);
+        res.status(200).send({products: products});
       })
       .catch(err => {
-        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+        logger.error(`Request status: ${res.status(500)} error ${err}`);
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message
         });
       });
   };
 
   //get all products with category id
 exports.getAllProWithCatId = (req, res) => {
-    const id = req.query.id;
+    const id = req.params.id;
     Product.findAll({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
@@ -35,23 +36,23 @@ exports.getAllProWithCatId = (req, res) => {
       attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
         "productAt", "expireAt", "manual", "preserve", "productCategoryId"]
       })
-      .then(data => {
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send(data);
+      .then(products => {
+        logger.info(`Request status: ${res.status(200)} data ${products}`);
+        res.status(200).send({products: products});
       })
       .catch(err => {
-        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+        logger.error(`Request status: ${res.status(500)} error ${err}`);
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message
         });
       });
   };
 
   //get a product with an id from req.query
   exports.getOneWithDetail = (req, res) => {
-    const id = req.query.id;
-    Product.findAll({
+    const id = req.params.id;
+    Product.findOne({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
       },
@@ -59,15 +60,15 @@ exports.getAllProWithCatId = (req, res) => {
       attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
         "productAt", "expireAt", "manual", "preserve", "productCategoryId"]
       })
-      .then(data => {
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send(data);
+      .then(product => {
+        logger.info(`Request status: ${res.status(200)} data ${product}`);
+        res.status(200).send({product: product});
       })
       .catch(err => {
-        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+        logger.error(`Request status: ${res.status(500)} error ${err}`);
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message
         });
       });
   };

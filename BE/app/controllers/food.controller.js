@@ -12,22 +12,22 @@ exports.getAll = (req, res) => {
       },
       attributes: ['id', 'foodName', 'foodPic', 'foodDescription', 'foodCalories']
     })
-      .then(data => {
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send(data);
+      .then(foods => {
+        logger.info(`Request status: ${res.status(200)}  data ${foods}`);
+        res.status(200).send({foods: foods});
       })
       .catch(err => {
-        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+        logger.error(`Request: status: ${res.status(500)}  error ${err}`);
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message
         });
       });
   };
 
   //get a food detail from databse with a id from req.query
 exports.getOneWithDetail = (req, res) => {
-  const id = req.query.id;
+  const id = req.params.id;
   Food.findOne({
     logging: (sql, queryObject) =>{
       logger.info(sql, queryObject);
@@ -44,22 +44,22 @@ exports.getOneWithDetail = (req, res) => {
       }
     ]
   })
-    .then(data => {
-      logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-      res.status(200).send(data);
+    .then(food => {
+      logger.info(`Request status: ${res.status(200)} data ${food}`);
+      res.status(200).send({food: food});
   })
   .catch(err => {
-    logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+    logger.error(`Request status: ${res.status(500)} error ${err}`);
     res.status(500).send({
       message:
-      err.message || "Some error occurred while retrieving tutorials."
+      err.message
     });
   });
 };
 
 //get all food with a category id
 exports.getAllWithCatId = (req, res) => {
-  const id = req.query.id;
+  const id = req.params.id;
   Food.findAll({
     logging: (sql, queryObject) =>{
       logger.info(sql, queryObject);
@@ -67,12 +67,12 @@ exports.getAllWithCatId = (req, res) => {
     where: {foodCategoryId: id},
     attributes: ['id', 'foodName', 'foodPic', 'foodDescription', 'foodCalories']
   })
-    .then(data => {
-      logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-      res.status(200).send(data);
+    .then(foods => {
+      logger.info(`Request status: ${res.status(200)} data ${foods}`);
+      res.status(200).send({foods: foods});
   })
   .catch(err => {
-    logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+    logger.error(`Request status: ${res.status(500)} error ${err}`);
     res.status(500).send({
       message:
       err.message || "Some error occurred while retrieving tutorials."

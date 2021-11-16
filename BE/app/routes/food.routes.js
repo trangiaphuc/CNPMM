@@ -15,11 +15,11 @@ module.exports = function(app){
     [authJwt.verifyToken], 
     controller.getAll);
     //get food detail
-    app.get('/api/foods/detail/', 
+    app.get('/api/foods/detail/:id', 
     [authJwt.verifyToken], 
     controller.getOneWithDetail);
     //get all food with a category id
-    app.get('/api/foods/category/', 
+    app.get('/api/foods/category/:id', 
     [authJwt.verifyToken], 
     controller.getAllWithCatId);
     

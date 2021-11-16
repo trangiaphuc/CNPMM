@@ -26,7 +26,6 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
-db.address = require("../models/address.model.js")(sequelize, Sequelize);
 db.foodCategory = require("../models/foodCategory.model.js")(sequelize, Sequelize);
 db.food = require("../models/food.model.js")(sequelize, Sequelize);
 db.foodMaterial = require("../models/foodMaterial.model.js")(sequelize, Sequelize);
@@ -74,7 +73,6 @@ db.user.belongsToMany(db.foodCategory, {through: db.favoritesFoodCategory});
 db.foodCategory.belongsToMany(db.user, {through: db.favoritesFoodCategory})
 
 
-db.user.hasOne(db.address);
 db.foodCategory.hasMany(db.food);
 db.food.hasMany(db.foodMaterial);
 db.food.hasMany(db.foodCookStep);
@@ -91,7 +89,6 @@ db.shipper.hasMany(db.order);
 db.paymentMethod.hasMany(db.order);
 db.order.hasMany(db.orderDetail);
 db.product.hasMany(db.orderDetail);
-db.shipper.hasOne(db.address);
 
 db.ROLES = ["user", "admin", "moderator"];
 

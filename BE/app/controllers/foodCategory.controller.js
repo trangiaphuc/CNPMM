@@ -11,15 +11,15 @@ const logger = require('../winston/winston');
       },
       attributes: ['id', 'catName']
     })
-      .then(data => {
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send(data);
+      .then(foodCategories => {
+        logger.info(`Request status: ${res.status(200)} data ${foodCategories}`);
+        res.status(200).send({foodCategories: foodCategories});
       })
       .catch(err => {
-        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+        logger.error(`Request status: ${res.status(500)} error ${err}`);
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message
         });
       });
   };

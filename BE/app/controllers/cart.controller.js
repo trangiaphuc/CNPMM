@@ -8,7 +8,6 @@ const logger = require('../winston/winston');
 
 exports.getCartByUserId = (req, res) => {
     const userId = req.params.userId;
-
     //tim gio hang cua khach hang xem co hay chua
     Cart.findOne({
         logging: (sql, queryObject) =>{
@@ -29,7 +28,7 @@ exports.getCartByUserId = (req, res) => {
     .then(data => {
         //neu co gio hang ti response ve
         if(data){
-            logger.info(`${new Date()}: Request: status: ${res.status(200)}  data ${data}`);
+            logger.info(`Request: status: ${res.status(200)}  data ${data}`);
             res.status(200).send({cart: data});
         }
         else{
@@ -44,8 +43,6 @@ exports.getCartByUserId = (req, res) => {
                 updatedAt: new Date(),
             })
             .then(cart =>{
-                
-
                 //tra ve dio hang rong
                 Cart.findOne({
                     logging: (sql, queryObject) =>{
@@ -67,29 +64,28 @@ exports.getCartByUserId = (req, res) => {
                     if(data)
                     {
                         //bao la gio hang vua duoc tao
-                        logger.info(`${new Date()}: Request: status: ${res.status(200)}  data ${data}`);
-                        res.status(201).send({message: "User didn't have cart! Cart Created!", cart: data});
+                        logger.info(`Request status: ${res.status(200)}  data ${data}`);
+                        res.status(201).send({cart: data});
                     }
                 })
                 .catch(err => {
-                    logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+                    logger.error(`Request status: ${res.status(500)}  error ${err}`);
                     res.status(500).send({
                         message:
-                        err.message || "Some error occurred while retrieving tutorials."
+                        err.message
                     });
                 });
             })
         }
     })
     .catch(err => {
-        logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({
             message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message
         });
     });
 }
-
 
 exports.addCartItem = (req, res) => {
     const listCartItems = req.body.listCartItems;
@@ -134,7 +130,7 @@ exports.addCartItem = (req, res) => {
                     })
                     .catch(err => {
                         flag = false;
-                        logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+                        logger.error(`Request status: ${res.status(500)}  error ${err}`);
                     });
                 });
  
@@ -147,11 +143,7 @@ exports.addCartItem = (req, res) => {
                 }
             })
             .catch(err => {
-                logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
-                res.status(500).send({
-                    message:
-                    err.message || "Some error occurred while retrieving tutorials."
-                });
+                logger.error(`Request status: ${res.status(500)}  error ${err}`);
             });
         }
         else{
@@ -172,10 +164,7 @@ exports.addCartItem = (req, res) => {
                 })
                 .catch(err => {
                     flag = false;
-                    logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
-                    res.status(500).send({
-                        message: err.message
-                    });
+                    logger.error(`Request status: ${res.status(500)}  error ${err}`);
                 });
             });
             if(flag == true)
@@ -189,7 +178,7 @@ exports.addCartItem = (req, res) => {
 
     })
     .catch(err => {
-        logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({
             message:
             err.message
@@ -200,8 +189,6 @@ exports.addCartItem = (req, res) => {
 exports.editCartItem = (req, res) => {
     const userId = req.params.userId;
     const cartDetailId = req.params.cartItemId;
-
-    // console.log({userId, cartDetailId});
 
     //check thong tin gio hang cua khach hang
     Cart.findOne({ 
@@ -242,10 +229,10 @@ exports.editCartItem = (req, res) => {
                                 where : {id: updatedItem.id}
                             })
                             .then(() =>{
-                                res.status(200).send({message: "Descrease to zero. Delete Cart Item!"});
+                                res.status(200).send({message: "Sucess!"});
                             })
                             .catch(err => {
-                                logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+                                logger.error(`Request status: ${res.status(500)}  error ${err}`);
                                 res.status(500).send({
                                     message:
                                     err.message
@@ -257,7 +244,7 @@ exports.editCartItem = (req, res) => {
                         }
                     })
                     .catch(err => {
-                        logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+                        logger.error(`Request status: ${res.status(500)}  error ${err}`);
                         res.status(500).send({
                             message:
                             err.message
@@ -269,7 +256,7 @@ exports.editCartItem = (req, res) => {
                 }
             })
             .catch(err => {
-                logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+                logger.error(`Request status: ${res.status(500)}  error ${err}`);
                 res.status(500).send({
                     message:
                     err.message
@@ -277,6 +264,7 @@ exports.editCartItem = (req, res) => {
             });
         }
         else{
+            logger.error(`${new Date()}: Request: status: ${res.status(404)}  error User not found`);
             res.status(404).send({message: "User not found!"})
         }
     })
@@ -287,7 +275,6 @@ exports.deleteCartItem= (req, res) => {
     const userId = req.params.userId;
     const cartItemId = req.params.cartItemId;
 
-    
     //check thong tin gio hang cua khach hang
     Cart.findOne({ 
         logging: (sql, queryObject) =>{
@@ -322,7 +309,7 @@ exports.deleteCartItem= (req, res) => {
                         res.status(200).send({message: "Success!"});
                     })
                     .catch(err => {
-                        logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+                        logger.error(`Request status: ${res.status(500)}  error ${err}`);
                         res.status(500).send({
                             message:
                             err.message
@@ -334,7 +321,7 @@ exports.deleteCartItem= (req, res) => {
                 }
             })
             .catch(err => {
-                logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+                logger.error(`Request status: ${res.status(500)}  error ${err}`);
                 res.status(500).send({
                     message:
                     err.message
@@ -342,6 +329,7 @@ exports.deleteCartItem= (req, res) => {
             });
         }
         else{
+            logger.error(`Request status: ${res.status(404)}  error User not found`);
             res.status(404).send({message: "User not found!"})
         }
     })

@@ -21,8 +21,8 @@ module.exports = (sequelize, Sequelize) => {
         birthday:{
             type: Sequelize.DATEONLY
         },
-        addressId:{
-            type: Sequelize.INTEGER
+        address:{
+            type: Sequelize.STRING
         }
     }
     );

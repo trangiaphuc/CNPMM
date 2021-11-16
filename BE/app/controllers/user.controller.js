@@ -1,8 +1,9 @@
 const db = require('../models');
 const { data } = require('../winston/winston');
 const User = db.user;
-const Address = db.address;
+const FavoriteFoodCategory = db.favoritesFoodCategory;
 const logger = require('../winston/winston');
+var bcrypt = require('bcryptjs');
 
 //get all information about the user with an id from req.params
   exports.information = (req, res) => {
@@ -14,16 +15,17 @@ const logger = require('../winston/winston');
     })
     .then(data => {
       if(data){
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send(data);
+        logger.info(`Request status: ${res.status(200)} data ${data}`);
+        //update lai sau
+        res.status(200).send({information: data});
       }
       else{
-        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
-        res.status(404).send({message: 'Can not find with id ' + id });
+        logger.error(`${new Date()}: Request: status: ${res.status(404)}  error User not found`);
+        res.status(404).send({message: 'User not found!'});
       }
     })
     .catch(err => {
-      logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
+      logger.error(`Request status: ${res.status(500)} error ${err}`);
       res.status(500).send({message: err.message});
     })
   };
@@ -37,182 +39,207 @@ const logger = require('../winston/winston');
     // - lastname
     // - phone
     // - birthday
+    //address
     const id = req.params.id;
-
-    User.update(req.body, 
-      {
-        logging: (sql, queryObject) =>{
-          logger.info(sql, queryObject);
-        },
-        where: {id: id}
+    User.findByPk(id, {
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+        }
+    })
+    .then(user => {
+      if(user){
+        user.update({
+          logging: (sql, queryObject) =>{
+            logger.info(sql, queryObject);
+          },
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          phone: req.body.phone,
+          email: req.body.email,
+          birthday: new Date(req.body.birthday),
+          address: req.body.address,
+        })
+        .then(updatedRecord => {
+          if(updatedRecord){
+            logger.info(`Request status: ${res.status(200)} data ${updatedRecord}`);
+            res.status(200).send({message: "Success!"});
+          }
+          else{
+            logger.error(`Request status: ${res.status(500)} error update Fail`);
+            res.status(500).send({message: "Fail!"});
+          }
+        })
+        .catch(err => {
+          logger.error(`Request status: ${res.status(500)}  error ${err}`);
+          res.status(500).send({message: err.message});
+        })
       }
-    )
-    .then(number => {
-      if (number ==1)
-      {
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send({message: 'User Information updated successful!', success: true});
-      }
-      else
-      {
-        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
-        res.status(404).send({message: 'User Information updated Error. Check your Request.body or your user is empty!', success: false});
+      else{
+        logger.error(`Request status: ${res.status(404)}  error User not found`);
+        res.status(404).send({message: 'User not found!'});
       }
     })
     .catch(err => {
-      logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
-      res.status(500).send({message: err.message});
+      logger.error(`Request status: ${res.status(500)}  error ${err}`);
+      res.status(500).send({message: err.message})
     });
   };
 
   //change user password
   exports.changepassword = (req, res) => {
     const id = req.params.id;
-    User.update(req.body, {
+    const oldPassword = req.body.oldPassword;
+
+    User.findByPk(id, {
+      logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+      }}
+    )
+    .then(user =>{
+      
+      if(user){
+
+        var passwordIsValid = bcrypt.compareSync(
+          oldPassword,
+          user.password
+        );
+        if(!passwordIsValid)
+        {
+          res.status(401).send('Invalid Password!');
+        }
+        else{
+          user.update(
+            // req.body, 
+            {
+              logging: (sql, queryObject) =>{
+                logger.info(sql, queryObject);
+              },
+              password: req.body.password,
+              // where: {id: id}
+            })
+            .then(updatedRecord => {
+              if (updatedRecord)
+              {
+                logger.info(`Request status: ${res.status(200)} data ${data}`);
+                res.status(200).send({message: 'Success!', success: true});
+              }
+              else
+              {
+                logger.error(`Request status: ${res.status(404)} error ${err}`);
+                res.send({message: 'Fail!', success: false});
+              }
+            })
+            .catch(err => {
+              logger.error(`Request status: ${res.status(500)} error ${err}`);
+              res.status(500).send({message: err.message});
+            });
+        }
+
+      }
+      else{
+        logger.error(`Request status: ${res.status(404)}  error User not found`);
+        res.status(404).send({message: 'User not found'});
+      }
+
+    })
+    .catch(err => {
+      logger.error(`Request status: ${res.status(500)}  error ${err}`);
+      res.status(500).send({message: err.message});
+    })
+  };
+  
+  //add user favorite food categories
+  exports.addFavorites = (req, res) =>{
+    const userId = req.body.userId;
+    const favorites = req.body.favorites;
+    var flag = true;
+    favorites.forEach(favorite => {
+      FavoriteFoodCategory.create({
+        logging: (sql, queryObject) =>{
+          logger.info(sql, queryObject);
+        },
+        userId: userId,
+        foodCategoryId: favorite,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .catch(err =>{
+        flag = false;
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
+      });
+    });
+    if(flag) {
+      logger.info(`Request status: ${res.status(201)}`);
+      res.status(201).send( {message:"Success!"} );
+    }
+    else{
+      logger.error(`Request status: ${res.status(500)}`);
+      res.status(500).send({message: "Fail!"} );
+    }
+  }
+
+  //update user favorite food categories
+  //delete favorite all current food categories
+  //add new favorite food categories record
+  exports.updateFavorites = (req, res) =>{
+    const userId = req.body.userId;
+    var flag = true;
+    FavoriteFoodCategory.destroy({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
       },
-      where: {id: id}
-    })
-    .then(number => {
-      if (number ==1)
-      {
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send({message: 'User Password updated successful!', success: true});
-      }
-      else
-      {
-        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
-        res.send({message: 'User Password updated Error. Check your Request.body or your user is empty!', success: false});
-      }
+      where: { userId: userId},
     })
     .catch(err => {
-      logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
-      res.status(500).send({message: err.message});
+      flag = false;
+      logger.error(`Request status: ${res.status(500)}  error ${err}`);
     });
-
-  };
-  
-  exports.insertaddress = (req, res) =>{
-    //user identifier
-    const id = req.body.userId
-    User.findByPk(id,  {
-      logging: (sql, queryObject) =>{
-      logger.info(sql, queryObject);
-      }})
-      .then(data => {
-        if(data){
-          logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-          //add address if had user
-          Address.create({
-            logging: (sql, queryObject) =>{
-              logger.info(sql, queryObject);
-            },
-            userId: req.body.userId,
-            province: req.body.province,
-            district: req.body.district,
-            ward: req.body.ward,
-            flatNumber: req.body.flatNumber,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          })
-          .then(() =>{
-              logger.info(`Request: status: ${res.status(201)} at ${new Date()} data ${data}`);
-              res.status(200).send({message: 'Address added successful!', success: true});
-          })
-          .catch(err => {
-            logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
-            res.status(500).send({message: err.message});
-          });
-        }
-        else{
-          //didn't have user
-          logger.error(`Request: status: ${res.status(404)} at ${new Date()} User not found`);
-          res.status(500).send({message: err.message});
-        }
-      })
-      .catch(err => {
-        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
-        res.status(500).send({message: err.message});
-    });
-  }
-
-  exports.updateaddress = (req, res) => {
-    //address identifier
-    const id = req.params.id;
-        //update if address existed
-    Address.update(req.body, {
-      logging: (sql, queryObject) =>{
-      logger.info(sql, queryObject);
-    },
-      where: {id: id}
-    })
-    .then(number => {
-      if (number ==1)
-      {
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send({message: 'Address updated successful!', success: true});
-      }
-      else
-      {
-        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
-        res.status(404).send({message: 'Address updated Error. Check your addressId!', success: false});
-      }
-      })
-      .catch(err => {
-        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
-        res.status(500).send({message: err.message});
+    if(flag) {
+      var flag = true;
+      const newFavorites = req.body.newFavorites;
+      newFavorites.forEach(favorite => {
+        FavoriteFoodCategory.create({
+          logging: (sql, queryObject) =>{
+            logger.info(sql, queryObject);
+          },
+          userId: userId,
+          foodCategoryId: favorite,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .catch(err =>{
+          flag = false;
+          logger.error(`${new Date()}: Request: status: ${res.status(500)}  error ${err}`);
+        });
       });
-  }
-  
-  exports.getaddress = (req, res) =>{
-    const userId = req.params.id;
-        //update if address existed
-    Address.findOne(
-    {
-      logging: (sql, queryObject) =>{
-      logger.info(sql, queryObject);
-    },
-      where: {userId: userId}
-    })
-    .then(data => {
-      if (data)
-      {
-        logger.info(`Request: status: ${res.status(200)} at ${new Date()} data ${data}`);
-        res.status(200).send(data);
+      if(flag) {
+        logger.info(`Request status: ${res.status(201)}`);
+        res.status(201).send( {message:"Success!"} );
       }
-      else
-      {
-        logger.error(`Request: status: ${res.status(404)} at ${new Date()} error ${err}`);
-        res.status(404).send({message: 'Address found Error. Check your addressId!', success: false});
+      else{
+        logger.error(`Request status: ${res.status(500)}`);
+        res.status(500).send({message: "Fail!"} );
       }
-      })
-      .catch(err => {
-        logger.error(`Request: status: ${res.status(500)} at ${new Date()} error ${err}`);
-        res.status(500).send({message: err.message});
-      });
+    }
+    else {
+      logger.error(`Request status: ${res.status(500)}`);
+      res.status(500).send({message: "Fail!"})
+    }
   }
-  exports.addFavorites = (req, res) =>{
-    const favorites = req.body.favorites;
-    favorites.forEach(element => {
-      
-    });
-  }
-
   
-  //test
-  exports.allAccess = (req, res) => {
-    res.status(200).send("Public Content.");
-  };
+  //test ROLE
+  // exports.allAccess = (req, res) => {
+  //   res.status(200).send("Public Content.");
+  // };
   
-  exports.userBoard = (req, res) => {
-    res.status(200).send("User Content.");
-  };
+  // exports.userBoard = (req, res) => {
+  //   res.status(200).send("User Content.");
+  // };
   
-  exports.adminBoard = (req, res) => {
-    res.status(200).send("Admin Content.");
-  };
+  // exports.adminBoard = (req, res) => {
+  //   res.status(200).send("Admin Content.");
+  // };
   
-  exports.moderatorBoard = (req, res) => {
-    res.status(200).send("Moderator Content.");
-  }
+  // exports.moderatorBoard = (req, res) => {
+  //   res.status(200).send("Moderator Content.");
+  // }

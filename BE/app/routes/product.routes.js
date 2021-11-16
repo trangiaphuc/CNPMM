@@ -15,11 +15,11 @@ module.exports = function(app){
     [authJwt.verifyToken],  
     controller.getAll);
     //get a product detail
-    app.get('/api/products/detail',
+    app.get('/api/products/detail/:id',
     [authJwt.verifyToken],  
     controller.getOneWithDetail);
     //get all products with category id
-    app.get('/api/products/category/', 
+    app.get('/api/products/category/:id', 
     [authJwt.verifyToken], 
     controller.getAllProWithCatId);
     

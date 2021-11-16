@@ -8,10 +8,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         isActive:{
             type: Sequelize.BOOLEAN,
-        },
-        userPay: 
-        {
-            type: Sequelize.FLOAT
         }
     }
     );

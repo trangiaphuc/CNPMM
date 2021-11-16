@@ -32,20 +32,20 @@ exports.signup = (req, res) => {
           }
         }).then(roles => {
           user.setRoles(roles).then(() => {
-            logger.info(`User ${req.body.username} is registered to system at ${new Date().getTime()}`); 
-            res.status(201).send({ message: "User was registered successfully!", success: true });
+            logger.info(`User ${req.body.username} is registered`); 
+            res.status(201).send({ message: "Success!", success: true });
           });
         });
       } else {
         // user role = 1
         user.setRoles([1]).then(() => {
-          logger.info(`User ${req.body.username} registered to system at ${new Date()}`); 
-          res.status(201).send({ message: "User was registered successfully!", success: true });
+          logger.info(`User ${req.body.username} registered`); 
+          res.status(201).send({ message: "Success!", success: true });
         });
       }
     })
     .catch(err => {
-      logger.error(`Error when user ${req.body.username} signed up at ${new Date()}. Err:  ${err}`)
+      logger.error(`Error when user ${req.body.username} signed up. Err:  ${err}`)
       res.status(500).send({ message: err.message });
     });
 };
@@ -62,7 +62,7 @@ exports.signin = (req, res) => {
     .then(user => {
       if (!user) {
         // logger.alert(`Could not find user ${req.body.username} when loggin at ${new Date()}`);
-        res.status(404).send({ message: "User Not found." });
+        res.status(404).send({ message: "User Not found!" });
       }
       else{
 
@@ -101,7 +101,7 @@ exports.signin = (req, res) => {
       }
     })
     .catch(err => {
-      logger.error(`Error when user ${req.user.username} logged at ${new Date()}. Error: ${err}`);
+      logger.error(`Error when user ${req.user.username} logged in. Error: ${err}`);
       res.status(500).send({ message: err.message });
     });
 };
