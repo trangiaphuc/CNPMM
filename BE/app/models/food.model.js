@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const Food = sequelize.define("foods", {
-        foodPic:{
+        foodImage:{
             type: Sequelize.STRING,
         },
         foodName:{

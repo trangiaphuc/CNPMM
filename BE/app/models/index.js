@@ -41,7 +41,7 @@ db.order = require("../models/order.model.js")(sequelize, Sequelize);
 db.orderDetail = require("../models/orderDetail.model.js")(sequelize, Sequelize);
 db.paymentMethod = require("../models/paymentMethod.model.js")(sequelize, Sequelize);
 db.shipper = require("../models/shipper.model.js")(sequelize, Sequelize);
-
+db.images = require("../models/images.model.js")(sequelize, Sequelize);
 //many to many table
 db.favoritesFoodCategory = sequelize.define('favoriteFoodCategories');
 
@@ -89,6 +89,7 @@ db.shipper.hasMany(db.order);
 db.paymentMethod.hasMany(db.order);
 db.order.hasMany(db.orderDetail);
 db.product.hasMany(db.orderDetail);
+
 
 db.ROLES = ["user", "admin", "moderator"];
 

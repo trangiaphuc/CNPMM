@@ -7,6 +7,9 @@ const logger = require('./app/winston/winston')
 var corsOptions = {
   origin: "http://localhost:19006"
 };
+
+global.__basedir = __dirname;
+
 //use cors middleware
 app.use(cors(corsOptions));
 
@@ -43,6 +46,9 @@ require('./app/routes/food.routes')(app);
 require('./app/routes/product.routes')(app);
 //cart routes
 require('./app/routes/cart.routes')(app);
+//images routes
+require('./app/routes/image.routes')(app);
+
 
 // simple route
 app.get("/", (req, res) => {
