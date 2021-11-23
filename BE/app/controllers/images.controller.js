@@ -1,12 +1,10 @@
 const fs = require("fs");
 const db = require("../models");
 
-const Image = db.images;
+const Image = db.image;
 
 exports.uploadFiles = async (req, res) => {
   try {
-    console.log(req.file);
-
     if (req.file == undefined) {
       return res.send(`You must select a file.`);
     }
@@ -14,7 +12,6 @@ exports.uploadFiles = async (req, res) => {
     const inputImage = fs.readFileSync(
       __basedir + "/resources/static/assets/uploads/" + req.file.filename
     );
-    var imagebase64 = Buffer.from(inputImage).toString("base64");
 
     Image.create({
       type: req.file.mimetype,
@@ -27,10 +24,10 @@ exports.uploadFiles = async (req, res) => {
         // image.data
         inputImage
       );
-
-      return res.status(201).send("data:image/png;base64,"+imagebase64);
+      console.log(3);
+      return res.status(201).send({image: image});
     });
-  } catch (error) {
+  }catch (error) {
     console.log(error);
     return res.status(500).send(`Error when trying upload images: ${error}`);
   }
@@ -38,6 +35,7 @@ exports.uploadFiles = async (req, res) => {
 
 exports.getImages = (req, res) => {
   const id = req.params.id;
+  console.log(id);
   Image.findOne(
     {
       where: {id: id},
@@ -45,8 +43,13 @@ exports.getImages = (req, res) => {
   )
   .then((image) => {
       if(image){
+        const inputImage = fs.readFileSync(
+          image.path
+        );
+        var imagebase64 = Buffer.from(inputImage).toString("base64");
+    
         // res.contentType('image/png');
-        res.status(200).send(image.base64Code.data);
+        res.status(200).send("data:image/png;base64,"+imagebase64);
       }
       else{
         res.status(404).send({message: 'Not Found'});

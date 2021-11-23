@@ -2,7 +2,6 @@ const db = require('../models');
 const Cart = db.cart;
 const CartDetail = db.cartDetail;
 const Product = db.product;
-const User = db.user;
 const logger = require('../winston/winston');
 
 

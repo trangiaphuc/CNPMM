@@ -1,28 +1,36 @@
-const { product } = require('../models');
 const db = require('../models');
 const Product = db.product;
 const logger = require('../winston/winston');
+const fs = require('fs');
 
 //get all products
 exports.getAll = (req, res) => {
     Product.findAll({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
-      },
-        attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
-     "productAt", "expireAt", "manual", "preserve", "productCategoryId"]}
-     )
-      .then(products => {
-        logger.info(`Request status: ${res.status(200)} data ${products}`);
-        res.status(200).send({products: products});
-      })
-      .catch(err => {
-        logger.error(`Request status: ${res.status(500)} error ${err}`);
-        res.status(500).send({
-          message:
-            err.message
-        });
+        },
+      }
+    )
+    .then(products => {
+      logger.info(`Request status: ${res.status(200)} data ${products}`);
+
+      products.forEach(product =>{
+        const image = fs.readFileSync(
+          product.productImage
+        );
+        var base64Image = Buffer.from(image).toString("base64");
+        product.productImage = "data:image/png;base64,"+base64Image;
       });
+
+      res.status(200).send({products: products});
+    })
+    .catch(err => {
+      logger.error(`Request status: ${res.status(500)} error ${err}`);
+      res.status(500).send({
+        message:
+          err.message
+      });
+    });
   };
 
   //get all products with category id
@@ -33,11 +41,16 @@ exports.getAllProWithCatId = (req, res) => {
         logger.info(sql, queryObject);
       },
       where: {productCategoryId: id},  
-      attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
-        "productAt", "expireAt", "manual", "preserve", "productCategoryId"]
       })
       .then(products => {
         logger.info(`Request status: ${res.status(200)} data ${products}`);
+        products.forEach(product =>{
+          const image = fs.readFileSync(
+            product.productImage
+          );
+          var base64Image = Buffer.from(image).toString("base64");
+          product.productImage = "data:image/png;base64,"+base64Image;
+        });
         res.status(200).send({products: products});
       })
       .catch(err => {
@@ -57,11 +70,16 @@ exports.getAllProWithCatId = (req, res) => {
         logger.info(sql, queryObject);
       },
       where: {id: id},  
-      attributes: ["id", "proPic", "proName", "proDescription", "quantity", "price", "brand", "origin",
-        "productAt", "expireAt", "manual", "preserve", "productCategoryId"]
       })
       .then(product => {
         logger.info(`Request status: ${res.status(200)} data ${product}`);
+        
+        const image = fs.readFileSync(
+          product.productImage
+        );
+        var base64Image = Buffer.from(image).toString("base64");
+        product.productImage = "data:image/png;base64,"+base64Image;
+
         res.status(200).send({product: product});
       })
       .catch(err => {
@@ -72,3 +90,44 @@ exports.getAllProWithCatId = (req, res) => {
         });
       });
   };
+
+  exports.addNewFood = (req, res) => {
+
+    Product.create({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      proName: req.body.proName,
+      proDescription: req.body.proDescription,
+      quantity: req.body.quantity,
+      price: req.body.price,
+      brand: req.body.brand,
+      origin: req.body.origin,
+      productAt: req.body.productAt,
+      expireAt: req.body.expireAt,
+      manual: req.body.manual,
+      preserve: req.body.preserve,
+      productImage: __basedir + "/resources/static/assets/uploads/" + req.file.filename,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .then(product =>{
+      if(product)
+      {  const productImage = fs.readFileSync(
+          __basedir + "/resources/static/assets/uploads/" + req.file.filename
+        );
+        fs.writeFileSync(
+          __basedir + "/resources/static/assets/tmp/" + req.file.filename,
+          // image.data
+          productImage
+        );
+        res.status(201).send({message: "Success!"})
+      }
+      else{
+        res.status(500).send({message:"Fail!"});
+      }
+    })
+    .catch(err => {
+      res.status(500).send({message: err.message});
+    })
+  }

@@ -1,8 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
     const Product = sequelize.define("products", {
-        proPic :{
-            type : Sequelize.STRING,
-        },
         proName: {
             type : Sequelize.STRING,
         },
@@ -31,6 +28,9 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.STRING
         },
         preserve: {
+            type : Sequelize.STRING
+        },
+        productImage: {
             type : Sequelize.STRING
         }
     });

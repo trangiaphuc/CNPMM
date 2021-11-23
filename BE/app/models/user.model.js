@@ -26,6 +26,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       address: {
         type: Sequelize.STRING
+      },
+      userAvatar: {
+        type: Sequelize.STRING
       }
     });
   

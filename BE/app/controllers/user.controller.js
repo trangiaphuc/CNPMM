@@ -4,6 +4,7 @@ const User = db.user;
 const FavoriteFoodCategory = db.favoritesFoodCategory;
 const logger = require('../winston/winston');
 var bcrypt = require('bcryptjs');
+var fs = require("fs");
 
 //get all information about the user with an id from req.params
   exports.information = (req, res) => {
@@ -13,11 +14,22 @@ var bcrypt = require('bcryptjs');
         logger.info(sql, queryObject);
       },
     })
-    .then(data => {
-      if(data){
-        logger.info(`Request status: ${res.status(200)} data ${data}`);
+    .then(user => {
+      if(user){
+        logger.info(`Request status: ${res.status(200)} data ${user}`);
         //update lai sau
-        res.status(200).send({information: data});
+
+        //chuyen doi hinh anh userAvatar sang base64 url
+        //gan vao bien moi
+        //gui lai qua res
+        const userAvatar = fs.readFileSync(
+          user.userAvatar
+        );
+        var base64Avatar = Buffer.from(userAvatar).toString("base64");
+
+        user.userAvatar = "data:image/png;base64,"+base64Avatar;
+
+        res.status(200).send({information: user});
       }
       else{
         logger.error(`${new Date()}: Request: status: ${res.status(404)}  error User not found`);
@@ -226,6 +238,27 @@ var bcrypt = require('bcryptjs');
       res.status(500).send({message: "Fail!"})
     }
   }
+  
+  // exports.changeAvatar = (req, res) =>{
+  //   const userId = req.params.userId;
+  //   User.findByPk(userId, {
+  //     logging: (sql, queryObject) =>{
+  //       logger.info(sql, queryObject);
+  //     },
+  //   })
+  //   .then(user => {
+  //     if(user){
+        
+  //     }
+  //     else{
+  //       res.status(404).send({message: "User not found!"});
+  //     }
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send({message: err.message});
+  //   })
+  // }
+
   
   //test ROLE
   // exports.allAccess = (req, res) => {

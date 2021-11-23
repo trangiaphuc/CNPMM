@@ -41,7 +41,7 @@ db.order = require("../models/order.model.js")(sequelize, Sequelize);
 db.orderDetail = require("../models/orderDetail.model.js")(sequelize, Sequelize);
 db.paymentMethod = require("../models/paymentMethod.model.js")(sequelize, Sequelize);
 db.shipper = require("../models/shipper.model.js")(sequelize, Sequelize);
-db.images = require("../models/images.model.js")(sequelize, Sequelize);
+db.image = require("../models/images.model.js")(sequelize, Sequelize);
 //many to many table
 db.favoritesFoodCategory = sequelize.define('favoriteFoodCategories');
 
@@ -83,12 +83,18 @@ db.product.hasOne(db.foodMaterial);
 db.user.hasOne(db.cart);
 db.cart.hasMany(db.cartDetail);
 db.cartDetail.belongsTo(db.product);
-db.user.hasMany(db.order);
-db.deliveryStatusType.hasMany(db.order);
-db.shipper.hasMany(db.order);
-db.paymentMethod.hasMany(db.order);
+db.order.belongsTo(db.user);
+db.order.belongsTo(db.deliveryStatusType);
+db.order.belongsTo(db.shipper);
+db.order.belongsTo(db.paymentMethod);
 db.order.hasMany(db.orderDetail);
 db.product.hasMany(db.orderDetail);
+//images belong to
+// db.user.belongsTo(db.image);
+// db.product.belongsTo(db.image);
+// db.food.belongsTo(db.image);
+// db.shipper.belongsTo(db.image);
+// db.foodCookStep.belongsTo(db.image);
 
 
 db.ROLES = ["user", "admin", "moderator"];
