@@ -100,7 +100,7 @@ export default function signUp({navigation}){
                         if(data.password === data.confirmPassword)
                         {
                             //alert([data.username, data.email, data.password, data.confirmPassword]);
-                            axios.post("http://192.168.1.4:8080/api/auth/signup", {username:data.username, password:data.password, email:data.email, role: "user"},
+                            axios.post("http://192.168.1.34:8080/api/auth/signup", {username:data.username, password:data.password, email:data.email, role: "user"},
                             {
                                 headers:{
                                     'Content-Type': 'application/json',
@@ -108,6 +108,9 @@ export default function signUp({navigation}){
                                 },
                             })
                             .then(response => {
+
+                                //console.log("Success");
+                                console.log(response);
                                 if(response.data.success === true) {
                                     navigation.navigate(darBoardScreen, response);
                                 }

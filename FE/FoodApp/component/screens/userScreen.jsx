@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, TextStyle, SafeAreaView, StyleSheet} from "react-native";
+import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView} from "react-native";
 import axios from "axios";
 import{
     Avatar,
@@ -14,7 +14,7 @@ export default function userScreen({navigation, route}){
 
     
         const fetchdata = async() => {
-            const result = await axios.get(`http://192.168.1.4:8080/api/auth/user/information/${response.id}`,
+            const result = await axios.get(`http://192.168.1.34:8080/api/user/information/${response.id}`,
             {
                 headers:{
                     'Content-Type': 'application/json',
@@ -22,8 +22,8 @@ export default function userScreen({navigation, route}){
                     
                 },
             });
-            //console.log(result.data);
-            setData(result.data);
+            //console.log(result.data.information);
+            setData(result.data.information);
             
         }
 
@@ -40,11 +40,12 @@ export default function userScreen({navigation, route}){
         // </View>
 
         <SafeAreaView style={styles.container}>
-            <View style={styles.userInfoSection}>
+           <ScrollView>
+           <View style={styles.userInfoSection}>
                 <View style={{flexDirection: 'row', marginTop: 15}}>
                     <Avatar.Image
                     source={{
-                        uri: 'https://www.pngarts.com/files/5/User-Avatar-PNG-Free-Download.png'
+                        uri: data.userAvatar,
                     }}
                     size={80}/>
                     <View style={{marginLeft:20}}>
@@ -72,6 +73,10 @@ export default function userScreen({navigation, route}){
                 <View style={styles.row}>
                     <Icon name="calendar-account" size={20}/>
                     <Text style={styles.text}>{data.birthday}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Icon name="map-marker" size={20}/>
+                    <Text style={styles.text}>{data.address}</Text>
                 </View>
             </View>
             <View style={styles.infoBoxWrapper}>
@@ -112,13 +117,21 @@ export default function userScreen({navigation, route}){
                         <Text style={styles.menuItemText}>Settings</Text>
                     </View>
                 </TouchableRipple>
+                <TouchableRipple onPress={()=>{}}>
+                    <View style={styles.menuItem}>
+                        <Icon name="logout" color="#FE6347" size={25}/>
+                        <Text style={styles.menuItemText}>Sign Out</Text>
+                    </View>
+                </TouchableRipple>
             </View>
+           </ScrollView>
         </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop:30,
     },
     text: {
         marginLeft: 10,
@@ -137,7 +150,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     row: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         marginBottom: 10,
     },
     infoBoxWrapper: {
