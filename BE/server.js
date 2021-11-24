@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //sequelize
+db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
 db.sequelize.sync({
   logging: (sql, queryObject) =>{
     logger.info(sql, queryObject);
@@ -29,7 +30,7 @@ db.sequelize.sync({
   logger.info("Dropped and Resync database");
     // initial();
 });
-db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
+
 
 //routes
 //authentication and author routes
