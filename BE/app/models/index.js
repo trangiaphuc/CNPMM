@@ -77,7 +77,6 @@ db.foodCategory.hasMany(db.food);
 db.food.hasMany(db.foodMaterial);
 db.food.hasMany(db.foodCookStep);
 db.productCategory.hasMany(db.product);
-db.quantity.hasOne(db.product);
 db.product.hasOne(db.foodMaterial);
 //ver 2
 db.user.hasOne(db.cart);
@@ -89,6 +88,9 @@ db.order.belongsTo(db.shipper);
 db.order.belongsTo(db.paymentMethod);
 db.order.hasMany(db.orderDetail);
 db.product.hasMany(db.orderDetail);
+db.product.belongsTo(db.quantity);
+db.foodMaterial.belongsTo(db.quantity);
+
 //images belong to
 // db.user.belongsTo(db.image);
 // db.product.belongsTo(db.image);

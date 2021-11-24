@@ -6,6 +6,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         quantityDescription:{
             type: Sequelize.STRING
+        },
+        quantityValue:{
+            type: Sequelize.FLOAT
         }
     });
 

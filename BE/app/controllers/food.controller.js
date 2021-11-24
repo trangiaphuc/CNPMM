@@ -34,7 +34,7 @@ exports.getAll = (req, res) => {
   };
 
   //get a food detail from databse with a id from req.query
-exports.getOneWithDetail = (req, res) => {
+exports.getFoodDetailById = (req, res) => {
   const id = req.params.id;
   Food.findOne({
     logging: (sql, queryObject) =>{

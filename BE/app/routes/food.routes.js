@@ -17,7 +17,7 @@ module.exports = function(app){
     //get food detail
     app.get('/api/foods/detail/:id', 
     [authJwt.verifyToken], 
-    controller.getOneWithDetail);
+    controller.getFoodDetailById);
     app.get('/api/foods/cooksteps/:foodId', 
     [authJwt.verifyToken], 
     controller.getFoodCookStepById);
