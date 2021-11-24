@@ -11,7 +11,7 @@ module.exports = {
           foodName: "Món khoai môn xào chay ngon bất ngờ!",
           foodDescription: "Nếu bạn thường xuyên ăn các món chay hay chế biến các món chay vào ngày rằm, mồng một thì sao bạn không thử ngay món khoai môn xào chay này nhỉ?",
           foodCalories: "NaN",
-          foodImage: "D:\\git\\CNPMM\\BE/resources/static/assets/tmp/male.png",
+          foodImage: "/resources/static/assets/tmp/male.png",
           createdAt: new Date(),
           updatedAt: new Date(),
         },

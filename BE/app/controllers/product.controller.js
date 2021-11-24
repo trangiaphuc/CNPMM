@@ -16,7 +16,7 @@ exports.getAll = (req, res) => {
 
       products.forEach(product =>{
         const image = fs.readFileSync(
-          product.productImage
+          __basedir + product.productImage
         );
         var base64Image = Buffer.from(image).toString("base64");
         product.productImage = "data:image/png;base64,"+base64Image;
@@ -46,7 +46,7 @@ exports.getAllProWithCatId = (req, res) => {
         logger.info(`Request status: ${res.status(200)} data ${products}`);
         products.forEach(product =>{
           const image = fs.readFileSync(
-            product.productImage
+            __basedir + product.productImage
           );
           var base64Image = Buffer.from(image).toString("base64");
           product.productImage = "data:image/png;base64,"+base64Image;
@@ -75,7 +75,7 @@ exports.getAllProWithCatId = (req, res) => {
         logger.info(`Request status: ${res.status(200)} data ${product}`);
         
         const image = fs.readFileSync(
-          product.productImage
+          __basedir + product.productImage
         );
         var base64Image = Buffer.from(image).toString("base64");
         product.productImage = "data:image/png;base64,"+base64Image;
@@ -114,10 +114,10 @@ exports.getAllProWithCatId = (req, res) => {
     .then(product =>{
       if(product)
       {  const productImage = fs.readFileSync(
-          __basedir + "/resources/static/assets/uploads/" + req.file.filename
+          "/resources/static/assets/uploads/" + req.file.filename
         );
         fs.writeFileSync(
-          __basedir + "/resources/static/assets/tmp/" + req.file.filename,
+          "/resources/static/assets/tmp/" + req.file.filename,
           // image.data
           productImage
         );

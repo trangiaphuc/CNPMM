@@ -20,7 +20,7 @@ module.exports = {
           manual:"Nấu chín trước khi sử dụng",
           preserve: "Thời hạn sử dụng 3 ngày kể từ ngày sản xuất, bảo quản ở nhiệt độ 0 - 4 độ C",
           productCategoryId: 1,
-          productImage: "D:\\git\\CNPMM\\BE/resources/static/assets/tmp/male.png"
+          productImage: "/resources/static/assets/tmp/male.png"
         },
         {
           proName: "Cốt lết heo có xương",
@@ -35,7 +35,7 @@ module.exports = {
           manual:"Nấu chín trước khi sử dụng",
           preserve: "Thời hạn sử dụng 3 ngày kể từ ngày sản xuất, bảo quản ở nhiệt độ 0 - 4 độ C",
           productCategoryId: 1,
-          productImage: "D:\\git\\CNPMM\\BE/resources/static/assets/tmp/male.png"
+          productImage: "/resources/static/assets/tmp/male.png"
         },
         {
           proName: "Thịt vai heo",
@@ -51,7 +51,7 @@ module.exports = {
           manual:"Nấu chín trước khi sử dụng",
           preserve: "Thời hạn sử dụng 3 ngày kể từ ngày sản xuất, bảo quản ở nhiệt độ 0 - 4 độ C",
           productCategoryId: 1,
-          productImage: "D:\\git\\CNPMM\\BE/resources/static/assets/tmp/male.png"
+          productImage: "/resources/static/assets/tmp/male.png"
         },
         {
           proName: "Thịt đùi heo",
@@ -66,7 +66,7 @@ module.exports = {
           manual:"Nấu chín trước khi sử dụng",
           preserve: "Thời hạn sử dụng 3 ngày kể từ ngày sản xuất, bảo quản ở nhiệt độ 0 - 4 độ C",
           productCategoryId: 1,
-          productImage: "D:\\git\\CNPMM\\BE/resources/static/assets/tmp/male.png"
+          productImage: "/resources/static/assets/tmp/male.png"
         },
         {
           proName: "Sườn non heo",
@@ -81,7 +81,7 @@ module.exports = {
           manual:"Nấu chín trước khi sử dụng",
           preserve: "Thời hạn sử dụng 3 ngày kể từ ngày sản xuất, bảo quản ở nhiệt độ 0 - 4 độ C",
           productCategoryId: 1,
-          productImage: "D:\\git\\CNPMM\\BE/resources/static/assets/tmp/male.png"
+          productImage: "/resources/static/assets/tmp/male.png"
         },
         {
           proName: "Bông cải trắng tươi",
@@ -96,7 +96,7 @@ module.exports = {
           manual:"",
           preserve: "",
           productCategoryId: 2,
-          productImage: "D:\\git\\CNPMM\\BE/resources/static/assets/tmp/male.png"
+          productImage: "/resources/static/assets/tmp/male.png"
         },
       ]);
 

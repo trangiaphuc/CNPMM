@@ -17,7 +17,7 @@ exports.getAll = (req, res) => {
         logger.info(`Request status: ${res.status(200)}  data ${foods}`);
         foods.forEach(food =>{
           const image = fs.readFileSync(
-            food.foodImage
+            __basedir + food.foodImage
           );
           var base64Image = Buffer.from(image).toString("base64");
           food.foodImage = "data:image/png;base64,"+base64Image;
@@ -51,7 +51,7 @@ exports.getFoodDetailById = (req, res) => {
     .then(food => {
       logger.info(`Request status: ${res.status(200)} data ${food}`);
       const image = fs.readFileSync(
-        food.foodImage
+        __basedir + food.foodImage
       );
       var base64Image = Buffer.from(image).toString("base64");
       food.foodImage = "data:image/png;base64,"+base64Image;
@@ -79,7 +79,7 @@ exports.getFoodCookStepById = (req, res) => {
     if(foodCookSteps)  
       {foodCookSteps.forEach(foodCookStep =>{
         const image = fs.readFileSync(
-          foodCookStep.foodCookStepImage
+          __basedir + foodCookStep.foodCookStepImage
         );
         var base64Image = Buffer.from(image).toString("base64");
         foodCookStep.foodCookStepImage = "data:image/png;base64,"+base64Image;
@@ -110,7 +110,7 @@ exports.getAllWithCatId = (req, res) => {
       
       foods.forEach(food =>{
         const image = fs.readFileSync(
-          food.foodImage
+          __basedir + food.foodImage
         );
         var base64Image = Buffer.from(image).toString("base64");
         food.foodImage = "data:image/png;base64,"+base64Image;
@@ -143,10 +143,10 @@ exports.addNewFood = (req, res) => {
     if(food){
 
       const foodImage = fs.readFileSync(
-        __basedir + "/resources/static/assets/uploads/" + req.file.filename
+        "/resources/static/assets/uploads/" + req.file.filename
       );
       fs.writeFileSync(
-        __basedir + "/resources/static/assets/tmp/" + req.file.filename,
+        "/resources/static/assets/tmp/" + req.file.filename,
         // image.data
         foodImage
       );

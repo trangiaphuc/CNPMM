@@ -23,7 +23,7 @@ var fs = require("fs");
         //gan vao bien moi
         //gui lai qua res
         const userAvatar = fs.readFileSync(
-          user.userAvatar
+          __basedir + user.userAvatar
         );
         var base64Avatar = Buffer.from(userAvatar).toString("base64");
 

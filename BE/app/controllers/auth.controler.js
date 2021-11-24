@@ -18,7 +18,7 @@ exports.signup = (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
-    userAvatar: __basedir + "/resources/static/assets/tmp/male.png"
+    userAvatar: "/resources/static/assets/tmp/male.png"
   })
     .then(user => {
       if (req.body.roles) {
