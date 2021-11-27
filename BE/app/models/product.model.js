@@ -33,6 +33,10 @@ module.exports = (sequelize, Sequelize) => {
         productImage: {
             type : Sequelize.STRING
         }
+    }, {
+        indexes: [
+            {type: 'FULLTEXT', name: 'product_index', fields: ['proName']}
+        ]
     });
     return Product;
 }

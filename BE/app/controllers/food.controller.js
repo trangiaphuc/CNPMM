@@ -2,7 +2,7 @@ const db = require('../models');
 const Food = db.food;
 const FoodMaterial = db.foodMaterial;
 const FoodCookStep = db.foodCookStep;
-const Image = db.image;
+const Sequelize = require("sequelize");
 const logger = require('../winston/winston');
 const fs = require('fs');
 
@@ -45,6 +45,10 @@ exports.getFoodDetailById = (req, res) => {
       {
         model: FoodMaterial,
         attributes:['id', 'foodMaterialName', 'quantityDescription', 'productId'],
+      },
+      { 
+        model: FoodCookStep,
+        attributes:['id', 'stepNumber', 'stepDescription']
       }
     ]
   })
@@ -128,33 +132,66 @@ exports.getAllWithCatId = (req, res) => {
 };
 
 exports.addNewFood = (req, res) => {
-  Food.create({
-    logging: (sql, queryObject) =>{
-      logger.info(sql, queryObject);
-    },
-    foodName: req.body.foodName,
-    foodDescription: req.body.foodDescription,
-    foodCalories: req.body.foodCalories,
-    foodImage: __basedir + "/resources/static/assets/uploads/" + req.file.filename,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+
+try{    
+    if (req.file == undefined) {
+      return res.send(`You must select a file.`);
+    }
+    const foodImage = fs.readFileSync(
+      __basedir + "/resources/static/assets/images/food/" + req.file.filename
+    );
+    Food.create({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      foodName: req.body.foodName,
+      foodDescription: req.body.foodDescription,
+      foodCalories: req.body.foodCalories,
+      foodImage: "/resources/static/assets/images/food/" + req.file.filename,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .then(food =>{
+      if(food){
+        fs.writeFileSync(
+          __basedir + "/resources/static/assets/tmp/images/food/" + req.file.filename,
+          // image.data
+          foodImage
+        );
+        res.status(201).send({message: "Success!"})
+      }
+      else{
+        res.status(500).send({message:"Fail!"});
+      }
+    })
+  }
+  catch(err) {
+    res.status(500).send({message: err.message});
+  }
+}
+
+exports.search = (req, res) =>{
+  Food.findAll({
+    where: Sequelize.literal('MATCH (foodName) AGAINST (:keyword)'),
+    replacements: {
+      keyword: req.query.keyword
+    }
   })
-  .then(food =>{
-    if(food){
-
-      const foodImage = fs.readFileSync(
-        "/resources/static/assets/uploads/" + req.file.filename
-      );
-      fs.writeFileSync(
-        "/resources/static/assets/tmp/" + req.file.filename,
-        // image.data
-        foodImage
-      );
-      res.status(201).send({message: "Success!"})
-
+  .then(foods => {
+    if(foods){
+      
+      foods.forEach(food =>{
+        const image = fs.readFileSync(
+          __basedir + food.foodImage
+        );
+        var base64Image = Buffer.from(image).toString("base64");
+        food.foodImage = "data:image/png;base64,"+base64Image;
+      })
+      
+      res.status(200).send({foods: foods})
     }
     else{
-      res.status(500).send({message:"Fail!"});
+      res.status(404).send({message: 'Food Not Found!'});
     }
   })
   .catch(err => {

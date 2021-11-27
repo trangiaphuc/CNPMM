@@ -1,5 +1,7 @@
 const controller = require('../controllers/food.controller');
+const upload = require('../middleware/upload');
 const { authJwt } = require('../middleware');
+const express = require('express');
 
 module.exports = function(app){
     app.use(function(req, res, next) {
@@ -9,6 +11,8 @@ module.exports = function(app){
         );
         next();
     });
+    
+    app.use(express.static("../../resources/static/assets/"));
 
     //get all food
     app.get('/api/foods/', 
@@ -18,6 +22,7 @@ module.exports = function(app){
     app.get('/api/foods/detail/:id', 
     [authJwt.verifyToken], 
     controller.getFoodDetailById);
+    //
     app.get('/api/foods/cooksteps/:foodId', 
     [authJwt.verifyToken], 
     controller.getFoodCookStepById);
@@ -25,5 +30,14 @@ module.exports = function(app){
     app.get('/api/foods/category/:id', 
     [authJwt.verifyToken], 
     controller.getAllWithCatId);
+    //search food
+    app.get('/api/foods/search', 
+    [authJwt.verifyToken], 
+    controller.search);
+    //add new
+    app.post('/api/foods/addnewfood',
+    [authJwt.verifyToken],
+    upload.single("file"), 
+    controller.addNewFood)
     
 }

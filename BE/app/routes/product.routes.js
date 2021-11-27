@@ -1,5 +1,7 @@
 const controller = require('../controllers/product.controller');
+const upload = require('../middleware/upload');
 const { authJwt } = require('../middleware');
+const express = require('express');
 
 module.exports = function(app){
     app.use(function(req, res, next) {
@@ -10,6 +12,8 @@ module.exports = function(app){
         next();
     });
     
+    app.use(express.static("../../resources/static/assets/"));
+
     //gete alal products
     app.get('/api/products/',
     [authJwt.verifyToken],  
@@ -22,5 +26,14 @@ module.exports = function(app){
     app.get('/api/products/category/:id', 
     [authJwt.verifyToken], 
     controller.getAllProWithCatId);
+     //product search     app.get('/api/products/category/:id', 
+     app.get('/api/products/search/', 
+     [authJwt.verifyToken], 
+     controller.search);
+
+     app.post('/api/products/addnewproduct', 
+     [authJwt.verifyToken],
+     upload.single("file"),
+     controller.addNewProduct)
     
 }

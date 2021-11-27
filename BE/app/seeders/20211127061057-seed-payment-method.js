@@ -2,6 +2,20 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    return queryInterface.bulkInsert(
+      'paymentMethods',
+      [
+        {
+          "paymentType": "Thanh toán khi nhận hàng",
+          "createdAt": new Date(),
+          "updatedAt": new Date()
+        },
+        {
+          "paymentType": "Chuyển khoản Online",
+          "createdAt": new Date(),
+          "updatedAt": new Date()
+        }
+      ]);
     /**
      * Add seed commands here.
      *

@@ -6,9 +6,12 @@ module.exports = (sequelize, Sequelize) => {
         deliveryAt:{
             type: Sequelize.DATEONLY,
         },
-        isActive:{
+        orderStatus:{
             type: Sequelize.BOOLEAN,
-        }
+        },
+        // shipperId: {
+        //     type: Sequelize.INTEGER,
+        // }
     }
     );
     return Order;

@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
         foodImage:{
             type: Sequelize.STRING,
         }
+    }, {
+        indexes: [
+            {type: 'FULLTEXT', name: 'food_index', fields: ['foodName']}
+        ]
     });
 
     return Food;

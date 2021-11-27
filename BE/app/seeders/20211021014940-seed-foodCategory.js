@@ -9,102 +9,38 @@ module.exports = {
         {
           catName: "Món chay",
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          catIcon: "/resources/static/assets/icon/foodCategoryIcon/vegetarian.png",
         },
         {
-          catName: "Món bún, phở",
+          catName: "Món canh",
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          catIcon: "/resources/static/assets/icon/foodCategoryIcon/soup.png",
         },
         {
-          catName: "Món canh, nấu",
+          catName: "Món chiên, xào",
           createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món giò, chả",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món gỏi, nộm",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món hầm, súp",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món hấp",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món kho",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món lẩu",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món luộc",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món muối chua",
-          createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          catIcon: "/resources/static/assets/icon/foodCategoryIcon/fried.png",
         },
         {
           catName: "Món nướng",
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          catIcon: "/resources/static/assets/icon/foodCategoryIcon/grill.png",
         },
         {
-          catName: "Món rán, chiên",
+          catName: "Bánh kẹo",
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          catIcon: "/resources/static/assets/icon/foodCategoryIcon/cake.png",
         },
-        {
-          catName: "Món rang",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món xào",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          catName: "Món xôi, cháo",
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
       ], {})
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     
-     */
      await queryInterface.bulkDelete('foodcategories', null, {});
   }
 };

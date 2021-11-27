@@ -3,7 +3,9 @@ module.exports = (sequelize, Sequelize) => {
       catName: {
         type: Sequelize.STRING
       },
-      
+      catIcon: {
+        type: Sequelize.STRING
+      }
     });
   
     return FoodCategory;

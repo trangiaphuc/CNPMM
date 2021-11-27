@@ -44,6 +44,9 @@ db.shipper = require("../models/shipper.model.js")(sequelize, Sequelize);
 db.image = require("../models/images.model.js")(sequelize, Sequelize);
 //many to many table
 db.favoritesFoodCategory = sequelize.define('favoriteFoodCategories');
+db.district = require("../models/address.district.model")(sequelize, Sequelize);
+db.province = require("../models/address.province.model")(sequelize, Sequelize);
+db.village = require("../models/address.village.model")(sequelize, Sequelize);
 
 //
 db.role.belongsToMany(db.user, {
@@ -57,17 +60,6 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 });
 
-// db.user.belongsToMany(db.foodCategory, {
-//   through: "favoriteFoodCategories",
-//   foreignKey:"userId", 
-//   otherKey:"foodCategoryId"
-// });
-
-// db.foodCategory.belongsToMany(db.user,{
-//   through: "favoriteFoodCategories",
-//   foreignKey:"foodCategoryId",
-//   otherKey: "userId"
-// });
 
 db.user.belongsToMany(db.foodCategory, {through: db.favoritesFoodCategory});
 db.foodCategory.belongsToMany(db.user, {through: db.favoritesFoodCategory})
@@ -84,13 +76,15 @@ db.cart.hasMany(db.cartDetail);
 db.cartDetail.belongsTo(db.product);
 db.order.belongsTo(db.user);
 db.order.belongsTo(db.deliveryStatusType);
-db.order.belongsTo(db.shipper);
+// db.order.belongsTo(db.shipper);
+db.order.belongsTo(db.user, {foreignKey: 'shipperId', targetKey: 'id'});
 db.order.belongsTo(db.paymentMethod);
 db.order.hasMany(db.orderDetail);
 db.product.hasMany(db.orderDetail);
 db.product.belongsTo(db.quantity);
 db.foodMaterial.belongsTo(db.quantity);
-
+db.village.belongsTo(db.district);
+db.district.belongsTo(db.province);
 //images belong to
 // db.user.belongsTo(db.image);
 // db.product.belongsTo(db.image);

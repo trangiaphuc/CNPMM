@@ -51,6 +51,7 @@ var fs = require("fs");
     // - lastname
     // - phone
     // - birthday
+    //gender
     //address
     const id = req.params.id;
     User.findByPk(id, {
@@ -66,6 +67,7 @@ var fs = require("fs");
           },
           firstname: req.body.firstname,
           lastname: req.body.lastname,
+          gender: req.body.gender,
           phone: req.body.phone,
           email: req.body.email,
           birthday: new Date(req.body.birthday),

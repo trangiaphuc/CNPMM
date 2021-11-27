@@ -1,6 +1,7 @@
 const db = require('../models');
 const Product = db.product;
 const logger = require('../winston/winston');
+const Sequelize = require("sequelize");
 const fs = require('fs');
 
 //get all products
@@ -91,7 +92,7 @@ exports.getAllProWithCatId = (req, res) => {
       });
   };
 
-  exports.addNewFood = (req, res) => {
+  exports.addNewProduct = (req, res) => {
 
     Product.create({
       logging: (sql, queryObject) =>{
@@ -107,17 +108,17 @@ exports.getAllProWithCatId = (req, res) => {
       expireAt: req.body.expireAt,
       manual: req.body.manual,
       preserve: req.body.preserve,
-      productImage: __basedir + "/resources/static/assets/uploads/" + req.file.filename,
+      productImage: __basedir + "/resources/static/assets/images/product/" + req.file.filename,
       createdAt: new Date(),
       updatedAt: new Date(),
     })
     .then(product =>{
       if(product)
       {  const productImage = fs.readFileSync(
-          "/resources/static/assets/uploads/" + req.file.filename
+          "/resources/static/assets/images/product/" + req.file.filename
         );
         fs.writeFileSync(
-          "/resources/static/assets/tmp/" + req.file.filename,
+          "/resources/static/assets/tmp/images/product/" + req.file.filename,
           // image.data
           productImage
         );
@@ -125,6 +126,33 @@ exports.getAllProWithCatId = (req, res) => {
       }
       else{
         res.status(500).send({message:"Fail!"});
+      }
+    })
+    .catch(err => {
+      res.status(500).send({message: err.message});
+    })
+  }
+
+  exports.search = (req, res) =>{
+    Product.findAll({
+      where: Sequelize.literal('MATCH (proName) AGAINST (:keyword)'),
+      replacements: {
+        keyword: req.query.keyword
+      }
+    })
+    .then(products => {
+      if(products){
+        products.forEach(product =>{
+          const image = fs.readFileSync(
+            __basedir + product.productImage
+          );
+          var base64Image = Buffer.from(image).toString("base64");
+          product.productImage = "data:image/png;base64,"+base64Image;
+        });
+        res.status(200).send({products: products})
+      }
+      else{
+        res.status(404).send({message: 'Product Not Found!'});
       }
     })
     .catch(err => {

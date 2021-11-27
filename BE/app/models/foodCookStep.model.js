@@ -6,9 +6,6 @@ module.exports = (sequelize, Sequelize) => {
         stepDescription: {
             type: Sequelize.STRING
         },
-        foodCookStepImage: {
-            type: Sequelize.STRING
-        }
     });
     return FoodCookStep;
 }

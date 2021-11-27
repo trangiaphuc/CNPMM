@@ -22,24 +22,24 @@ module.exports = function(app) {
   //insert user favorite food categories
   app.post("/api/user/updateFavorite/", [authJwt.verifyToken], controller.updateFavorites);
 
-//test ROLE
-  // app.get("/api/test/all", controller.allAccess);
+// // test ROLE
+//   app.get("/api/test/all", controller.allAccess);
 
-  // app.get(
-  //   "/api/test/user",
-  //   [authJwt.verifyToken],
-  //   controller.userBoard
-  // );
+//   app.get(
+//     "/api/test/user",
+//     [authJwt.verifyToken],
+//     controller.userBoard
+//   );
 
-  // app.get(
-  //   "/api/test/mod",
-  //   [authJwt.verifyToken, authJwt.isModerator],
-  //   controller.moderatorBoard
-  // );
+//   app.get(
+//     "/api/test/mod",
+//     [authJwt.verifyToken, authJwt.isModerator],
+//     controller.moderatorBoard
+//   );
 
-  // app.get(
-  //   "/api/test/admin",
-  //   [authJwt.verifyToken, authJwt.isAdmin],
-  //   controller.adminBoard
-  // );
+//   app.get(
+//     "/api/test/admin",
+//     [authJwt.verifyToken, authJwt.isAdmin],
+//     controller.adminBoard
+//   );
 };
