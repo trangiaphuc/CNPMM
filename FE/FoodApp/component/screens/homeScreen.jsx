@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
-import {View, Text, FlatList, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Button} from "react-native";
+import {View, Text, FlatList, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Button, TextInput, Item} from "react-native";
 import axios from "axios";
 import {Card} from "react-native-elements";
 import {LinearGradient} from 'expo-linear-gradient';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function homeScreen({navigation, route}){
     const{response}=route.params;
@@ -14,7 +16,7 @@ export default function homeScreen({navigation, route}){
 
 
     const fetchdata = async() => {
-        const result = await axios.get("http://192.168.1.34:8080/api/productcategory/",
+        const result = await axios.get("http://192.168.1.6:8080/api/productcategory/",
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -34,7 +36,7 @@ export default function homeScreen({navigation, route}){
 
     const renderItem=({item})=> {
         const itemCategory=()=> {
-            axios.get(`http://192.168.1.34:8080/api/products/category/${item.id}`,
+            axios.get(`http://192.168.1.6:8080/api/products/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -73,10 +75,27 @@ export default function homeScreen({navigation, route}){
     return(
         
         <SafeAreaView style={styles.productContainer}>
-
-
-
-            
+            <View style={styles.container_search}>
+                <View style={styles.search}>
+                        <TextInput 
+                            placeholder ="Search here"
+                            autoCapitalize='none'
+                            style={styles.textInput}
+                            placeholderStyle={{color:'#FF0000'}}
+                            
+                        />
+                        <TouchableOpacity onPress={()=>{}}>
+                            <View style={styles.iconSearch}>
+                                <FontAwesome
+                                    name="search"
+                                    color="#05375a"
+                                    size={20}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                    
+                </View>
+            </View>
             <View style={styles.productMargin}>
                 <ScrollView>
                     <FlatList
@@ -91,59 +110,43 @@ export default function homeScreen({navigation, route}){
 
             
                 
-                <FlatList
+              
+               <FlatList
                     data={productCategory}
                     renderItem={({item})=>
                         
-                            <View>
-                                <Card>
-                                <Card.Title>{item.proName}</Card.Title>
-                                <Card.Divider/>
-                                <Card.Image source = {{uri:item.productImage}} />
+                        
+                                <TouchableOpacity onPress={()=>{navigation.navigate('productDetailScreen',{productId: item.id, response: response})}}>
+                                    
+                                    <Card>
+                                        <Card.Title>{item.proName}</Card.Title>
+                                        <Card.Divider/>
+                                        <Card.Image source = {{uri:item.productImage}} />
 
-                                <View style={{flex: 1, flexDirection: 'row', padding:10}}>
-                                    <Text style={{flex: 1}}>Số lượng</Text>
-                                    <Text style={{flex: 1}}>{item.quantityValue}</Text>
-                                </View>
-                                <View style={{flex: 1, flexDirection: 'row', padding:10}}>
-                                    <Text style={{flex: 1}}>Giá</Text>
-                                    <Text style={{flex: 1}}>{item.price}đ</Text>
-                                </View>
-                                <View style={{flex: 1, flexDirection: 'row', padding:10}}>
-                                    <Text style={{flex: 1}}>Chi nhánh</Text>
-                                    <Text style={{flex: 1}}>{item.brand}</Text>
-                                </View>
-                                <View style={{flex: 1, flexDirection: 'row', padding:10}}>
-                                    <Text style={{flex: 1}}>Xuất xứ:</Text>
-                                    <Text style={{flex: 1}}>{item.origin}</Text>
-                                </View>
-                                <View style={{flex: 1, flexDirection: 'row', padding:10}}>
-                                    <Text style={{flex: 1}}>Cách sử dụng:</Text>
-                                    <Text style={{flex: 1}}>{item.manual}</Text>
-                                </View>
-                                <View style={{flex: 1, flexDirection: 'row', padding:10}}>
-                                    <Text style={{flex: 1}}>Hạn sử dụng</Text>
-                                    <Text style={{flex: 1}}>{item.preserve}</Text>
-                                </View>
-                                <View style={{flex: 1, flexDirection: 'row', padding:10}}>
-                                    <Text style={{flex: 1}}>Chi tiết</Text>
-                                    <Text style={{flex: 1}}>{item.proDescription}</Text>
-                                </View>
-                                <Card.Divider/>
-                                <View style={styles.button}>
-                                    <TouchableOpacity onPress={()=>{}}>
-                                            <LinearGradient
-                                                colors={['#FF4B3A','#FF4B3A']}
-                                                style={styles.signIn}>
-                                                <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
-                                            </LinearGradient>
-                                    </TouchableOpacity>
-                                </View>
-                            </Card>
-                            </View>
+                                        
+                                        <View style={{flex: 1, flexDirection: 'row', padding:10}}>
+                                            <Text style={{flex: 1}}>Giá:</Text>
+                                            <Text style={{flex: 1}}>{item.price}đ/kg</Text>
+                                        </View>
+                                        
+                                        <Card.Divider/>
+                                        <View style={styles.button}>
+                                            <TouchableOpacity onPress={()=>{}}>
+                                                    <LinearGradient
+                                                        colors={['#FF4B3A','#FF4B3A']}
+                                                        style={styles.signIn}>
+                                                        <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
+                                                    </LinearGradient>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </Card>
+                                    
+                                </TouchableOpacity>
+                        
                     
                     }
                     keyExtractor = {(item) => item.id}/>
+               
             
                 
         </SafeAreaView>
@@ -158,6 +161,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#eee',
     },
+    
     container: {
         flex: 1,
     },
@@ -166,7 +170,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     container_product:{
-        marginTop: 30,
+        marginTop: 5,
         borderWidth: 1,
         borderColor: '#FF4B3A',
         borderRadius: 50,
@@ -193,10 +197,28 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     productContainer:{
-        marginBottom: 65,
+        marginBottom: 120,
     },
     productMargin:{
         marginLeft: 15,
+        marginRight: 15
+    },
+    search:{
+        marginTop:30,
+        borderWidth: 0.5,
+        borderRadius: 15,
+        marginLeft: 15,
+        marginRight: 15,
+        flexDirection: 'row',
+        height: 35
+    },
+    textInput: {
+        flex: 1,
+        paddingLeft: 15,
+        color: '#05375a',
+    },
+    iconSearch:{
+        marginTop: 5,
         marginRight: 15
     }
 });

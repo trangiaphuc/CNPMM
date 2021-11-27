@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import homeScreen from "../screens/homeScreen";
 import userScreen from "../screens/userScreen";
-import favouriteScreen from "../screens/favouriteScreen";
+import foodScreen from "./foodScreen";
 import historyScreen from "../screens/historyScreen";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -27,8 +27,8 @@ const darBoardScreen=({route, navigation})=>{
                     iconName = focused
                       ? 'home-sharp'
                       : 'home-outline';
-                  } else if (route.name === 'Favourite') {
-                    iconName = focused ? 'heart-sharp' : 'heart-outline';
+                  } else if (route.name === 'Food') {
+                    iconName = focused ? 'fast-food-sharp' : 'fast-food-outline';
                   } else if (route.name === 'Cart'){
                       iconName = focused ? 'cart-sharp': 'cart-outline';
                   }
@@ -44,7 +44,7 @@ const darBoardScreen=({route, navigation})=>{
               })}
             >
                 <Tab.Screen name="Home" component={homeScreen} initialParams={{response}} options={{headerShown: false}} />
-                <Tab.Screen name="Favourite" component={favouriteScreen} options={{headerShown:false}} />
+                <Tab.Screen name="Food" component={foodScreen} initialParams={{response}} options={{headerShown:false}} />
                 <Tab.Screen name="Cart" component={historyScreen} options={{headerShown:false}} />
                 <Tab.Screen name="Profile" component={userScreen} initialParams={{response}} options={{headerShown: false}} />
             </Tab.Navigator>
