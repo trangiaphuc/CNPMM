@@ -14,7 +14,7 @@ export default function userScreen({navigation, route}){
 
     
         const fetchdata = async() => {
-            const result = await axios.get(`http://192.168.1.6:8080/api/user/information/${response.id}`,
+            const result = await axios.get(`http://192.168.1.13:8080/api/user/information/${response.id}`,
             {
                 headers:{
                     'Content-Type': 'application/json',
