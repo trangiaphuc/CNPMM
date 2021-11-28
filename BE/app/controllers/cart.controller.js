@@ -55,7 +55,11 @@ exports.getCartByUserId = (req, res) => {
                                   {
                                     model: Product,
                                   }
-                              ]
+                            ],
+                            where: {
+                                isBuy: false,
+                                isDelete: false,
+                            }
                           }
                       ]
                 })
@@ -124,6 +128,8 @@ exports.addCartItem = (req, res) => {
                         cartId: cart.id,
                         quantity: cartItem.quantity,
                         productId: cartItem.productId,
+                        isBuy: false,
+                        isDelete: false,
                         createAt: new Date(),
                         updatedAt: new Date(),
                     })
@@ -158,6 +164,8 @@ exports.addCartItem = (req, res) => {
                     cartId: cart.id,
                     quantity: cartItem.quantity,
                     productId: cartItem.productId,
+                    isBuy: 0,
+                    isDelete: 0,
                     createAt: new Date(),
                     updatedAt: new Date(),
                 })
@@ -221,11 +229,11 @@ exports.editCartItem = (req, res) => {
                         //neu update thanh 0 item
                         //delete cart item
                         if(updatedItem.quantity == 0){
-                            CartDetail.destroy({
+                            updatedItem.update({
                                 logging: (sql, queryObject) =>{
                                     logger.info(sql, queryObject);
                                 },
-                                where : {id: updatedItem.id}
+                                isDelete: true,
                             })
                             .then(() =>{
                                 res.status(200).send({message: "Sucess!"});
@@ -296,11 +304,11 @@ exports.deleteCartItem= (req, res) => {
             //update gio hang
                 if(cartItem)    
                 {
-                    CartDetail.destroy({
+                    cartItem.update({
                         logging: (sql, queryObject) =>{
                             logger.info(sql, queryObject);
                         },
-                        where: {id: cartItem.id},
+                        isDelete: true,
                     })
                     .then(() =>{
                         //neu update thanh 0 item
