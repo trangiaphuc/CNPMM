@@ -12,16 +12,16 @@ module.exports = function(app){
 
     //get all order history by userId
     app.get('/api/order/:userId', 
-    [authJwt.verifyToken], 
+    // [authJwt.verifyToken], 
     controller.getOrderHistoryByUserId);
     
     //get order detail by userid and orderid
     app.get('/api/order/:userId/:orderId', 
-    [authJwt.verifyToken], 
+    // [authJwt.verifyToken], 
     controller.getOrderDetailByUserId);
     
     //add new order
     app.post('/api/order/:userId', 
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     controller.addNewOrder);
 }

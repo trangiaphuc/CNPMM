@@ -80,7 +80,7 @@ db.order.belongsTo(db.deliveryStatusType);
 db.order.belongsTo(db.user, {foreignKey: 'shipperId', targetKey: 'id'});
 db.order.belongsTo(db.paymentMethod);
 db.order.hasMany(db.orderDetail);
-db.product.hasMany(db.orderDetail);
+db.orderDetail.belongsTo(db.product);
 db.product.belongsTo(db.quantity);
 db.foodMaterial.belongsTo(db.quantity);
 db.village.belongsTo(db.district);

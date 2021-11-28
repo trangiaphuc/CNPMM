@@ -11,6 +11,13 @@ var bcrypt = require('bcryptjs');
 //sign up function
 exports.signup = (req, res) => {
   // Save User to Database
+  var userAvatar= "";
+  if(req.body.gender == 1){
+    userAvatar = "/resources/static/assets/images/userAvatar/male.png";
+  }
+  else{
+    "/resources/static/assets/images/userAvatar/male.png";
+  }
   User.create({
     logging: (sql, queryObject) =>{
       logger.info(sql, queryObject);
@@ -19,7 +26,7 @@ exports.signup = (req, res) => {
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
     gender: req.body.gender,
-    userAvatar: "/resources/static/assets/tmp/male.png"
+    userAvatar: "/resources/static/assets/images/userAvatar/female.png",
   })
     .then(user => {
       if (req.body.roles) {

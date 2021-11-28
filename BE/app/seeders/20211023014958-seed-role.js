@@ -19,6 +19,11 @@ module.exports = {
         name: "admin",
         createdAt: new Date(),
         updatedAt: new Date(),
+      },
+      {
+        name: "shipper",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }
       ]);
     /**

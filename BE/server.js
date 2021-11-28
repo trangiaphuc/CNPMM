@@ -49,6 +49,12 @@ require('./app/routes/product.routes')(app);
 require('./app/routes/cart.routes')(app);
 //images routes
 require('./app/routes/image.routes')(app);
+//paymentMethod
+require('./app/routes/paymentMethod.routes')(app);
+//deliveryMethod
+require('./app/routes/deliveryMethod.routes')(app);
+//orders routes
+require('./app/routes/order.routes')(app);
 
 
 // simple route

@@ -1,3 +1,4 @@
+const { order } = require('../models');
 const db = require('../models');
 const Order = db.order;
 const OrderDetail = db.orderDetail;
@@ -36,19 +37,23 @@ exports.getOrderHistoryByUserId = (req, res) =>{
         }
       ]
     })
-    .then(orders =>{
+    .then(orders => {
+        orders.added = "added";
         if(orders){
             orders.forEach(order =>{
-                orderDetails = order.OrderDetail;
+                order.totalPrices = 'hello';
+                var orderDetails = order.orderDetails;
+                console.log(orderDetails)
                 var totalPrice = 0;
                 orderDetails.forEach(orderDetail => {
-                    var unitPrice = orderDetails.price * orderDetail.quantity;
+                    var unitPrice = orderDetail.price * orderDetail.quantity;
                     totalPrice = totalPrice + unitPrice;
                 });
-                totalPrice = totalPrice + order.Delivery.fee;
-                order.totalPrice = totalPrice;
+                totalPrice = totalPrice + order.deliveryMethod.fee;
+                console.log(totalPrice);
+                order.totalPrices = totalPrice;
             });
-            res.status(200).send({orders:orders});
+            res.status(200).send({orders: orders});
         }
         else{
             res.status(200).send('Empty!');
@@ -67,7 +72,7 @@ exports.getOrderDetailByUserId = (req, res) =>{
         logging: (sql, queryObject) =>{
             logger.info(sql, queryObject);
         },
-        where:{userId: userId, orderId: orderId},
+        where:{userId: userId, id: orderId},
         include: [
             {
                 model: Delivery,
@@ -90,16 +95,19 @@ exports.getOrderDetailByUserId = (req, res) =>{
         ]
     })
     .then(order => {
+        // var order = JSON.stringify(data);
+        // console.log(order);``
         if(order){
-            orderDetails = order.OrderDetail;
+            orderDetails = order.orderDetails;
             var totalPrice = 0;
             orderDetails.forEach(orderDetail => {
-                var unitPrice = orderDetails.price * orderDetail.quantity;
+                var unitPrice = orderDetail.price * orderDetail.quantity;
                 totalPrice = totalPrice + unitPrice;
             });
-            totalPrice = totalPrice + order.Delivery.fee;
-            order.totalPrice = totalPrice;
-            res.status(200).send({order: order});
+            totalPrice = totalPrice + order.deliveryMethod.fee;
+            // order.set({totalPrice: totalPrice});
+            // order.save();
+            res.status(200).send({order: order, totalPrice: totalPrice});
         }
         else{
             res.status(404).send({message: 'Not Found!'});
@@ -122,7 +130,7 @@ exports.addNewOrder = (req, res) => {
         userId: userId, 
         createdAt: new Date(),
         updatedAt: new Date(),
-        deliveryId: req.body.deliveryId,
+        deliveryMethodId: req.body.deliveryMethodId,
         shipperId: null,
         paymentMethodId: req.body.paymentMethodId
     })
