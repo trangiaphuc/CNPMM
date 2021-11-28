@@ -50,8 +50,7 @@ exports.getOrderHistoryByUserId = (req, res) =>{
                     totalPrice = totalPrice + unitPrice;
                 });
                 totalPrice = totalPrice + order.deliveryMethod.fee;
-                console.log(totalPrice);
-                order.totalPrices = totalPrice;
+                order.setDataValue('totalPrice', totalPrice);
             });
             res.status(200).send({orders: orders});
         }
@@ -95,8 +94,6 @@ exports.getOrderDetailByUserId = (req, res) =>{
         ]
     })
     .then(order => {
-        // var order = JSON.stringify(data);
-        // console.log(order);``
         if(order){
             orderDetails = order.orderDetails;
             var totalPrice = 0;
@@ -105,9 +102,8 @@ exports.getOrderDetailByUserId = (req, res) =>{
                 totalPrice = totalPrice + unitPrice;
             });
             totalPrice = totalPrice + order.deliveryMethod.fee;
-            // order.set({totalPrice: totalPrice});
-            // order.save();
-            res.status(200).send({order: order, totalPrice: totalPrice});
+            order.setDataValue('totalPrice', totalPrice);
+            res.status(200).send({order: order});
         }
         else{
             res.status(404).send({message: 'Not Found!'});

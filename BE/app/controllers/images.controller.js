@@ -48,6 +48,7 @@ exports.getImages = (req, res) => {
         );
         var imagebase64 = Buffer.from(inputImage).toString("base64");
     
+        image.hello = "hello";
         // res.contentType('image/png');
         res.status(200).send("data:image/png;base64,"+imagebase64);
       }
