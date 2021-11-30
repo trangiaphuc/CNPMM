@@ -36,7 +36,7 @@ export default function signIn({navigation}){
             if(data.password.length !== 0)
             {
                 
-                axios.post("http://192.168.1.6:8080/api/auth/signin", {username:data.username, password:data.password},
+                axios.post("http://192.168.1.13:8080/api/auth/signin", {username:data.username, password:data.password},
                 {
                     headers:{
                         'Content-Type': 'application/json'

@@ -19,7 +19,7 @@ export default function productDetailScreen({route, navigation}){
     const [productDetail, setProductDetail]=useState([]);
     
     const fetchdata = async() => {
-        const result = await axios.get(`http://192.168.1.6:8080/api/products/detail/${productId}`,
+        const result = await axios.get(`http://192.168.1.13:8080/api/products/detail/${productId}`,
         {
             headers:{
                 'Content-Type': 'application/json',

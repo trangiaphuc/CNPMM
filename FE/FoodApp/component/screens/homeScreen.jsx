@@ -16,7 +16,7 @@ export default function homeScreen({navigation, route}){
 
 
     const fetchdata = async() => {
-        const result = await axios.get("http://192.168.1.6:8080/api/productcategory/",
+        const result = await axios.get("http://192.168.1.13:8080/api/productcategory/",
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export default function homeScreen({navigation, route}){
 
     const renderItem=({item})=> {
         const itemCategory=()=> {
-            axios.get(`http://192.168.1.6:8080/api/products/category/${item.id}`,
+            axios.get(`http://192.168.1.13:8080/api/products/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export default function homeScreen({navigation, route}){
                 .then(response => {
                     //console.log(response.data.products);
                     setProductCategory(response.data.products)
-                    console.log(productCategory);
+                    
                 }).catch(error => {
                         alert('Error', error.response);
                     
@@ -75,7 +75,7 @@ export default function homeScreen({navigation, route}){
     return(
         
         <SafeAreaView style={styles.productContainer}>
-            <View style={styles.container_search}>
+            <View>
                 <View style={styles.search}>
                         <TextInput 
                             placeholder ="Search here"
@@ -110,13 +110,16 @@ export default function homeScreen({navigation, route}){
 
             
                 
+            
               
-               <FlatList
+                
+              <FlatList
                     data={productCategory}
                     renderItem={({item})=>
                         
                         
                                 <TouchableOpacity onPress={()=>{navigation.navigate('productDetailScreen',{productId: item.id, response: response})}}>
+                                    
                                     
                                     <Card>
                                         <Card.Title>{item.proName}</Card.Title>
@@ -128,7 +131,6 @@ export default function homeScreen({navigation, route}){
                                             <Text style={{flex: 1}}>Giá:</Text>
                                             <Text style={{flex: 1}}>{item.price}đ/kg</Text>
                                         </View>
-                                        
                                         <Card.Divider/>
                                         <View style={styles.button}>
                                             <TouchableOpacity onPress={()=>{}}>
@@ -141,12 +143,15 @@ export default function homeScreen({navigation, route}){
                                         </View>
                                     </Card>
                                     
+                                    
                                 </TouchableOpacity>
                         
                     
                     }
+
                     keyExtractor = {(item) => item.id}/>
-               
+              
+            
             
                 
         </SafeAreaView>
@@ -158,8 +163,6 @@ export default function homeScreen({navigation, route}){
 const styles = StyleSheet.create({
     item: {
         padding: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
     },
     
     container: {
@@ -194,10 +197,11 @@ const styles = StyleSheet.create({
     },
     text_product: {
         color: '#FF4B3A',
-        fontSize: 18
+        fontSize: 18,
+        
     },
     productContainer:{
-        marginBottom: 120,
+        marginBottom: 110,
     },
     productMargin:{
         marginLeft: 15,
@@ -220,5 +224,9 @@ const styles = StyleSheet.create({
     iconSearch:{
         marginTop: 5,
         marginRight: 15
+    },
+    productView:{
+        marginRight: 15
     }
+  
 });
