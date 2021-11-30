@@ -8,6 +8,7 @@ import signUpScreen from '../screens/signUpScreen';
 import darBoardScreen from '../screens/darBoardScreen';
 import productDetailScreen from '../screens/productDetailScreen';
 import foodDetailScreen from '../screens/foodDetailScreen';
+import cartScreen from '../screens/cartScreen';
 
 
 const RootStack = createStackNavigator();
@@ -20,6 +21,7 @@ const rootStackScreen = () => (
         <RootStack.Screen name="darBoardScreen" component={darBoardScreen} options={{headerShown: false}} />
         <RootStack.Screen name="productDetailScreen" component={productDetailScreen} options={{headerShown: false}} />
         <RootStack.Screen name="foodDetailScreen" component={foodDetailScreen} options={{headerShown: false}} />
+        <RootStack.Screen name="cartScreen" component={cartScreen} options={{headerShown: false}} />
     </RootStack.Navigator>
 );
 

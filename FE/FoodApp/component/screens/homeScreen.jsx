@@ -4,19 +4,21 @@ import axios from "axios";
 import {Card} from "react-native-elements";
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
+
+import NumericInput from 'react-native-numeric-input'
 
 export default function homeScreen({navigation, route}){
     const{response}=route.params;
-    //var products=[];
+
     const[data, setData]=useState([]);
     const[productCategory, setProductCategory]=useState([]);
+    const[quantityValue, setQuantityValue]=useState([]);
     //console.log(response);
 
 
 
     const fetchdata = async() => {
-        const result = await axios.get("http://192.168.1.13:8080/api/productcategory/",
+        const result = await axios.get("http://192.168.1.33:8080/api/productcategory/",
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -36,7 +38,7 @@ export default function homeScreen({navigation, route}){
 
     const renderItem=({item})=> {
         const itemCategory=()=> {
-            axios.get(`http://192.168.1.13:8080/api/products/category/${item.id}`,
+            axios.get(`http://192.168.1.33:8080/api/products/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -69,6 +71,10 @@ export default function homeScreen({navigation, route}){
             </TouchableOpacity>
             
         );
+    }
+
+    const onChange=(val)=>{
+        setQuantityValue(val);
     }
    
 
@@ -108,19 +114,13 @@ export default function homeScreen({navigation, route}){
 
 
 
-            
-                
-            
-              
-                
+
               <FlatList
                     data={productCategory}
                     renderItem={({item})=>
                         
                         
                                 <TouchableOpacity onPress={()=>{navigation.navigate('productDetailScreen',{productId: item.id, response: response})}}>
-                                    
-                                    
                                     <Card>
                                         <Card.Title>{item.proName}</Card.Title>
                                         <Card.Divider/>
@@ -132,15 +132,50 @@ export default function homeScreen({navigation, route}){
                                             <Text style={{flex: 1}}>{item.price}đ/kg</Text>
                                         </View>
                                         <Card.Divider/>
+                                        
                                         <View style={styles.button}>
-                                            <TouchableOpacity onPress={()=>{}}>
-                                                    <LinearGradient
-                                                        colors={['#FF4B3A','#FF4B3A']}
-                                                        style={styles.signIn}>
-                                                        <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
-                                                    </LinearGradient>
-                                            </TouchableOpacity>
+                                            <View style={{marginRight: 20}}>
+                                                <NumericInput
+                                                    minValue={0}
+                                                    maxValue={50}
+                                                    
+                                                    step={1}
+                                                    totalHeight={40}
+                                                    onChange={(val) =>onChange(val)}
+                                                    rounded/>
+                                            </View>
+                                            <View>
+                                                <TouchableOpacity onPress={()=>{
+                                                    axios.post(`http://192.168.1.33:8080/api/cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
+                                                    {
+                                                        headers:{
+                                                            'Content-Type': 'application/json',
+                                                            'x-access-token': response.accessToken,
+                                                            
+                                                        },
+                                                    })
+                                                    .then(res => {
+                                                        if(res.status===201)
+                                                        {
+                                                            alert(res.data.message);
+                                                        }
+                                                        
+                                                    }).catch(error => {
+                                                            //alert('Error', error.res);
+                                                            console.log(error.res);
+                                                        
+                                                    });
+                                                }}>
+                                                        <LinearGradient
+                                                            colors={['#FF4B3A','#FF4B3A']}
+                                                            style={styles.signIn}>
+                                                            <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
+                                                        </LinearGradient>
+                                                </TouchableOpacity>
+                                            </View>
                                         </View>
+                                        
+                                        
                                     </Card>
                                     
                                     
@@ -181,7 +216,8 @@ const styles = StyleSheet.create({
         marginLeft: 3,
     },
     button: {
-        alignItems: 'flex-end',
+        marginLeft: 30,
+        flexDirection: 'row'
     },
     signIn: {
         width: 150,

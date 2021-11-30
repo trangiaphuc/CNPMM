@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView} from "react-native";
+import {View, Text, SafeAreaView, StyleSheet, ScrollView} from "react-native";
 import axios from "axios";
 import{
     Avatar,
@@ -14,7 +14,7 @@ export default function userScreen({navigation, route}){
 
     
         const fetchdata = async() => {
-            const result = await axios.get(`http://192.168.1.13:8080/api/user/information/${response.id}`,
+            const result = await axios.get(`http://192.168.1.33:8080/api/user/information/${response.id}`,
             {
                 headers:{
                     'Content-Type': 'application/json',
