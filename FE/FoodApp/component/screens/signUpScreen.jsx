@@ -126,7 +126,7 @@ export default function signUp({navigation}){
                                 if(data.password.length !== 0){
                                     if(data.confirmPassword.length !== 0){
                                         if(data.password === data.confirmPassword){
-                                            alert([data.username, data.email, data.password, data.confirmPassword, data.firstname, data.lastname, data.phone, data.address]);
+                                            
                                             axios.post("http://192.168.1.5:8080/api/auth/signup",{username:data.username, email:data.email, password:data.password, firstname: data.firstname, lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"]},
                                                     {
                                                         headers:{
@@ -137,6 +137,7 @@ export default function signUp({navigation}){
                                                         if(res.status===201)
                                                         {
                                                             alert(res.data.message);
+                                                            navigation.navigate('signInScreen');
 
                                                         }
 
@@ -154,58 +155,6 @@ export default function signUp({navigation}){
                 }
             }
         }
-        // if(data.username.length !==0 )
-        // {
-        //     if(data.email.length !==0)
-        //     {
-        //         if(data.password.length !==0)
-        //         {
-        //             if(data.confirmPassword.length !==0)
-        //             {
-        //                 if(data.password === data.confirmPassword)
-        //                 {
-        //                     //alert([data.username, data.email, data.password, data.confirmPassword]);
-        //                     axios.post("http://192.168.1.5:8080/api/auth/signup", {username:data.username, password:data.password, email:data.email, role: "user"},
-        //                     {
-        //                         headers:{
-        //                             'Content-Type': 'application/json',
-                                    
-        //                         },
-        //                     })
-        //                     .then(response => {
-
-        //                         //console.log("Success");
-        //                         console.log(response);
-        //                         if(response.data.success === true) {
-        //                             navigation.navigate(darBoardScreen, response);
-        //                         }
-        //                         else
-        //                         {
-        //                             alert('Sign Up Failed');
-        //                         }
-                                
-                                
-        //                     }).catch(error => {
-        //                         console.log(error.response);
-        //                             //alert('Error', error.response);
-                                
-        //                     });
-        //                 } else{
-        //                     alert("Mat khau khong khop");
-        //                 }
-
-        //             } else {
-        //                 alert("Vui long nhap mat khau xac nhan");
-        //             }
-        //         } else {
-        //             alert("Vui long nhap mat khau");
-        //         }
-        //     } else {
-        //         alert("Vui long nhap email");
-        //     }
-        // } else {
-        //     alert("Vui long nhap username");
-        // }
     }
 
 
