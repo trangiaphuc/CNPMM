@@ -20,7 +20,11 @@ exports.getCartByUserId = (req, res) => {
                       {
                         model: Product,
                       }
-                  ]
+                  ],
+                where: {
+                    isBuy: false,
+                    isDelete: false,
+                }
               }
           ]
     })
@@ -28,6 +32,8 @@ exports.getCartByUserId = (req, res) => {
         //neu co gio hang ti response ve
         if(data){
             logger.info(`Request: status: ${res.status(200)}  data ${data}`);
+            data.cartDetails.reverse();
+            // console.log({"HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEE":data.cartDetails.reverse()});
             res.status(200).send({cart: data});
         }
         else{
@@ -342,3 +348,57 @@ exports.deleteCartItem= (req, res) => {
     })
 }
 
+exports.payCart = (req, res) => {
+    const userId = req.params.userId;
+    const listCartPay = req.body.listCartPay;
+    Cart.findOne({
+        logging: (sql, queryObject) =>{
+            logger.info(sql, queryObject);
+          },
+          where: {userId: userId},
+    })
+    .then(cart=>{
+        if(cart){
+            var flag = true;
+            listCartPay.forEach(cartItem =>{
+                CartDetail.findOne({
+                    logging: (sql, queryObject) =>{
+                        logger.info(sql, queryObject);
+                      },
+                      where: {id: cartItem.id},
+                })
+                .then(cartItem=>{
+                    cartItem.update({
+                        logging: (sql, queryObject) =>{
+                            logger.info(sql, queryObject);
+                        },
+                        isBuy : true,
+                    })
+                    .catch(err => {
+                        if(err){
+                            flag = false;
+                        }
+                    })
+                })
+                .catch(err => {
+                    if(err){
+                        flag = false;
+                    }
+                })
+            })
+
+            if(flag){
+                res.status(200).send({message: 'Success!'});
+            }
+            else{
+                res.status(500).send({message: 'Fail!'});
+            }
+        }
+        else{
+            res.status(404).send({message:"Not Found!"});
+        }
+    })
+    .catch(err => {
+        res.status(500).send({message: err.message});
+    })
+}

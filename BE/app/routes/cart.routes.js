@@ -27,6 +27,8 @@ module.exports = function(app){
     [authJwt.verifyToken], 
     controller.deleteCartItem);
     //get all food with a category id
-  
+    app.put('/api/cart/:userId/payCart', 
+    [authJwt.verifyToken], 
+    controller.payCart);
     
 }
