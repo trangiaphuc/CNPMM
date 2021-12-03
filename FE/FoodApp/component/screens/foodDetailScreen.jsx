@@ -18,7 +18,7 @@ export default function foodDetailScreen({route, navigation}){
   
 
     const fetchdata = async() => {
-        const result = await axios.get(`http://192.168.1.33:8080/api/foods/detail/${foodId}`,
+        const result = await axios.get(`http://192.168.1.5:8080/api/foods/detail/${foodId}`,
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export default function foodDetailScreen({route, navigation}){
    
     
     return(
-        
+        <ScrollView>
       
            <SafeAreaView>
            <View style={styles.image}>
@@ -93,6 +93,7 @@ export default function foodDetailScreen({route, navigation}){
             
            
        </SafeAreaView>
+       </ScrollView>
        
        
 

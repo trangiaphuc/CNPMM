@@ -22,7 +22,10 @@ export default function signUp({navigation}){
         username: '',
         password: '',
         email: '',
-        //role: 'user',
+        firstname: '',
+        lastname: '',
+        phone: '',
+        address: '',
         confirmPassword: '',
         check_TextInput: false,
         secureTextEntry: true
@@ -73,6 +76,30 @@ export default function signUp({navigation}){
             confirmPassword: val
         });
     }
+    const handleFirstName=(val)=>{
+        setData({
+            ...data,
+            firstname: val
+        });
+    }
+    const handleLastName=(val)=>{
+        setData({
+            ...data,
+            lastname: val
+        });
+    }
+    const handlePhone=(val)=>{
+        setData({
+            ...data,
+            phone: val
+        });
+    }
+    const handleAddress =(val)=>{
+        setData({
+            ...data,
+            address: val
+        });
+    }
     const updatePasswordEntry=()=>{
         setData({
             ...data,
@@ -89,58 +116,96 @@ export default function signUp({navigation}){
 
 
     const signUpButton =()=> {
-        if(data.username.length !==0 )
-        {
-            if(data.email.length !==0)
-            {
-                if(data.password.length !==0)
-                {
-                    if(data.confirmPassword.length !==0)
-                    {
-                        if(data.password === data.confirmPassword)
-                        {
-                            //alert([data.username, data.email, data.password, data.confirmPassword]);
-                            axios.post("http://192.168.1.33:8080/api/auth/signup", {username:data.username, password:data.password, email:data.email, role: "user"},
-                            {
-                                headers:{
-                                    'Content-Type': 'application/json',
-                                    
-                                },
-                            })
-                            .then(response => {
+        
+        if(data.username.length !==0){
+            if(data.firstname.length !==0){
+                if(data.lastname.length !==0){
+                    if(data.phone.length !==0){
+                        if(data.address.length !==0){
+                            if(data.email.length !==0){
+                                if(data.password.length !== 0){
+                                    if(data.confirmPassword.length !== 0){
+                                        if(data.password === data.confirmPassword){
+                                            alert([data.username, data.email, data.password, data.confirmPassword, data.firstname, data.lastname, data.phone, data.address]);
+                                            axios.post("http://192.168.1.5:8080/api/auth/signup",{username:data.username, email:data.email, password:data.password, firstname: data.firstname, lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"]},
+                                                    {
+                                                        headers:{
+                                                            'Content-Type': 'application/json',
+                                                        },
+                                                    })
+                                                    .then(res => {
+                                                        if(res.status===201)
+                                                        {
+                                                            alert(res.data.message);
 
-                                //console.log("Success");
-                                console.log(response);
-                                if(response.data.success === true) {
-                                    navigation.navigate(darBoardScreen, response);
+                                                        }
+
+                                                    }).catch(error => {
+                                                            console.log(error.res);
+                                                        
+                                                    });
+
+                                        }
+                                    }
                                 }
-                                else
-                                {
-                                    alert('Sign Up Failed');
-                                }
-                                
-                                
-                            }).catch(error => {
-                                console.log(error.response);
-                                    //alert('Error', error.response);
-                                
-                            });
-                        } else{
-                            alert("Mat khau khong khop");
+                            }
                         }
-
-                    } else {
-                        alert("Vui long nhap mat khau xac nhan");
                     }
-                } else {
-                    alert("Vui long nhap mat khau");
                 }
-            } else {
-                alert("Vui long nhap email");
             }
-        } else {
-            alert("Vui long nhap username");
         }
+        // if(data.username.length !==0 )
+        // {
+        //     if(data.email.length !==0)
+        //     {
+        //         if(data.password.length !==0)
+        //         {
+        //             if(data.confirmPassword.length !==0)
+        //             {
+        //                 if(data.password === data.confirmPassword)
+        //                 {
+        //                     //alert([data.username, data.email, data.password, data.confirmPassword]);
+        //                     axios.post("http://192.168.1.5:8080/api/auth/signup", {username:data.username, password:data.password, email:data.email, role: "user"},
+        //                     {
+        //                         headers:{
+        //                             'Content-Type': 'application/json',
+                                    
+        //                         },
+        //                     })
+        //                     .then(response => {
+
+        //                         //console.log("Success");
+        //                         console.log(response);
+        //                         if(response.data.success === true) {
+        //                             navigation.navigate(darBoardScreen, response);
+        //                         }
+        //                         else
+        //                         {
+        //                             alert('Sign Up Failed');
+        //                         }
+                                
+                                
+        //                     }).catch(error => {
+        //                         console.log(error.response);
+        //                             //alert('Error', error.response);
+                                
+        //                     });
+        //                 } else{
+        //                     alert("Mat khau khong khop");
+        //                 }
+
+        //             } else {
+        //                 alert("Vui long nhap mat khau xac nhan");
+        //             }
+        //         } else {
+        //             alert("Vui long nhap mat khau");
+        //         }
+        //     } else {
+        //         alert("Vui long nhap email");
+        //     }
+        // } else {
+        //     alert("Vui long nhap username");
+        // }
     }
 
 
@@ -150,7 +215,7 @@ export default function signUp({navigation}){
                <Text style={styles.textheader}>Đăng ký</Text>
            </View>
            <View style={styles.footer}>
-               <Text style={styles.textfooter}>Username</Text>
+               {/* <Text style={styles.textfooter}>Username</Text> */}
                <View style={styles.action}>
                    <FontAwesome
                         name="user-o"
@@ -158,7 +223,7 @@ export default function signUp({navigation}){
                         size={20}
                    />
                    <TextInput
-                        placeholder="Username"
+                        placeholder="Tên tài khoản"
                         style={styles.textInput}
                         autoCapitalize='none'
                         onChangeText={(val)=>textInputChange(val)}
@@ -173,11 +238,65 @@ export default function signUp({navigation}){
                    
                </View>
 
+               {/* <Text style={[styles.textfooter,{marginTop:25}]}>Họ</Text> */}
+               <View style={styles.action}>
+                    <Feather
+                        name="lock"
+                        color="#05375a"
+                        size={20}
+                    />
+                   <TextInput
+                        placeholder="Họ và tên lót"
+                        style={styles.textInput}
+                        autoCapitalize='none'
+                        onChangeText={(val)=>handleFirstName(val)}
+                   />
+               </View>
+               <View style={styles.action}>
+                    <Feather
+                        name="lock"
+                        color="#05375a"
+                        size={20}
+                    />
+                   <TextInput
+                        placeholder="Tên"
+                        style={styles.textInput}
+                        autoCapitalize='none'
+                        onChangeText={(val)=>handleLastName(val)}
+                   />
+               </View>
+               <View style={styles.action}>
+                    <Feather
+                        name="lock"
+                        color="#05375a"
+                        size={20}
+                    />
+                   <TextInput
+                        placeholder="Số điện thoại"
+                        style={styles.textInput}
+                        autoCapitalize='none'
+                        onChangeText={(val)=>handlePhone(val)}
+                   />
+               </View>
+               <View style={styles.action}>
+                    <Feather
+                        name="lock"
+                        color="#05375a"
+                        size={20}
+                    />
+                   <TextInput
+                        placeholder="Địa chỉ"
+                        style={styles.textInput}
+                        autoCapitalize='none'
+                        onChangeText={(val)=>handleAddress(val)}
+                   />
+               </View>
 
-               <Text style={[styles.textfooter,{marginTop:25}]}>Email</Text>
+
+               {/* <Text style={[styles.textfooter,{marginTop:25}]}>Email</Text> */}
                <View style={styles.action}>
                    <FontAwesome
-                        name="envelope"
+                        name="envelope-o"
                         color="#05375a"
                         size={20}
                    />
@@ -201,7 +320,7 @@ export default function signUp({navigation}){
 
 
 
-               <Text style={[styles.textfooter,{marginTop:25}]}>Password</Text>
+               {/* <Text style={[styles.textfooter,{marginTop:25}]}>Password</Text> */}
                <View style={styles.action}>
                     <Feather
                         name="lock"
@@ -209,7 +328,7 @@ export default function signUp({navigation}){
                         size={20}
                     />
                    <TextInput
-                        placeholder="Your password"
+                        placeholder="Mật khẩu của bạn"
                         secureTextEntry={data.secureTextEntry ? true : false}
                         style={styles.textInput}
                         autoCapitalize='none'
@@ -232,7 +351,7 @@ export default function signUp({navigation}){
                    </TouchableOpacity>
                     
                </View>
-               <Text style={[styles.textfooter,{marginTop:25}]}>Confirm password</Text>
+               {/* <Text style={[styles.textfooter,{marginTop:25}]}>Confirm password</Text> */}
                <View style={styles.action}>
                     <Feather
                         name="lock"
@@ -240,7 +359,7 @@ export default function signUp({navigation}){
                         size={20}
                     />
                    <TextInput
-                        placeholder="Confirm password"
+                        placeholder="Xác nhận mật khẩu"
                         secureTextEntry={data.secureTextEntry ? true : false}
                         style={styles.textInput}
                         autoCapitalize='none'
