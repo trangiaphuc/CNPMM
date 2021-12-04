@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {View, Text, FlatList, SafeAreaView, StyleSheet, TouchableOpacity, Image, RefreshControl} from "react-native"
 import axios from "axios";
 import {Card} from "react-native-elements";
@@ -10,6 +10,8 @@ export default function historyScreen({navigation, route}){
     const{response}=route.params;
     const[cart, setCart]=useState([]);
     const [isFetching, setIsFetching] = useState(false);
+
+    
 
 
 
@@ -55,11 +57,10 @@ export default function historyScreen({navigation, route}){
                         </View>
                         <View style={styles.deleteItem}>
                             <TouchableOpacity onPress={()=>{
+                                
                                 // console.log(item.id);
                                 
                                 const article ={title: "Delete Cart"};
-
-
                                 API.put(`cart/${response.id}/deleteCartItem/${item.id}`,article,
                                                     {
                                                         headers:{
@@ -68,12 +69,17 @@ export default function historyScreen({navigation, route}){
                                                         },
                                                     })
                                                     .then(res => {
-                                                        console.log(res.data);
+                                                        if(res.status===200){
+                                                            fetchdata();
+                                                        }
+                                                        
+                                                        
+                                                        
                                                         
                                                     }).catch(error => {
                                                             //alert('Error', error.res);
                                                             console.log(error.res);
-                                                    });
+                                                     });
                                 }}>
                                 <Image
                                     style={styles.recyclerImage}
