@@ -9,10 +9,6 @@ import API from "../services/api";
 export default function historyScreen({navigation, route}){
     const{response}=route.params;
     const[cart, setCart]=useState([]);
-    const [isFetching, setIsFetching] = useState(false);
-
-    
-
 
 
     const fetchdata = async() => {
@@ -72,10 +68,6 @@ export default function historyScreen({navigation, route}){
                                                         if(res.status===200){
                                                             fetchdata();
                                                         }
-                                                        
-                                                        
-                                                        
-                                                        
                                                     }).catch(error => {
                                                             //alert('Error', error.res);
                                                             console.log(error.res);

@@ -14,10 +14,12 @@ import axios from "axios";
 import {LinearGradient} from 'expo-linear-gradient';
 import React, {useState, useEffect} from "react";
 import API from "../services/api";
+import NumericInput from 'react-native-numeric-input';
 export default function productDetailScreen({route, navigation}){
     const {productId, response}=route.params;
     //console.log(productId);
     const [productDetail, setProductDetail]=useState([]);
+    const [quantityValue, setQuantityValue] =useState([]);
     
     const fetchdata = async() => {
         const result = await API.get(`products/detail/${productId}`,
@@ -37,6 +39,18 @@ export default function productDetailScreen({route, navigation}){
     useEffect(() => {
         fetchdata();
     },[setProductDetail]);
+
+
+
+
+    const addToCart=() => {
+        alert(quantityValue);
+    }
+    const onChange=(value)=>{
+        setQuantityValue(value);
+    }
+
+
     return(
         <View style={styles.container}>
             <Card>
@@ -74,8 +88,17 @@ export default function productDetailScreen({route, navigation}){
                 </View>
                 
                 <Card.Divider/>
+                <View style={{marginRight: 20}}>
+                    <NumericInput
+                        minValue={1}
+                        maxValue={50}
+                        step={1}
+                        totalHeight={40}
+                        onChange={(value) =>onChange(value)}
+                        rounded/>
+                </View>
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={()=>{}}>
+                    <TouchableOpacity onPress={addToCart}>
                         <LinearGradient
                             colors={['#FF4B3A','#FF4B3A']}
                             style={styles.signIn}>
@@ -85,7 +108,6 @@ export default function productDetailScreen({route, navigation}){
                 </View>
             </Card>
         </View>
-       
     );
 }
 const styles = StyleSheet.create({

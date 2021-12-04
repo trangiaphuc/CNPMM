@@ -74,8 +74,8 @@ export default function homeScreen({navigation, route}){
         );
     }
 
-    const onChange=(val)=>{
-        setQuantityValue(val);
+    const onChange=(value)=>{
+        setQuantityValue(value);
     }
    
 
@@ -137,12 +137,12 @@ export default function homeScreen({navigation, route}){
                                         <View style={styles.button}>
                                             <View style={{marginRight: 20}}>
                                                 <NumericInput
-                                                    minValue={0}
+                                                    minValue={1}
                                                     maxValue={50}
-                                                    
                                                     step={1}
+                                                    
                                                     totalHeight={40}
-                                                    onChange={(val) =>onChange(val)}
+                                                    onChange={(value) =>onChange(value)}
                                                     rounded/>
                                             </View>
                                             <View>

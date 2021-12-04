@@ -6,7 +6,9 @@ import {
     TouchableOpacity,
     Dimensions,
     Platform,
-    TextInput
+    TextInput,
+    Picker,
+    Image,
 } from "react-native";
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -16,6 +18,10 @@ import axios from "axios";
 import darBoardScreen from "./darBoardScreen";
 import API from "../services/api";
 import ComboBox from 'react-native-combobox';
+
+
+
+
 
 
 
@@ -35,11 +41,7 @@ export default function signUp({navigation}){
         check_TextInput: false,
         secureTextEntry: true
     });
-    const [gender, setGender] = useState([]);
-    const values =[
-        'Nam',
-        'Nữ',
-    ];
+    const [selectedValue, setSelectedValue] = useState(0);
     const textInputChange=(val)=>{
         if( val.length !==0){
             setData({
@@ -122,6 +124,7 @@ export default function signUp({navigation}){
             secureTextEntry: !data.secureTextEntry,
         });
     }
+    
   
 
     const signUpButton =()=> {
@@ -135,10 +138,9 @@ export default function signUp({navigation}){
                                 if(data.password.length !== 0){
                                     if(data.confirmPassword.length !== 0){
                                         if(data.password === data.confirmPassword){
-                                            
                                             API.post("auth/signup",
                                             {username:data.username, email:data.email, password:data.password, firstname: data.firstname,
-                                                lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"], gender: gender},
+                                                lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"], gender: selectedValue},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
@@ -212,13 +214,6 @@ export default function signUp({navigation}){
                         onChangeText={(val)=>handleFirstName(val)}
                    />
                </View>
-               <View style={styles.ComboBox}>
-               <ComboBox
-                   values={values}
-                   onValueSelect={setGender}
-                   
-                   />
-               </View>
                
                <View style={styles.action}>
                     <FontAwesome
@@ -232,6 +227,19 @@ export default function signUp({navigation}){
                         autoCapitalize='none'
                         onChangeText={(val)=>handleLastName(val)}
                    />
+               </View>
+               <View style={styles.gender}>
+                    <Image
+                        style={styles.genderImage}
+                        source={require('../images/gender.png')}/>
+                    <Picker
+                        selectedValue={selectedValue}
+                        style={{ height: 30, width: 260}}
+                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                        >
+                        <Picker.Item label="Nam" value="0" />
+                        <Picker.Item label="Nữ" value="1" />
+                    </Picker>
                </View>
                <View style={styles.action}>
                     <Feather
@@ -432,8 +440,16 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginTop: 15
     },
-    ComboBox:{
-        
-        height: 70,
+    gender:{
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    genderImage:{
+        width: 20,
+        height: 20,
+        marginRight: 10,
     }
 });
+
+
+
