@@ -4,6 +4,7 @@ import axios from "axios";
 import {Card} from "react-native-elements";
 import NumericInput from 'react-native-numeric-input';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import API from "../services/api";
 
 export default function historyScreen({navigation, route}){
     const{response}=route.params;
@@ -12,7 +13,7 @@ export default function historyScreen({navigation, route}){
 
 
     const fetchdata = async() => {
-        const result = await axios.get(`http://192.168.1.31:8080/api/cart/${response.id}`,
+        const result = await API.get(`cart/${response.id}`,
         {
             headers:{
                 'Content-Type': 'application/json',

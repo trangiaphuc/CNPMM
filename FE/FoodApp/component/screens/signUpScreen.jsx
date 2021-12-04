@@ -14,6 +14,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import axios from "axios";
 //import signInScreen from "./signInScreen";
 import darBoardScreen from "./darBoardScreen";
+import API from "../services/api";
 //import signInScreen from "./signInScreen";
 export default function signUp({navigation}){
 
@@ -127,7 +128,7 @@ export default function signUp({navigation}){
                                     if(data.confirmPassword.length !== 0){
                                         if(data.password === data.confirmPassword){
                                             
-                                            axios.post("http://192.168.1.31:8080/api/auth/signup",
+                                            API.post("auth/signup",
                                             {username:data.username, email:data.email, password:data.password, firstname: data.firstname,
                                                 lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"]},
                                                     {

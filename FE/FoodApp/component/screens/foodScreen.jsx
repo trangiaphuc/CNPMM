@@ -10,6 +10,7 @@ import{
 import {Card} from "react-native-elements";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import API from "../services/api";
 export default function userScreen({navigation, route}){
     const{response}=route.params;
     const[foodCategory, setfoodCategory]=useState([]);
@@ -18,7 +19,7 @@ export default function userScreen({navigation, route}){
 
     
         const fetchfoodCategory = async() => {
-            const result = await axios.get("http://192.168.1.31:8080/api/foodcategory/",
+            const result = await API.get("foodcategory/",
             {
                 headers:{
                     'Content-Type': 'application/json',
@@ -38,7 +39,7 @@ export default function userScreen({navigation, route}){
         const renderItem=({item})=>{
             const itemFood =()=>{
                 
-                axios.get(`http://192.168.1.31:8080/api/foods/category/${item.id}`,
+                API.get(`foods/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',

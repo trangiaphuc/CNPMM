@@ -13,13 +13,14 @@ import {Card} from "react-native-elements";
 import axios from "axios";
 import {LinearGradient} from 'expo-linear-gradient';
 import React, {useState, useEffect} from "react";
+import API from "../services/api";
 export default function productDetailScreen({route, navigation}){
     const {productId, response}=route.params;
     //console.log(productId);
     const [productDetail, setProductDetail]=useState([]);
     
     const fetchdata = async() => {
-        const result = await axios.get(`http://192.168.1.31:8080/api/products/detail/${productId}`,
+        const result = await API.get(`products/detail/${productId}`,
         {
             headers:{
                 'Content-Type': 'application/json',

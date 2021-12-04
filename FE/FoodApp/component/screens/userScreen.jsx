@@ -7,14 +7,15 @@ import{
     Caption,
     TouchableRipple
 } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import API from "../services/api";
 export default function userScreen({navigation, route}){
     const{response}=route.params;
     const[data, setData]=useState([]);
 
     
         const fetchdata = async() => {
-            const result = await axios.get(`http://192.168.1.31:8080/api/user/information/${response.id}`,
+            const result = await API.get(`user/information/${response.id}`,
             {
                 headers:{
                     'Content-Type': 'application/json',

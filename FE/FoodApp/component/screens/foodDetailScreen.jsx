@@ -9,6 +9,7 @@ import{
 } from 'react-native-paper';
 import {Card} from "react-native-elements";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import API from "../services/api";
 export default function foodDetailScreen({route, navigation}){
     const {foodId, response}=route.params;
     const[data, setData]=useState([]);
@@ -18,7 +19,7 @@ export default function foodDetailScreen({route, navigation}){
   
 
     const fetchdata = async() => {
-        const result = await axios.get(`http://192.168.1.31:8080/api/foods/detail/${foodId}`,
+        const result = await API.get(`foods/detail/${foodId}`,
         {
             headers:{
                 'Content-Type': 'application/json',

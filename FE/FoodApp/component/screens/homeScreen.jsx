@@ -5,7 +5,8 @@ import {Card} from "react-native-elements";
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import RNRestart from 'react-native-restart';
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from 'react-native-numeric-input';
+import API from "../services/api";
 
 export default function homeScreen({navigation, route}){
     const{response}=route.params;
@@ -18,7 +19,7 @@ export default function homeScreen({navigation, route}){
 
 
     const fetchdata = async() => {
-        const result = await axios.get("http://192.168.1.31:8080/api/productcategory/",
+        const result = await API.get("productcategory/",
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -38,7 +39,7 @@ export default function homeScreen({navigation, route}){
 
     const renderItem=({item})=> {
         const itemCategory=()=> {
-            axios.get(`http://192.168.1.31:8080/api/products/category/${item.id}`,
+            API.get(`products/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -146,7 +147,7 @@ export default function homeScreen({navigation, route}){
                                             </View>
                                             <View>
                                                 <TouchableOpacity onPress={()=>{
-                                                    axios.post(`http://192.168.1.31:8080/api/cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
+                                                    API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
