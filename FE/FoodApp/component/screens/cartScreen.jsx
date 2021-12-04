@@ -57,7 +57,7 @@ export default function historyScreen({navigation, route}){
                             <TouchableOpacity onPress={()=>{
                                 // console.log(item.id);
                                 
-                                const article ={title: "Huy"};
+                                const article ={title: "Delete Cart"};
 
 
                                 API.put(`cart/${response.id}/deleteCartItem/${item.id}`,article,
@@ -73,7 +73,6 @@ export default function historyScreen({navigation, route}){
                                                     }).catch(error => {
                                                             //alert('Error', error.res);
                                                             console.log(error.res);
-                                                        
                                                     });
                                 }}>
                                 <Image
