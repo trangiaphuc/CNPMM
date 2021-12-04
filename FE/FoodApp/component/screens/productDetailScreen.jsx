@@ -43,9 +43,7 @@ export default function productDetailScreen({route, navigation}){
 
 
 
-    const addToCart=() => {
-        alert(quantityValue);
-    }
+    
     const onChange=(value)=>{
         setQuantityValue(value);
     }
@@ -88,23 +86,47 @@ export default function productDetailScreen({route, navigation}){
                 </View>
                 
                 <Card.Divider/>
-                <View style={{marginRight: 20}}>
-                    <NumericInput
-                        minValue={1}
-                        maxValue={50}
-                        step={1}
-                        totalHeight={40}
-                        onChange={(value) =>onChange(value)}
-                        rounded/>
-                </View>
-                <View style={styles.button}>
-                    <TouchableOpacity onPress={addToCart}>
-                        <LinearGradient
-                            colors={['#FF4B3A','#FF4B3A']}
-                            style={styles.signIn}>
-                            <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
+                <View style={styles.addQuantityToCart}>
+                    <View style={{marginRight: 20}}>
+                        <NumericInput
+                            minValue={1}
+                            maxValue={50}
+                            step={1}
+                            totalHeight={40}
+                            onChange={(value) =>onChange(value)}
+                            rounded/>
+                    </View>
+                    <View style={styles.button}>
+                        <TouchableOpacity onPress={()=>{
+                            API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: productDetail.id, quantity: quantityValue}]},
+                            {
+                                headers:{
+                                    'Content-Type': 'application/json',
+                                    'x-access-token': response.accessToken,
+                                    
+                                },
+                            })
+                            .then(res => {
+                                if(res.status===201)
+                                {
+                                    alert(res.data.message);
+                                    //navigation.params.resetData();
+                                    // RNRestart.Restart();
+                                }
+                                
+                            }).catch(error => {
+                                    //alert('Error', error.res);
+                                    console.log(error.res);
+                                
+                            });
+                        }}>
+                            <LinearGradient
+                                colors={['#FF4B3A','#FF4B3A']}
+                                style={styles.signIn}>
+                                <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </Card>
         </View>
@@ -112,7 +134,7 @@ export default function productDetailScreen({route, navigation}){
 }
 const styles = StyleSheet.create({
     container: {
-        marginTop:20
+        flex: 1,
     },
     button: {
         alignItems: 'flex-end',
@@ -134,5 +156,10 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginTop: 5,
         
+    },
+    addQuantityToCart:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })

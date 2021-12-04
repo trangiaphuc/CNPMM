@@ -137,7 +137,7 @@ export default function homeScreen({navigation, route}){
                                         <View style={styles.button}>
                                             <View style={{marginRight: 20}}>
                                                 <NumericInput
-                                                    minValue={1}
+                                                    minValue={0}
                                                     maxValue={50}
                                                     step={1}
                                                     
@@ -147,7 +147,8 @@ export default function homeScreen({navigation, route}){
                                             </View>
                                             <View>
                                                 <TouchableOpacity onPress={()=>{
-                                                    API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
+                                                    if(quantityValue !==0){
+                                                        API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
@@ -168,6 +169,10 @@ export default function homeScreen({navigation, route}){
                                                             console.log(error.res);
                                                         
                                                     });
+                                                    }
+                                                    else{
+                                                        alert("Vui lòng chọn số lượng sản phẩm")
+                                                    }
                                                 }}>
                                                         <LinearGradient
                                                             colors={['#FF4B3A','#FF4B3A']}
