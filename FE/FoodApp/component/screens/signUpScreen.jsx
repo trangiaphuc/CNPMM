@@ -127,7 +127,9 @@ export default function signUp({navigation}){
                                     if(data.confirmPassword.length !== 0){
                                         if(data.password === data.confirmPassword){
                                             
-                                            axios.post("http://192.168.1.5:8080/api/auth/signup",{username:data.username, email:data.email, password:data.password, firstname: data.firstname, lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"]},
+                                            axios.post("http://192.168.1.5:8080/api/auth/signup",
+                                            {username:data.username, email:data.email, password:data.password, firstname: data.firstname,
+                                                lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"]},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
