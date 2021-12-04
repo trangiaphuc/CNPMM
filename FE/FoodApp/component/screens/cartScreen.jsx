@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {View, Text, FlatList, SafeAreaView, StyleSheet, TouchableOpacity, Image} from "react-native"
+import {View, Text, FlatList, SafeAreaView, StyleSheet, TouchableOpacity, Image, RefreshControl} from "react-native"
 import axios from "axios";
 import {Card} from "react-native-elements";
 import NumericInput from 'react-native-numeric-input';
@@ -9,6 +9,7 @@ import API from "../services/api";
 export default function historyScreen({navigation, route}){
     const{response}=route.params;
     const[cart, setCart]=useState([]);
+    const [isFetching, setIsFetching] = useState(false);
 
 
 
@@ -28,8 +29,7 @@ export default function historyScreen({navigation, route}){
         fetchdata();
     },[setCart]);
 
-    
-
+   
   
         const onChange=(val)=>{
         }
@@ -55,11 +55,12 @@ export default function historyScreen({navigation, route}){
                         </View>
                         <View style={styles.deleteItem}>
                             <TouchableOpacity onPress={()=>{
-                                //alert(item.product.id);
+                                // console.log(item.id);
+                                
                                 const article ={title: "Huy"};
 
 
-                                axios.put(`http://192.168.1.31:8080/api/cart/${response.id}/deleteCartItem/${item.product.id}`,article,
+                                API.put(`cart/${response.id}/deleteCartItem/${item.id}`,article,
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
@@ -85,6 +86,7 @@ export default function historyScreen({navigation, route}){
             </Card>
         }
             keyExtractor={(item) =>item.id}
+            
             />
         </SafeAreaView>
     );

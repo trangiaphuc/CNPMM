@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect}from "react";
 import {
     StyleSheet,
     View,
@@ -15,6 +15,10 @@ import axios from "axios";
 //import signInScreen from "./signInScreen";
 import darBoardScreen from "./darBoardScreen";
 import API from "../services/api";
+import ComboBox from 'react-native-combobox';
+
+
+
 //import signInScreen from "./signInScreen";
 export default function signUp({navigation}){
 
@@ -31,6 +35,11 @@ export default function signUp({navigation}){
         check_TextInput: false,
         secureTextEntry: true
     });
+    const [gender, setGender] = useState([]);
+    const values =[
+        'Nam',
+        'Nữ',
+    ];
     const textInputChange=(val)=>{
         if( val.length !==0){
             setData({
@@ -113,8 +122,7 @@ export default function signUp({navigation}){
             secureTextEntry: !data.secureTextEntry,
         });
     }
-
-
+  
 
     const signUpButton =()=> {
         
@@ -130,7 +138,7 @@ export default function signUp({navigation}){
                                             
                                             API.post("auth/signup",
                                             {username:data.username, email:data.email, password:data.password, firstname: data.firstname,
-                                                lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"]},
+                                                lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"], gender: gender},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
@@ -192,8 +200,8 @@ export default function signUp({navigation}){
 
                {/* <Text style={[styles.textfooter,{marginTop:25}]}>Họ</Text> */}
                <View style={styles.action}>
-                    <Feather
-                        name="lock"
+                    <FontAwesome
+                        name="user-circle"
                         color="#05375a"
                         size={20}
                     />
@@ -204,9 +212,17 @@ export default function signUp({navigation}){
                         onChangeText={(val)=>handleFirstName(val)}
                    />
                </View>
+               <View style={styles.ComboBox}>
+               <ComboBox
+                   values={values}
+                   onValueSelect={setGender}
+                   
+                   />
+               </View>
+               
                <View style={styles.action}>
-                    <Feather
-                        name="lock"
+                    <FontAwesome
+                        name="user-circle"
                         color="#05375a"
                         size={20}
                     />
@@ -219,7 +235,7 @@ export default function signUp({navigation}){
                </View>
                <View style={styles.action}>
                     <Feather
-                        name="lock"
+                        name="phone"
                         color="#05375a"
                         size={20}
                     />
@@ -231,8 +247,8 @@ export default function signUp({navigation}){
                    />
                </View>
                <View style={styles.action}>
-                    <Feather
-                        name="lock"
+                    <FontAwesome
+                        name="location-arrow"
                         color="#05375a"
                         size={20}
                     />
@@ -415,5 +431,9 @@ const styles = StyleSheet.create({
     textSignIn:{
         fontSize: 15,
         marginTop: 15
+    },
+    ComboBox:{
+        
+        height: 70,
     }
 });
