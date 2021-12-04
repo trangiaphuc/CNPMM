@@ -18,7 +18,7 @@ export default function userScreen({navigation, route}){
 
     
         const fetchfoodCategory = async() => {
-            const result = await axios.get("http://192.168.1.5:8080/api/foodcategory/",
+            const result = await axios.get("http://192.168.1.31:8080/api/foodcategory/",
             {
                 headers:{
                     'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export default function userScreen({navigation, route}){
         const renderItem=({item})=>{
             const itemFood =()=>{
                 
-                axios.get(`http://192.168.1.5:8080/api/foods/category/${item.id}`,
+                axios.get(`http://192.168.1.31:8080/api/foods/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',

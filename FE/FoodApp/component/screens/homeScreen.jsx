@@ -18,7 +18,7 @@ export default function homeScreen({navigation, route}){
 
 
     const fetchdata = async() => {
-        const result = await axios.get("http://192.168.1.5:8080/api/productcategory/",
+        const result = await axios.get("http://192.168.1.31:8080/api/productcategory/",
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export default function homeScreen({navigation, route}){
 
     const renderItem=({item})=> {
         const itemCategory=()=> {
-            axios.get(`http://192.168.1.5:8080/api/products/category/${item.id}`,
+            axios.get(`http://192.168.1.31:8080/api/products/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ export default function homeScreen({navigation, route}){
                                             </View>
                                             <View>
                                                 <TouchableOpacity onPress={()=>{
-                                                    axios.post(`http://192.168.1.5:8080/api/cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
+                                                    axios.post(`http://192.168.1.31:8080/api/cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',

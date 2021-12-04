@@ -12,7 +12,7 @@ export default function historyScreen({navigation, route}){
 
 
     const fetchdata = async() => {
-        const result = await axios.get(`http://192.168.1.5:8080/api/cart/${response.id}`,
+        const result = await axios.get(`http://192.168.1.31:8080/api/cart/${response.id}`,
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export default function historyScreen({navigation, route}){
                                 const article ={title: "Huy"};
 
 
-                                axios.put(`http://192.168.1.5:8080/api/cart/${response.id}/deleteCartItem/${item.product.id}`,article,
+                                axios.put(`http://192.168.1.31:8080/api/cart/${response.id}/deleteCartItem/${item.product.id}`,article,
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
