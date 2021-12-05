@@ -1,54 +1,36 @@
 const db = require('../models');
 const MarketNote = db.marketNote;
-const MarketNoteDetail = db.marketNoteDetail;
 const logger = require('../winston/winston');
 
 exports.addToNote = (req, res) =>{
-    const userId = req.params.userId;
+    const userId  = req.params.userId;
     const listMarketNoteItems = req.body.listMarketNoteItems;
-    MarketNote.create({
-        logging: (sql, queryObject) =>{
-            logger.info(sql, queryObject);
-        },
-        userId: userId,
-        marketNoteName: req.body.marketNoteName,
-        remindDate: req.body.remindDate,
-        isDone: false,
-        isDelete: false,
-    })
-    .then(marketNote=>{
-        // res.status(200).send({message: 'Success!'})
-        // if(marketNote){
-            var flag = true;
-            listMarketNoteItems.forEach(marketNoteItem=>{
-                MarketNoteDetail.create({
-                    logging: (sql, queryObject) =>{
-                        logger.info(sql, queryObject);
-                    },
-                    marketNoteId: marketNote.id,
-                    marketNoteDetailProduct: marketNoteItem.marketNoteDetailProduct,
-                    marketNoteDetailQuantity: marketNoteItem.marketNoteDetailQuantity,
-                    isDone: marketNoteItem.isDone,
-                })
-                .catch(err =>{
-                    if(err){
-                        flag = false;
-                        console.log(err.message)
-                    }
-                })
-            });
-
-            if(flag == true){
-                res.status(201).send({message: "Success!"});
+    var flag = true;
+    listMarketNoteItems.forEach(marketNoteItem => {
+        MarketNote.create({
+            logging: (sql, queryObject) =>{
+                logger.info(sql, queryObject);
+            },
+            userId: userId,
+            marketNoteText: marketNoteItem.marketNoteText,
+            remindDate: marketNoteItem.remindDate,
+            isDone: marketNoteItem.isDone,
+            isDeleted: false,
+        })
+        .catch(err=>{
+            if(err)
+            {
+                flag = false;
             }
-            else{
-                res.status(500).send({message: "Fail!"});
-            }
-        // }
+        })
     })
-    .catch(err => {
-        res.status(500).send({message: err.message});
-    })
+    if(flag)
+    { 
+        res.status(201).send({message: "Success!"});
+    }
+    else{
+        res.status(500).send({message: "Fail!"});
+    }
 }
 
 exports.getAllMarketNotes = (req, res)=>{
@@ -59,14 +41,8 @@ exports.getAllMarketNotes = (req, res)=>{
         },
         where:{
             userId: userId,
-            isDelete: false,
-        },
-        include: [
-            {
-                model: MarketNoteDetail,
-                attributes: ['id', 'marketNoteDetailProduct', 'marketNoteDetailQuantity', 'marketNoteId', 'isDone'],
-            }
-        ]
+            isDeleted: false,
+        }
     })
     .then(marketNotes =>{
         if(marketNotes){
@@ -91,7 +67,7 @@ exports.deleteMarketNote = (req, res) =>{
         where: {
             userId: userId,
             id: marketNoteId,
-            isDelete: false,
+            isDeleted: false,
         }
     })
     .then(marketNote =>{
@@ -101,7 +77,7 @@ exports.deleteMarketNote = (req, res) =>{
                 logging: (sql, queryObject) =>{
                     logger.info(sql, queryObject);
                 },
-                isDelete: true
+                isDeleted: true,
             })
             .then(updatedItem=>{
                 if(updatedItem){
@@ -122,100 +98,50 @@ exports.deleteMarketNote = (req, res) =>{
 }
 
 exports.editNote = (req, res) =>{
-    const userId = req.params.userId;
-    const marketNoteId = req.params.marketNoteId;
     
-    MarketNote.findAll({
+    const userId = req.params.userId;
+    MarketNote.findOne({
         logging: (sql, queryObject) =>{
             logger.info(sql, queryObject);
         },
         where: {
-            userId: userId,
-            id: marketNoteId
-        },
-        include: [
-            {
-                model: MarketNoteDetail,
-                attributes: ['id', 'marketNoteDetailProduct', 'marketNoteDetailQuantity', 'marketNoteId', 'isDone'],
-            }
-        ]
+            userId: userId, 
+            isDeleted: false,
+        }
     })
     .then(marketNote =>{
         if(marketNote){
-            var listMarketNoteItems = marketNote.marketNoteName;
-            var listUpdateMarketNoteItemsId = [];
-            console.log()
-            res.send({"data": "listMarketNoteItems", message: marketNote});
-
-            listMarketNoteItems.forEach(marketNoteItem => {
-                listUpdateMarketNoteItemsId.push(marketNoteItem.id);
-            });
-
-            console.log({"HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEE": listUpdateMarketNoteItemsId})
-
-            const listUpdateMarketNoteItems = req.body.listUpdateMarketNoteItems;
-            var flag = true;
-            listUpdateMarketNoteItems.forEach(marketNoteItem => {
-                MarketNoteDetail.findOne({
-                    logging: (sql, queryObject) =>{
-                        logger.info(sql, queryObject);
-                    },
-                    where: {id: marketNoteItem.id}
-                })
-                .then(foundItem => 
-                {    
-                    if(listUpdateMarketNoteItemsId.includes(foundItem.id)){
-                        //neu co ton tai trong danh sach moi
-                        //update
-                        foundItem.update({
-                            logging: (sql, queryObject) =>{
-                                logger.info(sql, queryObject);
-                            },
-                            marketNoteDetailProduct: marketNoteItem.marketNoteDetailProduct,
-                            marketNoteDetailQuantity: marketNoteItem.marketNoteDetailQuantity,
-                            isDone: marketNoteItem.isDone,
-                            updatedAt: new Date(),
-                        })
-                        .catch(err => {
-                            if(err){
-                                flag = false;
-                            }
-                        })
-                    }
-                    else{
-                        //neu khong ton tai trong danh sach moi
-                        //delete
-                        foundItem.destroy({
-                            logging: (sql, queryObject) =>{
-                                logger.info(sql, queryObject);
-                            },
-                        })
-                        .catch(err =>{
-                            if(err){
-                                flag = false;
-                            }
-                        })
-                    }
-                })
-                .catch(err =>{
-                    res.status(500).send({message: 'Fail!'});
-                })
+            marketNote.update({
+                logging: (sql, queryObject) =>{
+                    logger.info(sql, queryObject);
+                },
+                marketNoteText: req.body.marketNoteText,
+                remindDate: req.body.remindDate,
+                isDone: req.body.isDone,
             })
-
-            if(flag== true){
-                res.status(200).send({message: 'Success!'})
-            }
-            else{
-                res.status(500).send({message: 'Fail!'});
-            }
-
+            .then(updatedItem =>{
+                if(updatedItem){
+                    res.status(200).send({message: 'Success!'});
+                }
+                else{
+                    res.status(500).send({message: 'Fail!'})
+                }
+            })
         }
         else{
-            res.status(404).send({message: "Not Found!"});
+            res.status(404).send({message: 'Not Found!'})
         }
     })
-    .catch(err =>{
-        res.status(500).send({message: err.message});
+    .catch(err=>{
+        res.status(500).send({message: err.message})
     })
-
 }
+
+
+
+// reqUpdate = [1,3,4,5]
+// Db = [1,2,3,4]
+
+// reqUpdate.include(Db) = [1,3,4] => {Update}
+// !reqUpdate.include(Db) = [5] => create
+// !Db.include(reqUpdate) = [4] => Delete

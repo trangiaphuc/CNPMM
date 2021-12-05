@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
             isBuy:{
                 type: Sequelize.BOOLEAN
             },
-            isDelete:{
+            isDeleted:{
                 type: Sequelize.BOOLEAN
             }
         }

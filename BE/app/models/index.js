@@ -50,7 +50,7 @@ db.village = require("../models/address.village.model")(sequelize, Sequelize);
 //market Note zone
 // db.user_marketNotes = sequelize.define('user_marketNotes');
 db.marketNote = require("../models/marketNote.models")(sequelize, Sequelize);
-db.marketNoteDetail = require("../models/marketNoteDetail.model")(sequelize, Sequelize);
+// db.marketNoteDetail = require("../models/marketNoteDetail.model")(sequelize, Sequelize);
 
 //user role zone
 db.role.belongsToMany(db.user, {
@@ -94,7 +94,7 @@ db.village.belongsTo(db.district);
 db.district.belongsTo(db.province);
 //market note zone
 db.marketNote.belongsTo(db.user);
-db.marketNote.hasMany(db.marketNoteDetail);
+// db.marketNote.hasMany(db.marketNoteDetail);
 
 
 db.ROLES = ["user", "admin", "moderator"];

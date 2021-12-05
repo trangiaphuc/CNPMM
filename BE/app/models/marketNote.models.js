@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const MarketNote = sequelize.define("marketNotes", {
-      marketNoteName: {
+      marketNoteText: {
           type: Sequelize.STRING
       },
       remindDate:{
@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
       isDone:{
           type: Sequelize.BOOLEAN
       },
-      isDelete: {
+      isDeleted: {
           type: Sequelize.BOOLEAN
       }
     });

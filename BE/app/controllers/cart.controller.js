@@ -23,7 +23,7 @@ exports.getCartByUserId = (req, res) => {
                   ],
                 where: {
                     isBuy: false,
-                    isDelete: false,
+                    isDeleted: false,
                 }
               }
           ]
@@ -64,7 +64,7 @@ exports.getCartByUserId = (req, res) => {
                             ],
                             where: {
                                 isBuy: false,
-                                isDelete: false,
+                                isDeleted: false,
                             }
                           }
                       ]
@@ -135,7 +135,7 @@ exports.addCartItem = (req, res) => {
                         quantity: cartItem.quantity,
                         productId: cartItem.productId,
                         isBuy: false,
-                        isDelete: false,
+                        isDeleted: false,
                         createAt: new Date(),
                         updatedAt: new Date(),
                     })
@@ -171,7 +171,7 @@ exports.addCartItem = (req, res) => {
                     quantity: cartItem.quantity,
                     productId: cartItem.productId,
                     isBuy: 0,
-                    isDelete: 0,
+                    isDeleted: 0,
                     createAt: new Date(),
                     updatedAt: new Date(),
                 })
@@ -208,7 +208,9 @@ exports.editCartItem = (req, res) => {
         logging: (sql, queryObject) =>{
             logger.info(sql, queryObject);
         },
-          where: {userId: userId},
+        where: {
+              userId: userId
+        },
     })
     .then(cart =>{
         //neu gio hang const
@@ -219,7 +221,11 @@ exports.editCartItem = (req, res) => {
                     logging: (sql, queryObject) =>{
                     logger.info(sql, queryObject);
                 },
-                    where: {id: cartDetailId}},
+                    where: {
+                        id: cartDetailId,
+                        isDeleted: false,
+                    }
+                },
             )
             .then(cartDetail=>{
             //update gio hang
@@ -239,7 +245,7 @@ exports.editCartItem = (req, res) => {
                                 logging: (sql, queryObject) =>{
                                     logger.info(sql, queryObject);
                                 },
-                                isDelete: true,
+                                isDeleted: true,
                             })
                             .then(() =>{
                                 res.status(200).send({message: "Sucess!"});
@@ -304,7 +310,11 @@ exports.deleteCartItem= (req, res) => {
                     logging: (sql, queryObject) =>{
                     logger.info(sql, queryObject);
                 },
-                    where: {id: cartItemId}},
+                    where: {
+                        id: cartItemId,
+                        isDeleted: false,
+                    }
+                },
             )
             .then(cartItem=>{
             //update gio hang
@@ -314,7 +324,7 @@ exports.deleteCartItem= (req, res) => {
                         logging: (sql, queryObject) =>{
                             logger.info(sql, queryObject);
                         },
-                        isDelete: true,
+                        isDeleted: true,
                     })
                     .then(() =>{
                         //neu update thanh 0 item
@@ -365,7 +375,10 @@ exports.payCart = (req, res) => {
                     logging: (sql, queryObject) =>{
                         logger.info(sql, queryObject);
                       },
-                      where: {id: cartItem.id},
+                    where: {
+                          id: cartItem.id,
+                          isDeleted: false,
+                    },
                 })
                 .then(cartItem=>{
                     cartItem.update({
