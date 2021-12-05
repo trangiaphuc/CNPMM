@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, Dimensions,Image, TouchableOpacity} from "react-native";
+import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, Dimensions,Image, TouchableOpacity, TextInput} from "react-native";
 import axios from "axios";
 import{
     Avatar,
@@ -10,6 +10,7 @@ import{
 import {Card} from "react-native-elements";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import API from "../services/api";
 export default function userScreen({navigation, route}){
     const{response}=route.params;
     const[foodCategory, setfoodCategory]=useState([]);
@@ -18,7 +19,7 @@ export default function userScreen({navigation, route}){
 
     
         const fetchfoodCategory = async() => {
-            const result = await axios.get("http://192.168.1.33:8080/api/foodcategory/",
+            const result = await API.get("foodcategory/",
             {
                 headers:{
                     'Content-Type': 'application/json',
@@ -38,7 +39,7 @@ export default function userScreen({navigation, route}){
         const renderItem=({item})=>{
             const itemFood =()=>{
                 
-                axios.get(`http://192.168.1.33:8080/api/foods/category/${item.id}`,
+                API.get(`foods/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -75,6 +76,27 @@ export default function userScreen({navigation, route}){
        
     return(
         <SafeAreaView style={styles.productFoodMargin}>
+            <View>
+                <View style={styles.search}>
+                        <TextInput 
+                            placeholder ="Search here"
+                            autoCapitalize='none'
+                            style={styles.textInput}
+                            placeholderStyle={{color:'#FF0000'}}
+                            
+                        />
+                        <TouchableOpacity onPress={()=>{}}>
+                            <View style={styles.iconSearch}>
+                                <FontAwesome
+                                    name="search"
+                                    color="#05375a"
+                                    size={20}
+                                />
+                            </View>
+                        </TouchableOpacity>
+                    
+                </View>
+            </View>
             <FlatList
                     horizontal={true}
                     data={foodCategory}
@@ -115,7 +137,7 @@ export default function userScreen({navigation, route}){
 }
 const styles = StyleSheet.create({
     container: {
-        marginTop:30,
+        marginTop:10,
         marginLeft: 3,
         borderWidth: 1,
         borderRadius: 20,
@@ -172,5 +194,23 @@ const styles = StyleSheet.create({
     },
     iconFood:{
         marginTop: 20,
-    }
+    },
+    search:{
+        marginTop:5,
+        borderWidth: 0.5,
+        borderRadius: 15,
+        marginLeft: 5,
+        marginRight: 5,
+        flexDirection: 'row',
+        height: 35
+    },  
+    iconSearch:{
+        marginTop: 5,
+        marginRight: 15
+    },
+    textInput: {
+        flex: 1,
+        paddingLeft: 15,
+        color: '#05375a',
+    },
 });

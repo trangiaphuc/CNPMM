@@ -16,6 +16,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import axios from "axios";
 import darBoardScreen from "./darBoardScreen";
+import API from "../services/api";
 //import { error } from "../../../../BE/app/winston/winston";
 //import authServices from "../../services/authServices";
 
@@ -36,7 +37,7 @@ export default function signIn({navigation}){
             if(data.password.length !== 0)
             {
                 
-                axios.post("http://192.168.1.33:8080/api/auth/signin", {username:data.username, password:data.password},
+                API.post("auth/signin", {username:data.username, password:data.password},
                 {
                     headers:{
                         'Content-Type': 'application/json'

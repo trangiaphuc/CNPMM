@@ -13,13 +13,16 @@ import {Card} from "react-native-elements";
 import axios from "axios";
 import {LinearGradient} from 'expo-linear-gradient';
 import React, {useState, useEffect} from "react";
+import API from "../services/api";
+import NumericInput from 'react-native-numeric-input';
 export default function productDetailScreen({route, navigation}){
     const {productId, response}=route.params;
     //console.log(productId);
     const [productDetail, setProductDetail]=useState([]);
+    const [quantityValue, setQuantityValue] =useState([]);
     
     const fetchdata = async() => {
-        const result = await axios.get(`http://192.168.1.33:8080/api/products/detail/${productId}`,
+        const result = await API.get(`products/detail/${productId}`,
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -36,6 +39,16 @@ export default function productDetailScreen({route, navigation}){
     useEffect(() => {
         fetchdata();
     },[setProductDetail]);
+
+
+
+
+    
+    const onChange=(value)=>{
+        setQuantityValue(value);
+    }
+
+
     return(
         <View style={styles.container}>
             <Card>
@@ -73,23 +86,55 @@ export default function productDetailScreen({route, navigation}){
                 </View>
                 
                 <Card.Divider/>
-                <View style={styles.button}>
-                    <TouchableOpacity onPress={()=>{}}>
-                        <LinearGradient
-                            colors={['#FF4B3A','#FF4B3A']}
-                            style={styles.signIn}>
-                            <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
+                <View style={styles.addQuantityToCart}>
+                    <View style={{marginRight: 20}}>
+                        <NumericInput
+                            minValue={1}
+                            maxValue={50}
+                            step={1}
+                            totalHeight={40}
+                            onChange={(value) =>onChange(value)}
+                            rounded/>
+                    </View>
+                    <View style={styles.button}>
+                        <TouchableOpacity onPress={()=>{
+                            API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: productDetail.id, quantity: quantityValue}]},
+                            {
+                                headers:{
+                                    'Content-Type': 'application/json',
+                                    'x-access-token': response.accessToken,
+                                    
+                                },
+                            })
+                            .then(res => {
+                                if(res.status===201)
+                                {
+                                    alert(res.data.message);
+                                    //navigation.params.resetData();
+                                    // RNRestart.Restart();
+                                }
+                                
+                            }).catch(error => {
+                                    //alert('Error', error.res);
+                                    console.log(error.res);
+                                
+                            });
+                        }}>
+                            <LinearGradient
+                                colors={['#FF4B3A','#FF4B3A']}
+                                style={styles.signIn}>
+                                <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </Card>
         </View>
-       
     );
 }
 const styles = StyleSheet.create({
     container: {
-        marginTop:20
+        flex: 1,
     },
     button: {
         alignItems: 'flex-end',
@@ -111,5 +156,10 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginTop: 5,
         
+    },
+    addQuantityToCart:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })

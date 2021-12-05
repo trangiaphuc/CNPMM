@@ -4,8 +4,9 @@ import axios from "axios";
 import {Card} from "react-native-elements";
 import {LinearGradient} from 'expo-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
-import NumericInput from 'react-native-numeric-input'
+import RNRestart from 'react-native-restart';
+import NumericInput from 'react-native-numeric-input';
+import API from "../services/api";
 
 export default function homeScreen({navigation, route}){
     const{response}=route.params;
@@ -18,7 +19,7 @@ export default function homeScreen({navigation, route}){
 
 
     const fetchdata = async() => {
-        const result = await axios.get("http://192.168.1.33:8080/api/productcategory/",
+        const result = await API.get("productcategory/",
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -38,7 +39,7 @@ export default function homeScreen({navigation, route}){
 
     const renderItem=({item})=> {
         const itemCategory=()=> {
-            axios.get(`http://192.168.1.33:8080/api/products/category/${item.id}`,
+            API.get(`products/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -73,8 +74,8 @@ export default function homeScreen({navigation, route}){
         );
     }
 
-    const onChange=(val)=>{
-        setQuantityValue(val);
+    const onChange=(value)=>{
+        setQuantityValue(value);
     }
    
 
@@ -128,8 +129,8 @@ export default function homeScreen({navigation, route}){
 
                                         
                                         <View style={{flex: 1, flexDirection: 'row', padding:10}}>
-                                            <Text style={{flex: 1}}>Giá:</Text>
-                                            <Text style={{flex: 1}}>{item.price}đ/kg</Text>
+                                            <Text style={styles.price}>Giá:</Text>
+                                            <Text style={{flex: 2}}>{item.price}đ/kg</Text>
                                         </View>
                                         <Card.Divider/>
                                         
@@ -138,15 +139,16 @@ export default function homeScreen({navigation, route}){
                                                 <NumericInput
                                                     minValue={0}
                                                     maxValue={50}
-                                                    
                                                     step={1}
+                                                    
                                                     totalHeight={40}
-                                                    onChange={(val) =>onChange(val)}
+                                                    onChange={(value) =>onChange(value)}
                                                     rounded/>
                                             </View>
                                             <View>
                                                 <TouchableOpacity onPress={()=>{
-                                                    axios.post(`http://192.168.1.33:8080/api/cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
+                                                    if(quantityValue !==0){
+                                                        API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
@@ -158,6 +160,8 @@ export default function homeScreen({navigation, route}){
                                                         if(res.status===201)
                                                         {
                                                             alert(res.data.message);
+                                                            //navigation.params.resetData();
+                                                            // RNRestart.Restart();
                                                         }
                                                         
                                                     }).catch(error => {
@@ -165,12 +169,22 @@ export default function homeScreen({navigation, route}){
                                                             console.log(error.res);
                                                         
                                                     });
+                                                    }
+                                                    else{
+                                                        alert("Vui lòng chọn số lượng sản phẩm")
+                                                    }
                                                 }}>
                                                         <LinearGradient
                                                             colors={['#FF4B3A','#FF4B3A']}
                                                             style={styles.signIn}>
                                                             <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
+                                                            <FontAwesome
+                                                                name="shopping-cart"
+                                                                color="#FFFFFF"
+                                                                size={20}
+                                                        />
                                                         </LinearGradient>
+                                                        
                                                 </TouchableOpacity>
                                             </View>
                                         </View>
@@ -199,7 +213,10 @@ const styles = StyleSheet.create({
     item: {
         padding: 5,
     },
-    
+    price: {
+        flex: 1,
+        marginLeft: 60
+    },
     container: {
         flex: 1,
     },
@@ -244,7 +261,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     search:{
-        marginTop:30,
+        marginTop:5,
         borderWidth: 0.5,
         borderRadius: 15,
         marginLeft: 15,
