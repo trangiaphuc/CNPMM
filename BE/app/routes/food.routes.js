@@ -39,5 +39,10 @@ module.exports = function(app){
     [authJwt.verifyToken],
     upload.single("file"), 
     controller.addNewFood)
+
+    app.get('/api/foods/foodextract/:foodId',
+    [authJwt.verifyToken],
+    upload.single("file"), 
+    controller.extractFoodMaterial)
     
 }

@@ -47,8 +47,12 @@ db.favoritesFoodCategory = sequelize.define('favoriteFoodCategories');
 db.district = require("../models/address.district.model")(sequelize, Sequelize);
 db.province = require("../models/address.province.model")(sequelize, Sequelize);
 db.village = require("../models/address.village.model")(sequelize, Sequelize);
+//market Note zone
+// db.user_marketNotes = sequelize.define('user_marketNotes');
+db.marketNote = require("../models/marketNote.models")(sequelize, Sequelize);
+db.marketNoteDetail = require("../models/marketNoteDetail.model")(sequelize, Sequelize);
 
-//
+//user role zone
 db.role.belongsToMany(db.user, {
   through: "user_roles",
   foreignKey: "roleId",
@@ -60,6 +64,9 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 });
 
+//list market note zone
+// db.user.belongsToMany(db.marketNote, {through: db.user_marketNotes});
+// db.marketNote.belongsToMany(db.user, {through: db.user_marketNotes});
 
 db.user.belongsToMany(db.foodCategory, {through: db.favoritesFoodCategory});
 db.foodCategory.belongsToMany(db.user, {through: db.favoritesFoodCategory})
@@ -69,7 +76,7 @@ db.foodCategory.hasMany(db.food);
 db.food.hasMany(db.foodMaterial);
 db.food.hasMany(db.foodCookStep);
 db.productCategory.hasMany(db.product);
-db.product.hasOne(db.foodMaterial);
+db.foodMaterial.belongsTo(db.product);
 //ver 2
 db.user.hasOne(db.cart);
 db.cart.hasMany(db.cartDetail);
@@ -85,12 +92,9 @@ db.product.belongsTo(db.quantity);
 db.foodMaterial.belongsTo(db.quantity);
 db.village.belongsTo(db.district);
 db.district.belongsTo(db.province);
-//images belong to
-// db.user.belongsTo(db.image);
-// db.product.belongsTo(db.image);
-// db.food.belongsTo(db.image);
-// db.shipper.belongsTo(db.image);
-// db.foodCookStep.belongsTo(db.image);
+//market note zone
+db.marketNote.belongsTo(db.user);
+db.marketNote.hasMany(db.marketNoteDetail);
 
 
 db.ROLES = ["user", "admin", "moderator"];

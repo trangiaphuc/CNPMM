@@ -11,7 +11,7 @@ module.exports = {
           quantityDescription: "400g ",
           foodId: 1,
           quantityValue: 400,
-          productId: null,
+          productId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

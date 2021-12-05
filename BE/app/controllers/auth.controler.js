@@ -16,7 +16,7 @@ exports.signup = (req, res) => {
     userAvatar = "/resources/static/assets/images/userAvatar/male.png";
   }
   else{
-    "/resources/static/assets/images/userAvatar/male.png";
+    userAvatar = "/resources/static/assets/images/userAvatar/female.png";
   }
   User.create({
     logging: (sql, queryObject) =>{
@@ -25,8 +25,14 @@ exports.signup = (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    phone: req.body.phone,
+    birthday: new Date(req.body.birthday),
+    address: req.body.address,
     gender: req.body.gender,
-    userAvatar: "/resources/static/assets/images/userAvatar/female.png",
+    userAvatar: userAvatar
+    // "/resources/static/assets/images/userAvatar/female.png",
   })
     .then(user => {
       if (req.body.roles) {

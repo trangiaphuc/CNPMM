@@ -172,6 +172,9 @@ try{
 
 exports.search = (req, res) =>{
   Food.findAll({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
     where: Sequelize.literal('MATCH (foodName) AGAINST (:keyword)'),
     replacements: {
       keyword: req.query.keyword
@@ -195,6 +198,52 @@ exports.search = (req, res) =>{
     }
   })
   .catch(err => {
+    res.status(500).send({message: err.message});
+  })
+}
+
+//show food Material to note list and cart listCartItems
+exports.extractFoodMaterial = (req, res) =>{
+  const foodId = req.params.foodId;
+  Food.findOne({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
+    where: {id: foodId},
+    include:[
+      {
+        model: FoodMaterial,
+        attributes:['id', 'foodMaterialName', 'quantityDescription', 'productId'],
+      }
+    ]
+  })
+  .then(food =>{
+    if(food){
+      var foodMaterials = food.foodMaterials;
+      var listMarketNoteItems = [];
+      var listCartItems = [];
+      foodMaterials.forEach(foodMaterial =>{
+        if(foodMaterial.productId != null){
+          listCartItems.push(foodMaterial);
+          foodMaterial.setDataValue('isDone', true);
+          listMarketNoteItems.push(foodMaterial);
+          // console.log(listMarketNoteItems)
+        }
+        else{
+          foodMaterial.setDataValue('isDone', false);
+          listMarketNoteItems.push(foodMaterial);
+        }
+      })
+      res.status(200).send({
+        listCartItems: listCartItems, 
+        listMarketNoteItems: listMarketNoteItems
+      })
+    }
+    else{
+      res.status(400).send({message: "Not Found!"});
+    }
+  })
+  .catch(err =>{
     res.status(500).send({message: err.message});
   })
 }

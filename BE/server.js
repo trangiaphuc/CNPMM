@@ -55,6 +55,8 @@ require('./app/routes/paymentMethod.routes')(app);
 require('./app/routes/deliveryMethod.routes')(app);
 //orders routes
 require('./app/routes/order.routes')(app);
+//market note zone
+require('./app/routes/marketNote.routes')(app)
 
 
 // simple route
