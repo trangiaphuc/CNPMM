@@ -9,6 +9,7 @@ import API from "../services/api";
 export default function historyScreen({navigation, route}){
     const{response}=route.params;
     const[cart, setCart]=useState([]);
+    const[quantity, setQuantity]=useState('2');
 
 
     const fetchdata = async() => {
@@ -30,15 +31,30 @@ export default function historyScreen({navigation, route}){
    
   
         const onChange=(val)=>{
+            setQuantity(val);
         }
 
     return(
         
         <SafeAreaView>
+            <View style={styles.return}>
+                
+                <View style={styles.returnIcon}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                        <FontAwesome
+                            name="arrow-left"
+                            color="#05375a"
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.returnText}>Giỏ hàng</Text>
+            </View>
             <FlatList
             data={cart}
             renderItem={({item})=>
             <Card>
+                <Card.Image source={{uri: item.product.productImage}}/>
                 <View style={styles.cardItem}>
                         <View>
                             <Text>{item.product.proName}</Text>
@@ -46,7 +62,6 @@ export default function historyScreen({navigation, route}){
                                 minValue={0}
                                 maxValue={50}
                                 step={1}
-                                initValue={item.quantity}
                                 totalHeight={40}
                                 onChange={(val) =>onChange(val)}
                                 rounded/>
@@ -101,5 +116,23 @@ const styles = StyleSheet.create({
     recyclerImage:{
         width: 20,
         height: 20,
+    },
+    return: {
+
+        height: 60,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        
+    },
+    returnIcon:{
+        marginLeft: 15,
+        marginTop: 30,
+    },
+    returnText:{
+        marginTop: 25,
+        marginLeft: 127,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#05375a'
     }
 });

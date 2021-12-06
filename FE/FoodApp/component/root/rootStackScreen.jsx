@@ -18,10 +18,10 @@ const rootStackScreen = () => (
         <RootStack.Screen name="flashScreen" component={flashScreen} options={{headerShown: false}} />
         <RootStack.Screen name="signInScreen" component={signInScreen} options={{headerShown: false}} />
         <RootStack.Screen name="signUpScreen" component={signUpScreen} options={{headerShown: false}} />
-        <RootStack.Screen name="darBoardScreen" component={darBoardScreen}/>
-        <RootStack.Screen name="productDetailScreen" component={productDetailScreen}  />
-        <RootStack.Screen name="foodDetailScreen" component={foodDetailScreen}  />
-        <RootStack.Screen name="cartScreen" component={cartScreen}  />
+        <RootStack.Screen name="darBoardScreen" component={darBoardScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name="productDetailScreen" component={productDetailScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name="foodDetailScreen" component={foodDetailScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name="cartScreen" component={cartScreen} options={{headerShown: false}}/>
     </RootStack.Navigator>
 );
 

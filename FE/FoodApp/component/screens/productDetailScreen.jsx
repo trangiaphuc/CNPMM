@@ -15,6 +15,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import React, {useState, useEffect} from "react";
 import API from "../services/api";
 import NumericInput from 'react-native-numeric-input';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 export default function productDetailScreen({route, navigation}){
     const {productId, response}=route.params;
     //console.log(productId);
@@ -51,6 +52,19 @@ export default function productDetailScreen({route, navigation}){
 
     return(
         <View style={styles.container}>
+            <View style={styles.return}>
+                
+                <View style={styles.returnIcon}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                        <FontAwesome
+                            name="arrow-left"
+                            color="#05375a"
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.returnText}>Chi tiết</Text>
+            </View>
             <Card>
                 <Card.Title>{productDetail.proName}</Card.Title>
                 <Card.Divider/>
@@ -161,5 +175,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    return: {
+
+        height: 60,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        
+    },
+    returnIcon:{
+        marginLeft: 15,
+        marginTop: 30,
+        
+    },
+    returnText:{
+        marginTop: 25,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#05375a',
+        marginLeft: 130,
     }
 })

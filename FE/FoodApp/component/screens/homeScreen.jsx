@@ -77,11 +77,24 @@ export default function homeScreen({navigation, route}){
     const onChange=(value)=>{
         setQuantityValue(value);
     }
-   
+  
 
     return(
         
         <SafeAreaView style={styles.productContainer}>
+            <View style={styles.return}>
+                
+                <View style={styles.returnIcon}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                        <FontAwesome
+                            name="arrow-left"
+                            color="#05375a"
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.returnText}>Trang chủ</Text>
+            </View>
             <View>
                 <View style={styles.search}>
                         <TextInput 
@@ -137,7 +150,7 @@ export default function homeScreen({navigation, route}){
                                         <View style={styles.button}>
                                             <View style={{marginRight: 20}}>
                                                 <NumericInput
-                                                    minValue={0}
+                                                    minValue={1}
                                                     maxValue={50}
                                                     step={1}
                                                     
@@ -280,6 +293,25 @@ const styles = StyleSheet.create({
     },
     productView:{
         marginRight: 15
+    },
+    return: {
+
+        height: 60,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        
+    },
+    returnIcon:{
+        marginLeft: 15,
+        marginTop: 30,
+        
+    },
+    returnText:{
+        marginTop: 25,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#05375a',
+        marginLeft: 115,
     }
   
 });
