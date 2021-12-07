@@ -90,27 +90,26 @@ export default function foodDetailScreen({route, navigation}){
             
             <Text style={[styles.textMeterial,{marginTop: 10}]}>2. Các bước thực hiện</Text>
 
-            
-            <FlatList
-            
-                data={step}
-                renderItem={({item}) =>
-                    <View style={styles.stepCook}>
-                        <Text style={styles.textStep}>{'Bước' + ' ' + item.stepNumber + ''+':'}</Text>
-                        <Text>{item.stepDescription}</Text>
-                    </View>
-                    }
-                keyExtractor={(item) =>item.id}
-               />
+            <View>
+                {
+                    step.map((item) => {
+                        return (
+                            <View style={styles.stepCook}>
+                            <Text style={styles.textStep}>{'Bước' + ' ' + item.stepNumber + ''+':'}</Text>
+                            <Text>{item.stepDescription}</Text>
+                        </View>
+                        )
+                    })
 
+                }
+            </View>
+            
 
             
             
            
        </SafeAreaView>
        </ScrollView>
-       
-       
 
     );
 }

@@ -16,6 +16,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import axios from "axios";
 import darBoardScreen from "./darBoardScreen";
+import welcomScreen from "./welcomScreen";
 import API from "../services/api";
 //import { error } from "../../../../BE/app/winston/winston";
 //import authServices from "../../services/authServices";
@@ -46,8 +47,8 @@ export default function signIn({navigation}){
                 })
                 .then(response => {
                     if (response.accessToken !== null){
-                        
-                        navigation.navigate('darBoardScreen', { response: response.data});
+                        navigation.navigate('welcomScreen', { response: response.data});
+                        //navigation.navigate('darBoardScreen', { response: response.data});
                         //alert("Login Successfully");
                     }
                     else if (response.accessToken === null){
