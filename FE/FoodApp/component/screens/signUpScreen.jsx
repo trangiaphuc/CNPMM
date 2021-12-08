@@ -149,7 +149,7 @@ export default function signUp({navigation}){
                                                     .then(res => {
                                                         if(res.status===201)
                                                         {
-                                                            alert(res.data.message);
+                                                            
                                                             navigation.navigate('signInScreen');
 
                                                         }
@@ -228,7 +228,7 @@ export default function signUp({navigation}){
                         onChangeText={(val)=>handleLastName(val)}
                    />
                </View>
-               <View style={styles.gender}>
+               {/* <View style={styles.gender}>
                     <Image
                         style={styles.genderImage}
                         source={require('../images/gender.png')}/>
@@ -240,7 +240,7 @@ export default function signUp({navigation}){
                         <Picker.Item label="Nam" value="0" />
                         <Picker.Item label="Nữ" value="1" />
                     </Picker>
-               </View>
+               </View> */}
                <View style={styles.action}>
                     <Feather
                         name="phone"
