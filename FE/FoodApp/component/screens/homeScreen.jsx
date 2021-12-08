@@ -14,6 +14,10 @@ export default function homeScreen({navigation, route}){
     const[data, setData]=useState([]);
     const[productCategory, setProductCategory]=useState([]);
     const[quantityValue, setQuantityValue]=useState([]);
+    const[dataSearch, setDataSearch]=React.useState({
+        textSearch: '',
+    });
+    const [search, setSearch]=useState([]);
     //console.log(response);
 
     const fetchdata = async() => {
@@ -73,13 +77,24 @@ export default function homeScreen({navigation, route}){
     const onChange=(value)=>{
         setQuantityValue(value);
     }
-  
 
-    return(
+    const textInputChange=(val)=>{
         
+            setDataSearch({
+                ...dataSearch,
+                textSearch: val,
+            });
+        
+    }
+
+
+    const searchProduct =()=>{
+        alert(dataSearch.textSearch);
+    }
+    
+    return(
         <SafeAreaView style={styles.productContainer}>
             <View style={styles.return}>
-                
                 <View style={styles.returnIcon}>
                     <TouchableOpacity onPress={()=>{navigation.goBack();}}>
                         <FontAwesome
@@ -98,9 +113,10 @@ export default function homeScreen({navigation, route}){
                             autoCapitalize='none'
                             style={styles.textInput}
                             placeholderStyle={{color:'#FF0000'}}
+                            onChangeText={(val)=>textInputChange(val)}
                             
                         />
-                        <TouchableOpacity onPress={()=>{}}>
+                        <TouchableOpacity onPress={searchProduct}>
                             <View style={styles.iconSearch}>
                                 <FontAwesome
                                     name="search"
