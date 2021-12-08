@@ -21,6 +21,8 @@ module.exports = function(app) {
   app.post("/api/user/addFavorite/", [authJwt.verifyToken], controller.addFavorites);
   //insert user favorite food categories
   app.post("/api/user/updateFavorite/", [authJwt.verifyToken], controller.updateFavorites);
+  //show user favorite food categories
+  app.get("/api/user/:userId/getFavorite/", [authJwt.verifyToken], controller.getAllFavorites);
 
 // // test ROLE
 //   app.get("/api/test/all", controller.allAccess);

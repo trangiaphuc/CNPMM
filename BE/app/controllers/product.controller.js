@@ -137,7 +137,7 @@ exports.getAllProWithCatId = (req, res) => {
     Product.findAll({
       where: Sequelize.literal('MATCH (proName) AGAINST (:keyword)'),
       replacements: {
-        keyword: req.query.keyword
+        keyword: req.body.keyword
       }
     })
     .then(products => {

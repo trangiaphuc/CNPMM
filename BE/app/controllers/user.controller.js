@@ -241,6 +241,22 @@ var fs = require("fs");
     }
   }
   
+  exports.getAllFavorites = (req, res)=>{
+    const userId = req.params.userId;
+    FavoriteFoodCategory.findAll({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      where: { userId: userId}
+    })
+    .then(favorites =>{
+        res.status(200).send({FavoriteFoodCategory: favorites});
+    })
+    .catch(err =>{
+      res.status(500).send({message: err.message});
+    })
+  }
+
   // exports.changeAvatar = (req, res) =>{
   //   const userId = req.params.userId;
   //   User.findByPk(userId, {

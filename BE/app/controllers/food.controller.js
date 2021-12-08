@@ -177,7 +177,7 @@ exports.search = (req, res) =>{
     },
     where: Sequelize.literal('MATCH (foodName) AGAINST (:keyword)'),
     replacements: {
-      keyword: req.query.keyword
+      keyword: req.body.keyword
     }
   })
   .then(foods => {
