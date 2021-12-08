@@ -4,8 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert(
       'productCategories',
-      [
-        
+      [ 
         {
           catName: "Thịt, cá, hải sản",
           createdAt: new Date(),
@@ -13,16 +12,6 @@ module.exports = {
         },
         {
           catName: "Rau, củ, trái cây",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          catName: "Đồ uống các loại",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          catName: "Sữa uống các loại",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -43,11 +32,6 @@ module.exports = {
         },
         {
           catName: "Gạo, bột, đồ khô",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          catName: "Đồ mát, đông lạnh",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
