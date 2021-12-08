@@ -1,14 +1,26 @@
 import React, {useState, useEffect, useCallback} from "react";
-import {View, Text, FlatList, SafeAreaView, StyleSheet, TouchableOpacity, Image, RefreshControl} from "react-native"
+import {View, Text, FlatList, SafeAreaView, StyleSheet, TouchableOpacity, Image, RefreshControl, ScrollView} from "react-native"
 import axios from "axios";
 import {Card} from "react-native-elements";
+import { CheckBox } from 'react-native-elements';
 import NumericInput from 'react-native-numeric-input';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useIsFocused } from '@react-navigation/native';
 import API from "../services/api";
+import {LinearGradient} from 'expo-linear-gradient';
+import{
+    Avatar,
+    Title,
+    Caption,
+    TouchableRipple
+} from 'react-native-paper';
 
 export default function historyScreen({navigation, route}){
     const{response}=route.params;
     const[cart, setCart]=useState([]);
+    const[quantity, setQuantity]= useState([]);
+    const isFocused = useIsFocused();
+   
 
 
     const fetchdata = async() => {
@@ -27,35 +39,56 @@ export default function historyScreen({navigation, route}){
         fetchdata();
     },[setCart]);
 
+    useEffect(() => {
+        fetchdata();
+    },[isFocused])
+
    
   
-        const onChange=(val)=>{
+        const onChange=(value)=>{
+            setQuantity(value);
         }
 
     return(
         
         <SafeAreaView>
+            <View style={styles.return}>
+            
+                <View style={styles.returnIcon}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                        <FontAwesome
+                            name="arrow-left"
+                            color="#05375a"
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.returnText}>Giỏ hàng</Text>
+            </View>
+            
             <FlatList
             data={cart}
             renderItem={({item})=>
             <Card>
+                
+                
                 <View style={styles.cardItem}>
-                        <View>
-                            <Text>{item.product.proName}</Text>
+                    
+                        <Avatar.Image source={{uri: item.product.productImage}} size={80}/>
+                        <View style={{marginLeft:25}}>
+                            <Card.Title>{item.product.proName}</Card.Title>
+                            
                             <NumericInput
                                 minValue={0}
                                 maxValue={50}
-                                step={1}
                                 initValue={item.quantity}
+                                step={1}
                                 totalHeight={40}
-                                onChange={(val) =>onChange(val)}
+                                onChange={(value) =>onChange(value)}
                                 rounded/>
                         </View>
                         <View style={styles.deleteItem}>
                             <TouchableOpacity onPress={()=>{
-                                
-                                // console.log(item.id);
-                                
                                 const article ={title: "Delete Cart"};
                                 API.put(`cart/${response.id}/deleteCartItem/${item.id}`,article,
                                                     {
@@ -85,6 +118,17 @@ export default function historyScreen({navigation, route}){
             keyExtractor={(item) =>item.id}
             
             />
+            <View style={styles.button}>
+                        <TouchableOpacity onPress={()=>{}}>
+                            <LinearGradient
+                                colors={['#FF4B3A','#FF4B3A']}
+                                style={styles.signIn}>
+                                <Text style={styles.textSign}>Thanh toán</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+            
+           
         </SafeAreaView>
     );
 }
@@ -94,12 +138,53 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         
     },
+    checkbox: {
+        alignSelf: "center",
+    },
+    footer: {
+        borderWidth: 1,
+        
+    },
     deleteItem:{
-        marginLeft: 180,
+        paddingLeft: 60,
         
     },
     recyclerImage:{
         width: 20,
         height: 20,
-    }
+    },
+    return: {
+
+        height: 60,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        
+    },
+    returnIcon:{
+        marginLeft: 15,
+        marginTop: 30,
+    },
+    returnText:{
+        marginTop: 25,
+        marginLeft: 127,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#05375a'
+    },
+    button: {
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    signIn: {
+        width: 150,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+        flexDirection: 'row'
+    },
+      textSign: {
+        color: 'white',
+        fontWeight: 'bold'
+    },
 });

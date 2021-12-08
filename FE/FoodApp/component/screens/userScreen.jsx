@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, SafeAreaView, StyleSheet, ScrollView} from "react-native";
+import {View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import axios from "axios";
 import{
     Avatar,
@@ -39,7 +40,20 @@ export default function userScreen({navigation, route}){
         //     <Text>{JSON.stringify(data.username)}</Text>
         // </View>
 
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView>
+            <View style={styles.return}>
+                
+                <View style={styles.returnIcon}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                        <FontAwesome
+                            name="arrow-left"
+                            color="#05375a"
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.returnText}>Thông tin cá nhân</Text>
+            </View>
            <ScrollView>
            <View style={styles.userInfoSection}>
                 <View style={{flexDirection: 'row', marginTop: 15}}>
@@ -181,5 +195,23 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 26,
     },
+    return: {
+
+        height: 60,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        
+    },
+    returnIcon:{
+        marginLeft: 15,
+        marginTop: 30,
+    },
+    returnText:{
+        marginTop: 25,
+        marginLeft: 80,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#05375a'
+    }
     
 });

@@ -75,8 +75,21 @@ export default function userScreen({navigation, route}){
         }
        
     return(
-        <SafeAreaView style={styles.productFoodMargin}>
-            <View>
+        <SafeAreaView>
+            <View style={styles.return}>
+                
+                <View style={styles.returnIcon}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                        <FontAwesome
+                            name="arrow-left"
+                            color="#05375a"
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.returnText}>Món ăn</Text>
+            </View>
+            <View style={styles.productFoodMargin}>
                 <View style={styles.search}>
                         <TextInput 
                             placeholder ="Search here"
@@ -97,11 +110,13 @@ export default function userScreen({navigation, route}){
                     
                 </View>
             </View>
-            <FlatList
-                    horizontal={true}
-                    data={foodCategory}
-                    renderItem={renderItem}
-                    keyExtractor={(item) =>item.id}/>
+            <View style={styles.productFoodMargin}>
+                <FlatList
+                        horizontal={true}
+                        data={foodCategory}
+                        renderItem={renderItem}
+                        keyExtractor={(item) =>item.id}/>
+            </View>
 
             <FlatList
             data={data}
@@ -213,4 +228,22 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         color: '#05375a',
     },
+    return: {
+
+        height: 60,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        
+    },
+    returnIcon:{
+        marginLeft: 15,
+        marginTop: 30,
+    },
+    returnText:{
+        marginTop: 25,
+        marginLeft: 130,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#05375a'
+    }
 });

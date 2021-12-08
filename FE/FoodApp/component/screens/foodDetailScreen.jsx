@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, Image, FlatList, VirtualizedList} from "react-native";
+import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, Image, FlatList, VirtualizedList, TouchableOpacity} from "react-native";
 import axios from "axios";
 import{
     Avatar,
@@ -9,6 +9,7 @@ import{
 } from 'react-native-paper';
 import {Card} from "react-native-elements";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import API from "../services/api";
 export default function foodDetailScreen({route, navigation}){
     const {foodId, response}=route.params;
@@ -46,6 +47,19 @@ export default function foodDetailScreen({route, navigation}){
         <ScrollView>
       
            <SafeAreaView>
+           <View style={styles.return}>
+                
+                <View style={styles.returnIcon}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                        <FontAwesome
+                            name="arrow-left"
+                            color="#05375a"
+                            size={20}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.returnText}>Chi tiết</Text>
+            </View>
            <View style={styles.image}>
                 <Avatar.Image source={{uri: data.foodImage}} size={300}/>
             </View>
@@ -76,27 +90,26 @@ export default function foodDetailScreen({route, navigation}){
             
             <Text style={[styles.textMeterial,{marginTop: 10}]}>2. Các bước thực hiện</Text>
 
-            
-            <FlatList
-            
-                data={step}
-                renderItem={({item}) =>
-                    <View style={styles.stepCook}>
-                        <Text style={styles.textStep}>{'Bước' + ' ' + item.stepNumber + ''+':'}</Text>
-                        <Text>{item.stepDescription}</Text>
-                    </View>
-                    }
-                keyExtractor={(item) =>item.id}
-               />
+            <View>
+                {
+                    step.map((item) => {
+                        return (
+                            <View style={styles.stepCook}>
+                            <Text style={styles.textStep}>{'Bước' + ' ' + item.stepNumber + ''+':'}</Text>
+                            <Text>{item.stepDescription}</Text>
+                        </View>
+                        )
+                    })
 
+                }
+            </View>
+            
 
             
             
            
        </SafeAreaView>
        </ScrollView>
-       
-       
 
     );
 }
@@ -136,6 +149,25 @@ const styles = StyleSheet.create({
     },
     stepCookView:{
         marginBottom: 30,
+    },
+    return: {
+
+        height: 60,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        
+    },
+    returnIcon:{
+        marginLeft: 15,
+        marginTop: 30,
+        
+    },
+    returnText:{
+        marginTop: 25,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#05375a',
+        marginLeft: 130,
     }
 
 });
