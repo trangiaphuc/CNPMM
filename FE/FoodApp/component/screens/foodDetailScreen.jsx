@@ -103,11 +103,6 @@ export default function foodDetailScreen({route, navigation}){
 
                 }
             </View>
-            
-
-            
-            
-           
        </SafeAreaView>
        </ScrollView>
 

@@ -10,6 +10,7 @@ import productDetailScreen from '../screens/productDetailScreen';
 import foodDetailScreen from '../screens/foodDetailScreen';
 import cartScreen from '../screens/cartScreen';
 import welcomScreen from '../screens/welcomScreen';
+import favoriteFoodScreen from '../screens/favoriteFoodScreen';
 
 
 const RootStack = createStackNavigator();
@@ -24,6 +25,7 @@ const rootStackScreen = () => (
         <RootStack.Screen name="foodDetailScreen" component={foodDetailScreen} options={{headerShown: false}}/>
         <RootStack.Screen name="cartScreen" component={cartScreen} options={{headerShown: false}}/>
         <RootStack.Screen name="welcomScreen" component={welcomScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name="favoriteFoodScreen" component={favoriteFoodScreen} options={{headerShown: false}}/>
     </RootStack.Navigator>
 );
 
