@@ -19,9 +19,16 @@ import{
 import API from "../services/api";
 import darBoardScreen from "./darBoardScreen";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useIsFocused } from '@react-navigation/native';
 export default function welcomScreen({navigation, route}){
     const{response}=route.params;
     const[data, setData]=useState([]);
+    const[favorites, setFavorites]=useState([]);
+    const isFocused = useIsFocused();
+
+    
+
+
     const fetchdata = async() => {
         const result = await API.get(`user/information/${response.id}`,
         {
@@ -34,16 +41,98 @@ export default function welcomScreen({navigation, route}){
         //console.log(result.data.information);
         setData(result.data.information);
     }
+    const fetchFavorite = async() => {
+        const result = await API.get(`user/${response.id}/getFavorite/`,
+        {
+            headers:{
+                'Content-Type': 'application/json',
+                'x-access-token': response.accessToken
+                
+            },
+        });
+        
+        setFavorites(result.data.FavoriteFoodCategory);
+        console.log(result.data.FavoriteFoodCategory);
+    }
 
     useEffect(() => {
         fetchdata();
-    },[setData]);
+        fetchFavorite();
+    },[setData, setFavorites]);
+
+    useEffect(() => {
+        fetchFavorite();
+    },[isFocused])
+
+    if(favorites.length===0){
+        return (
+            <View>
+                <View style={styles.containerTitle}>
+                    <Avatar.Image source={{uri: data.userAvatar}}/>
+                    <View style={styles.title}>
+                        <Text style={styles.textTitle}>{'Hello, '+ data.firstname +' '+ data.lastname +'!'}</Text>
+                    </View>
+                </View>
+                <View>
+                    <Text style={styles.caption}>Bạn muốn nấu món gì hôm nay?</Text>
+                </View>
+                <View style={styles.containerButton}>
+                    <View style={styles.containerFood}>
+                        <TouchableOpacity onPress={()=>{
+                            navigation.navigate('darBoardScreen',{ response: response, screen: 'Food'});
+                        }}>
+                            <FontAwesome
+                                name="bars"
+                                color="#FF0000"
+                                size={60}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.containerShop}>
+                        <TouchableOpacity onPress={()=>{
+                            navigation.navigate('darBoardScreen',{ response: response});
+                        }}>
+                            <FontAwesome
+                                name="shopping-cart"
+                                color="#FF0000"
+                                size={60}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={styles.containerText}>
+                    <View style={styles.textCaption}>
+                        <Text style={styles.textCaptionDetail}>Món Ngon</Text>
+                    </View>
+                    <View style ={styles.textCaption}>
+                        <Text style={styles.textCaptionDetail}>Mua sắm ngay</Text>
+                    </View>
+                </View>
+                <View>
+                    <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
+                 
+                    <TouchableOpacity onPress={()=>{navigation.navigate('favoriteFoodScreen',{response: response})}}>
+                   <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                        <Text style={styles.addFavoriteFood}>Thêm món ăn yêu thích</Text>
+                        <View>
+                            <FontAwesome
+                                        name="plus"
+                                        color="#FF0000"
+                                        size={20}
+                                    />
+                            </View>
+                    </View>
+                </TouchableOpacity>
+                </View>
+            </View>
+        );
+    }
     return (
         <View>
             <View style={styles.containerTitle}>
                 <Avatar.Image source={{uri: data.userAvatar}}/>
                 <View style={styles.title}>
-                    <Text style={styles.textTitle}>{'Hello!, '+ data.firstname +' '+ data.lastname}</Text>
+                    <Text style={styles.textTitle}>{'Hello, '+ data.firstname +' '+ data.lastname +'!'}</Text>
                 </View>
             </View>
             <View>
@@ -81,6 +170,9 @@ export default function welcomScreen({navigation, route}){
                     <Text style={styles.textCaptionDetail}>Mua sắm ngay</Text>
                 </View>
             </View>
+            <View>
+                <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
+            </View>
         </View>
     );
 }
@@ -103,7 +195,7 @@ const styles = StyleSheet.create({
         marginTop:30,
         fontSize: 18,
         marginLeft: 20,
-        color: '#FF0000'
+        color: '#800000'
     },
     containerButton:{
         marginTop: 20,
@@ -111,7 +203,6 @@ const styles = StyleSheet.create({
         marginRight: 15,
         flexDirection: 'row',
         height: 90,
-        
     },
     containerFood:{
         flex: 1,
@@ -144,6 +235,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#FF0000',
         fontSize: 20,
-    }
+    },
+    addFavoriteFood:{
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginLeft: 50,
+        color: '#FF0000'
+
+    },
+   
     
 });

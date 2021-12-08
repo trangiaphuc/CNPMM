@@ -77,7 +77,6 @@ export default function userScreen({navigation, route}){
     return(
         <SafeAreaView>
             <View style={styles.return}>
-                
                 <View style={styles.returnIcon}>
                     <TouchableOpacity onPress={()=>{navigation.goBack();}}>
                         <FontAwesome
