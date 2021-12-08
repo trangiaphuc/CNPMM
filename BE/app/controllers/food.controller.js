@@ -247,3 +247,36 @@ exports.extractFoodMaterial = (req, res) =>{
     res.status(500).send({message: err.message});
   })
 }
+
+exports.getAllFavoriteFood = (req, res) => {
+  const listFavoriteFoodCategory = req.body.listFavoriteFoodCategory;
+  // res.send({listFavoriteFoodCategory});
+  var favoriteFoods = [];
+  var count =0;
+  listFavoriteFoodCategory.forEach(foodCategory => {
+    Food.findAll({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      where: {foodCategoryId: foodCategory.id},
+      order: Sequelize.literal('rand()'),
+      limit: 3
+    })
+    .then(foods =>{
+      count = count + 1;
+      foods.forEach(food =>{
+        
+        const image = fs.readFileSync(
+          __basedir + food.foodImage
+        );
+        var base64Image = Buffer.from(image).toString("base64");
+        food.foodImage = "data:image/png;base64,"+base64Image;
+
+        favoriteFoods.push(food);
+      })
+      if(count == listFavoriteFoodCategory.length) {
+        res.send({favoriteFoods: favoriteFoods});
+      }
+    })
+  })
+}

@@ -31,7 +31,7 @@ module.exports = function(app){
     [authJwt.verifyToken], 
     controller.getAllWithCatId);
     //search food
-    app.get('/api/foods/search', 
+    app.post('/api/foods/search', 
     [authJwt.verifyToken], 
     controller.search);
     //add new
@@ -39,10 +39,13 @@ module.exports = function(app){
     [authJwt.verifyToken],
     upload.single("file"), 
     controller.addNewFood)
-
+    //lấy nguyên liêu ra note và cart
     app.get('/api/foods/foodextract/:foodId',
     [authJwt.verifyToken],
-    upload.single("file"), 
     controller.extractFoodMaterial)
+    //lay cac mon anh tu danh sach danh muc mon an
+    app.post('/api/foods/favorite',
+    [authJwt.verifyToken], 
+    controller.getAllFavoriteFood)
     
 }

@@ -27,10 +27,10 @@ module.exports = function(app){
     [authJwt.verifyToken], 
     controller.getAllProWithCatId);
      //product search     app.get('/api/products/category/:id', 
-     app.get('/api/products/search/', 
+     app.post('/api/products/search/', 
      [authJwt.verifyToken], 
      controller.search);
-
+    //add new product
      app.post('/api/products/addnewproduct', 
      [authJwt.verifyToken],
      upload.single("file"),

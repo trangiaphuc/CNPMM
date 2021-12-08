@@ -17,17 +17,17 @@ module.exports = function(app){
     
     //add 
     app.post('/api/marketnote/:userId/add/', 
-    // [authJwt.verifyToken], 
+    [authJwt.verifyToken], 
     controller.addToNote);
     
     //delete
     app.put('/api/marketnote/:userId/delete/:marketNoteId', 
-    // [authJwt.verifyToken],
+    [authJwt.verifyToken],
     controller.deleteMarketNote);
 
     //delete
     app.put('/api/marketnote/:userId/edit/:marketNoteId', 
-    // [authJwt.verifyToken],
+    [authJwt.verifyToken],
     controller.editNote);
 
 }
