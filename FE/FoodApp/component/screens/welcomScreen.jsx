@@ -8,7 +8,8 @@ import {
     Platform,
     TextInput,
     Form,
-    Alert
+    Alert,
+    FlatList
 } from "react-native";
 import{
     Avatar,
@@ -17,6 +18,7 @@ import{
     TouchableRipple
 } from 'react-native-paper';
 import API from "../services/api";
+import {Card} from "react-native-elements";
 import darBoardScreen from "./darBoardScreen";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useIsFocused } from '@react-navigation/native';
@@ -25,6 +27,7 @@ export default function welcomScreen({navigation, route}){
     const[data, setData]=useState([]);
     const[favorites, setFavorites]=useState([]);
     const isFocused = useIsFocused();
+    const[dataFavorites, setDataFavorites]=useState([]);
 
     
 
@@ -47,17 +50,35 @@ export default function welcomScreen({navigation, route}){
             headers:{
                 'Content-Type': 'application/json',
                 'x-access-token': response.accessToken
-                
+
             },
         });
         
         setFavorites(result.data.FavoriteFoodCategory);
-        console.log(result.data.FavoriteFoodCategory);
+        //console.log(result.data.FavoriteFoodCategory);
+        //console.log(favorites);
+        //console.log(result.data.FavoriteFoodCategory.foodCategoryId);
     }
+    const fetchDataFavorite = async() => {
+        //console.log('Huy', favorites);
+        
+        const result = await API.post("foods/favorite", {listFavoriteFoodCategory: response.favoritesFoodCategory},
+        {
+            headers:{
+                'Content-Type': 'application/json',
+                'x-access-token': response.accessToken
+
+            },
+        });
+        setDataFavorites(result.data.favoriteFoods);
+        //console.log(result.data.favoriteFoods);
+    }
+    
 
     useEffect(() => {
         fetchdata();
         fetchFavorite();
+        fetchDataFavorite();
     },[setData, setFavorites]);
 
     useEffect(() => {
@@ -170,8 +191,34 @@ export default function welcomScreen({navigation, route}){
                     <Text style={styles.textCaptionDetail}>Mua sắm ngay</Text>
                 </View>
             </View>
-            <View>
+            <View style={styles.card}>
                 <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
+                <FlatList
+                    horizontal={true}
+                    data={dataFavorites}
+                    renderItem={({item})=>
+                        <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
+                            <Card>
+                                <Card.Image source={{uri: item.foodImage}}/>
+                                <Card.Divider/>
+                                
+                                <View style={styles.food}>
+                                    <Text style={styles.textFood}>{item.foodName}</Text>
+                                </View>
+                                <Card.Divider/>
+                            </Card>
+                        </TouchableOpacity>
+                    }
+                    keyExtractor={(item) =>item.id}
+                    
+                    />
+                {/* <View>
+                    {
+                    favorites.map(item => 
+                        <Text>{item.foodCategoryId}</Text>
+                    )
+                    }
+                </View> */}
             </View>
         </View>
     );
@@ -243,6 +290,15 @@ const styles = StyleSheet.create({
         color: '#FF0000'
 
     },
-   
-    
+    food:{
+        width: 220,
+        alignItems: 'center',
+    },
+    textFood:{
+        fontWeight: 'bold',
+    },
+    card:{
+        marginLeft: 15,
+        marginRight: 15,
+    }
 });

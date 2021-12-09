@@ -117,6 +117,7 @@ export default function userScreen({navigation, route}){
                         keyExtractor={(item) =>item.id}/>
             </View>
 
+            <View style={{marginBottom: 210}}>
             <FlatList
             data={data}
             renderItem={({item})=>
@@ -125,10 +126,7 @@ export default function userScreen({navigation, route}){
                         <Avatar.Image source={{uri:item.foodImage}} size={70}/>
                         <View style={{flex: 15}}>
                             <Text style={styles.textFoodTitle}>{item.foodName}</Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.textFood}>Calories:</Text>
-                                <Text style={styles.textFood}>{item.foodCalories}</Text>
-                            </View>
+                            
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={styles.textFood}>Mô tả:</Text>
                                 <Text style={styles.textFood}>{item.foodDescription}</Text>
@@ -146,6 +144,7 @@ export default function userScreen({navigation, route}){
                 </TouchableOpacity>
             }
             keyExtractor={(item) =>item.id}/>
+            </View>
         </SafeAreaView>
     );
 }

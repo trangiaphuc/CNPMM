@@ -11,6 +11,7 @@ import {Card} from "react-native-elements";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import API from "../services/api";
+
 export default function foodDetailScreen({route, navigation}){
     const {foodId, response}=route.params;
     const[data, setData]=useState([]);
@@ -44,7 +45,7 @@ export default function foodDetailScreen({route, navigation}){
    
     
     return(
-        <ScrollView>
+        
       
            <SafeAreaView>
            <View style={styles.return}>
@@ -60,7 +61,8 @@ export default function foodDetailScreen({route, navigation}){
                 </View>
                 <Text style={styles.returnText}>Chi tiết</Text>
             </View>
-           <View style={styles.image}>
+            <ScrollView>
+            <View style={styles.image}>
                 <Avatar.Image source={{uri: data.foodImage}} size={300}/>
             </View>
             <View style={styles.title}>
@@ -71,33 +73,55 @@ export default function foodDetailScreen({route, navigation}){
             
             
             <View style={styles.cardMeterial}>
-            <FlatList
-                horizontal={true}
+                {
+                    meterial.map((item) => 
+                        <View key={item.id}>
+                            <View>
+                                <Text style={styles.textMeterialTitle}>{'- '+item.foodMaterialName }</Text>
+                            </View>
+                            <View style={styles.weightMeterial}>
+                                <Text style={{marginLeft: 50}}>Khối lượng: </Text>
+                                <Text>{item.quantityDescription}</Text>
+                            </View>
+                        </View>
+                    )
+                }
+            </View>
+            {/* <FlatList
+                
                 data={meterial}
                 renderItem={({item})=>
-                    <Card>
+                   
                         <View>
-                            <Text style={styles.textMeterialTitle}>{item.foodMaterialName}</Text>
+                            <View>
+                                <Text style={styles.textMeterialTitle}>{'- '+item.foodMaterialName }</Text>
+                            </View>
+                            <View style={styles.weightMeterial}>
+                                <Text style={{marginLeft: 40}}>Khối lượng: </Text>
+                                <Text>{item.quantityDescription}</Text>
+                            </View>
                         </View>
-                        <View style={styles.weightMeterial}>
-                            <Text>Khối lượng: </Text>
-                            <Text>{item.quantityDescription}</Text>
-                        </View>
-                    </Card>
+                   
                 }
-                keyExtractor={(item) =>item.id}/>
-            </View>
+                keyExtractor={(item) =>item.id}/> */}
+            
             
             <Text style={[styles.textMeterial,{marginTop: 10}]}>2. Các bước thực hiện</Text>
 
-            <View>
+            <View style={{marginBottom: 70}}>
                 {
                     step.map((item) => {
                         return (
                             <SafeAreaView key={item.id}>
                                 <View style={styles.stepCook}>
-                                    <Text style={styles.textStep}>{'Bước' + ' ' + item.stepNumber + ''+':'}</Text>
-                                    <Text>{item.stepDescription}</Text>
+                                    <Card>
+                                        <Text style={styles.textStep}>{'Bước' + ' ' + item.stepNumber + ''+':'}</Text>
+                                        <Text>{item.stepDescription}</Text>
+                                    </Card>
+
+
+                                    {/* <Text style={styles.textStep}>{'Bước' + ' ' + item.stepNumber + ''+':'}</Text>
+                                    <Text>{item.stepDescription}</Text> */}
                                 </View>
                             </SafeAreaView>
                         
@@ -106,8 +130,10 @@ export default function foodDetailScreen({route, navigation}){
 
                 }
             </View>
+            </ScrollView>
+           
        </SafeAreaView>
-       </ScrollView>
+       
 
     );
 }
@@ -125,16 +151,17 @@ const styles = StyleSheet.create({
     },
     textMeterial:{
         marginLeft: 10,
+        fontSize: 20,
     },
     textMeterialTitle:{
         fontWeight: 'bold',
+        marginLeft: 20,
     },
     weightMeterial:{
         flexDirection: 'row',
     },
     textStep:{
-        marginLeft: 40,
-        marginTop: 10,
+        fontWeight: 'bold',
     },
     stepCook:{
         marginLeft: 10,
