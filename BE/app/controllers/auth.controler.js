@@ -2,6 +2,7 @@ const db = require('../models');
 const config = require('../config/auth.config');
 const User = db.user;
 const Role = db.role;
+const FavoriteFoodCategory = db.favoritesFoodCategory;
 const logger = require('../winston/winston');
 const Op = db.Sequelize.Op;
 
@@ -104,13 +105,31 @@ exports.signin = (req, res) => {
             for (let i = 0; i < roles.length; i++) {
               authorities.push("ROLE_" + roles[i].name.toUpperCase());
             }
-            res.status(200).send({
-              id: user.id,
-              username: user.username,
-              email: user.email,
-              roles: authorities,
-              accessToken: token
-            });
+            FavoriteFoodCategory.findAll({
+              logging: (sql, queryObject) =>{
+                logger.info(sql, queryObject);
+              },
+              where: { userId: user.id}
+            })
+            .then(favorites =>{
+
+              var favoritesFoodCategories = [];
+              favorites.forEach(favorite => {
+                favoritesFoodCategories.push({"id" : favorite.foodCategoryId})
+              })
+
+              res.status(200).send({
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                roles: authorities,
+                accessToken: token,
+                favoritesFoodCategory: favoritesFoodCategories
+              });
+            })
+            .catch(err =>{
+              res.status(500).send({message: err.message});
+            })
           });
         }
       }
