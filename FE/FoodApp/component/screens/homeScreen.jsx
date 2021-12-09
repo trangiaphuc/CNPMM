@@ -18,6 +18,8 @@ export default function homeScreen({navigation, route}){
         textSearch: '',
     });
     const [search, setSearch]=useState([]);
+    const [click, setClick]=useState(false);
+    //console.log(click);
     //console.log(response);
 
     const fetchdata = async() => {
@@ -51,6 +53,8 @@ export default function homeScreen({navigation, route}){
                 .then(response => {
                     //console.log(response.data.products);
                     setProductCategory(response.data.products)
+                    // setClick(true);
+                    // console.log(click);
                     
                 }).catch(error => {
                         alert('Error', error.response);
@@ -89,7 +93,134 @@ export default function homeScreen({navigation, route}){
 
 
     const searchProduct =()=>{
-        alert(dataSearch.textSearch);
+        //alert(dataSearch.textSearch);
+        
+        API.post(`products/search`,{keyword: dataSearch.textSearch},
+                {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'x-access-token': response.accessToken,
+                    },
+                })
+                .then(res => {
+                    //console.log(res.data.products);
+                    
+                    if(res.data.products.length !==0);
+                    {
+                        setSearch(res.data.products);
+                        setClick(true);
+                    }
+                    
+                    
+                }).catch(error => {
+                        alert('Error', error.res);
+                });
+    }
+
+    if(click===true){
+        //console.log(search);
+        return (
+            <SafeAreaView style={styles.productContainerSearch}>
+                <View style={styles.return}>
+                    <View style={styles.returnIcon}>
+                        <TouchableOpacity onPress={()=>{setClick(false);}}>
+                            <FontAwesome
+                                name="arrow-left"
+                                color="#05375a"
+                                size={20}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={styles.returnText}>Tìm kiếm</Text>
+                </View>
+                <ScrollView>
+                <View>
+                    {
+                        search.map(item =>
+                            
+                            <SafeAreaView key={item.id}>
+                                
+                                <Card>
+                                        <Card.Title>{item.proName}</Card.Title>
+                                        <Card.Divider/>
+                                        <Card.Image source = {{uri:item.productImage}} />
+
+                                        
+                                        <View style={{flex: 1, flexDirection: 'row', padding:10}}>
+                                            <Text style={styles.price}>Giá:</Text>
+                                            <Text style={{flex: 2}}>{item.price}đ/kg</Text>
+                                        </View>
+                                        <Card.Divider/>
+                                        
+                                        <View style={styles.button}>
+                                            <View style={{marginRight: 20}}>
+                                                <NumericInput
+                                                    minValue={1}
+                                                    maxValue={50}
+                                                    step={1}
+                                                    
+                                                    totalHeight={40}
+                                                    onChange={(value) =>onChange(value)}
+                                                    rounded/>
+                                            </View>
+                                            <View>
+                                                <TouchableOpacity onPress={()=>{
+                                                    if(quantityValue !==0){
+                                                        API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
+                                                    {
+                                                        headers:{
+                                                            'Content-Type': 'application/json',
+                                                            'x-access-token': response.accessToken,
+                                                            
+                                                        },
+                                                    })
+                                                    .then(res => {
+                                                        if(res.status===201)
+                                                        {
+                                                            alert(res.data.message);
+                                                            
+                                                            //navigation.params.resetData();
+                                                            // RNRestart.Restart();
+                                                        }
+                                                        
+                                                    }).catch(error => {
+                                                            //alert('Error', error.res);
+                                                            console.log(error.res);
+                                                        
+                                                    });
+                                                    }
+                                                    else{
+                                                        alert("Vui lòng chọn số lượng sản phẩm")
+                                                    }
+
+
+                                                }}>
+                                                        <LinearGradient
+                                                            colors={['#FF4B3A','#FF4B3A']}
+                                                            style={styles.signIn}>
+                                                                <FontAwesome
+                                                                name="shopping-cart"
+                                                                color="#FFFFFF"
+                                                                size={20}
+                                                            />
+                                                            <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
+                                                            
+                                                        </LinearGradient>
+                                                        
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    </Card>
+                                
+                            </SafeAreaView>
+                            
+                            )
+                    }
+                </View>
+                </ScrollView>
+                
+            </SafeAreaView>
+        );
     }
     
     return(
@@ -342,6 +473,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#05375a',
         marginLeft: 120,
+    },
+    productContainerSearch:{
+        marginBottom: 60,
     }
   
 });

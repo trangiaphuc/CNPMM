@@ -94,10 +94,13 @@ export default function foodDetailScreen({route, navigation}){
                 {
                     step.map((item) => {
                         return (
-                            <View style={styles.stepCook}>
-                            <Text style={styles.textStep}>{'Bước' + ' ' + item.stepNumber + ''+':'}</Text>
-                            <Text>{item.stepDescription}</Text>
-                        </View>
+                            <SafeAreaView key={item.id}>
+                                <View style={styles.stepCook}>
+                                    <Text style={styles.textStep}>{'Bước' + ' ' + item.stepNumber + ''+':'}</Text>
+                                    <Text>{item.stepDescription}</Text>
+                                </View>
+                            </SafeAreaView>
+                        
                         )
                     })
 
