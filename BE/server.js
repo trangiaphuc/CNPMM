@@ -48,7 +48,7 @@ require('./app/routes/product.routes')(app);
 //cart routes
 require('./app/routes/cart.routes')(app);
 //images routes
-require('./app/routes/image.routes')(app);
+// require('./app/routes/image.routes')(app);
 //paymentMethod
 require('./app/routes/paymentMethod.routes')(app);
 //deliveryMethod

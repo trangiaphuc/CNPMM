@@ -40,8 +40,8 @@ db.deliveryStatusType = require("../models/delivery.model.js")(sequelize, Sequel
 db.order = require("../models/order.model.js")(sequelize, Sequelize);
 db.orderDetail = require("../models/orderDetail.model.js")(sequelize, Sequelize);
 db.paymentMethod = require("../models/paymentMethod.model.js")(sequelize, Sequelize);
-db.shipper = require("../models/shipper.model.js")(sequelize, Sequelize);
-db.image = require("../models/images.model.js")(sequelize, Sequelize);
+// db.shipper = require("../models/shipper.model.js")(sequelize, Sequelize);
+// db.image = require("../models/images.model.js")(sequelize, Sequelize);
 //many to many table
 db.favoritesFoodCategory = sequelize.define('favoriteFoodCategories');
 db.district = require("../models/address.district.model")(sequelize, Sequelize);

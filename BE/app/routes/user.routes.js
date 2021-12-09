@@ -11,7 +11,9 @@ module.exports = function(app) {
   });
 
   //get user profile
-  app.get("/api/user/information/:id", [authJwt.verifyToken], controller.information);
+  app.get("/api/user/information/:id", 
+  // [authJwt.verifyToken], 
+  controller.information);
   //update user information
   app.put("/api/user/updateinfor/:id", [authJwt.verifyToken], controller.updateinfor);
   //change user password

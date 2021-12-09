@@ -105,31 +105,13 @@ exports.signin = (req, res) => {
             for (let i = 0; i < roles.length; i++) {
               authorities.push("ROLE_" + roles[i].name.toUpperCase());
             }
-            FavoriteFoodCategory.findAll({
-              logging: (sql, queryObject) =>{
-                logger.info(sql, queryObject);
-              },
-              where: { userId: user.id}
-            })
-            .then(favorites =>{
-
-              var favoritesFoodCategories = [];
-              favorites.forEach(favorite => {
-                favoritesFoodCategories.push({"id" : favorite.foodCategoryId})
-              })
-
-              res.status(200).send({
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                roles: authorities,
-                accessToken: token,
-                favoritesFoodCategory: favoritesFoodCategories
-              });
-            })
-            .catch(err =>{
-              res.status(500).send({message: err.message});
-            })
+            res.status(200).send({
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              roles: authorities,
+              accessToken: token,
+            }); 
           });
         }
       }

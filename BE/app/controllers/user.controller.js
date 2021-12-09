@@ -28,8 +28,28 @@ var fs = require("fs");
         var base64Avatar = Buffer.from(userAvatar).toString("base64");
 
         user.userAvatar = "data:image/png;base64,"+base64Avatar;
+        
+        FavoriteFoodCategory.findAll({
+          logging: (sql, queryObject) =>{
+            logger.info(sql, queryObject);
+          },
+          where: { userId: user.id}
+        })
+        .then(favorites =>{
 
-        res.status(200).send({information: user});
+          var favoritesFoodCategories = [];
+          favorites.forEach(favorite => {
+            favoritesFoodCategories.push({"id" : favorite.foodCategoryId})
+          })
+          user.setDataValue('favoriteFoodCategory', favoritesFoodCategories);
+          res.status(200).send({information: user});
+         
+        })
+        .catch(err =>{
+          res.status(500).send({message: err.message});
+        })
+
+        
       }
       else{
         logger.error(`${new Date()}: Request: status: ${res.status(404)}  error User not found`);
