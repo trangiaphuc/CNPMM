@@ -42,7 +42,6 @@ export default function signIn({navigation}){
                 {
                     headers:{
                         'Content-Type': 'application/json'
-                        
                     },
                 })
                 .then(response => {
