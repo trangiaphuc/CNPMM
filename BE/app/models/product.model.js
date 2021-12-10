@@ -22,7 +22,7 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.DATEONLY
         },
         expireAt: {
-            type : Sequelize.DATEONLY
+            type : Sequelize.STRING
         },
         manual:{
             type : Sequelize.STRING

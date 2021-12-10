@@ -16,11 +16,6 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          catName: "Bánh kẹo các loại",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
           catName: "Mì, cháo, phở bún",
           createdAt: new Date(),
           updatedAt: new Date(),
