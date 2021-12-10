@@ -68,7 +68,7 @@ export default function foodDetailScreen({route, navigation}){
             <View style={styles.title}>
                 <Text style={styles.textTitle}>{data.foodName}</Text>
             </View>
-           
+           <Text style={{marginLeft: 15, marginRight: 15, marginBottom: 10, marginTop: 15}}>{data.foodDescription}</Text>
            <Text style={styles.textMeterial}>1. Nguyên liệu</Text>
             
             
@@ -76,13 +76,11 @@ export default function foodDetailScreen({route, navigation}){
                 {
                     meterial.map((item) => 
                         <View key={item.id}>
-                            <View>
-                                <Text style={styles.textMeterialTitle}>{'- '+item.foodMaterialName }</Text>
-                            </View>
-                            <View style={styles.weightMeterial}>
-                                <Text style={{marginLeft: 50}}>Khối lượng: </Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.textMeterialTitle}>{'- '+item.foodMaterialName+ ' '}</Text>
                                 <Text>{item.quantityDescription}</Text>
                             </View>
+
                         </View>
                     )
                 }

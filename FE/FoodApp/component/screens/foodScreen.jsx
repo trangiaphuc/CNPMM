@@ -136,10 +136,7 @@ export default function userScreen({navigation, route}){
                                             <View style={{flex: 15}}>
                                                 <Text style={styles.textFoodTitle}>{item.foodName}</Text>
                                                 
-                                                <View style={{flexDirection: 'row'}}>
-                                                    <Text style={styles.textFood}>Mô tả:</Text>
-                                                    <Text style={styles.textFood}>{item.foodDescription}</Text>
-                                                </View>
+                                               
                                             </View>
                                             
                                             <View style={{flex: 1, marginTop: 13}}>
@@ -214,10 +211,7 @@ export default function userScreen({navigation, route}){
                         <View style={{flex: 15}}>
                             <Text style={styles.textFoodTitle}>{item.foodName}</Text>
                             
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.textFood}>Mô tả:</Text>
-                                <Text style={styles.textFood}>{item.foodDescription}</Text>
-                            </View>
+                            
                         </View>
                         
                         <View style={{flex: 1, marginTop: 13}}>

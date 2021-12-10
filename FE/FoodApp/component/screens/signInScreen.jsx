@@ -59,11 +59,11 @@ export default function signIn({navigation}){
                 });
             }
             else {
-                Alert.alert("Please enter your password");
+                Alert.alert("Thông báo","Vui lòng nhập mật khẩu");
             }
         }
         else{
-            Alert.alert("Please enter your username");
+            Alert.alert("Thông báo","Vui lòng nhập tên tài khoản");
         }
     }
 

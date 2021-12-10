@@ -213,29 +213,34 @@ export default function welcomScreen({navigation, route}){
                 </View>
                 <View style={styles.card}>
                     <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
-                    <ScrollView>
+                    
+                    
+                    <View>
                     <FlatList
                         horizontal={true}
                         data={dataFavorites}
                         renderItem={({item})=>
                             <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
                                 <Card>
-                                    <Card.Image source={{uri: item.foodImage}}/>
+                                    <View style={{marginTop: 40}}>
+                                        <Card.Image source={{uri: item.foodImage}}/>
+                                    </View>
                                     <Card.Divider/>
                                     
                                     {/* <View style={styles.food}>
                                         <Text style={styles.textFood}>{item.foodName}</Text>
                                     </View> */}
-                                    <Card.Title style={{width:220}}>{item.foodName}</Card.Title>
+                                    <Card.Title style={{width:220, height: 70}}>{item.foodName}</Card.Title>
                                     <Card.Divider/>
                                 </Card>
                             </TouchableOpacity>
                         }
                         keyExtractor={(item) =>item.id}
                         
-                        
                         />
-                    </ScrollView>
+                    </View>
+                    
+                    
                     {/* <View style={{marginBottom: 300}}>
                         <ScrollView>
                             {
@@ -279,7 +284,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     caption:{
-        marginTop:30,
+        marginTop:60,
         fontSize: 18,
         marginLeft: 20,
         color: '#800000'
@@ -341,5 +346,8 @@ const styles = StyleSheet.create({
     card:{
         marginLeft: 15,
         marginRight: 15,
+    },
+    cardFood:{
+        marginBottom: 1,
     }
 });

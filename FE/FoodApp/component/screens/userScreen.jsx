@@ -53,6 +53,8 @@ export default function userScreen({navigation, route}){
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.returnText}>Thông tin cá nhân</Text>
+                
+                
             </View>
            <ScrollView>
            <View style={styles.userInfoSection}>
@@ -107,7 +109,7 @@ export default function userScreen({navigation, route}){
                 </View>
             </View>
             <View style={styles.menuWrapper}>
-                <TouchableRipple onPress={()=>{}}>
+                <TouchableRipple onPress={()=>{navigation.navigate('favoriteFoodScreen',{response: response})}}>
                     <View style={styles.menuItem}>
                         <Icon name="heart-outline" color="#FE6347" size={25}/>
                         <Text style={styles.menuItemText}>Your Favourites</Text>
