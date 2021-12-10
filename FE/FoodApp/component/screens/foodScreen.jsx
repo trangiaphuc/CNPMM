@@ -15,6 +15,11 @@ export default function userScreen({navigation, route}){
     const{response}=route.params;
     const[foodCategory, setfoodCategory]=useState([]);
     const[data, setData]=useState([]);
+    const[dataSearch, setDataSearch]=React.useState({
+        textSearch: '',
+    });
+    const[search, setSearch]=useState([]);
+    const [click, setClick]=useState(false);
    
 
     
@@ -73,7 +78,88 @@ export default function userScreen({navigation, route}){
                     
             );
         }
-       
+        const textInputChange=(val)=>{
+        
+            setDataSearch({
+                ...dataSearch,
+                textSearch: val,
+            });
+        
+    }
+    const searchFood =()=>{
+        //alert(dataSearch.textSearch);
+        
+        API.post(`foods/search`,{keyword: dataSearch.textSearch},
+                {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'x-access-token': response.accessToken,
+                    },
+                })
+                .then(res => {
+                    //console.log(res.data.products);
+                    
+                   
+                        setSearch(res.data.foods);
+                        //console.log(res.data.foods);
+                        setClick(true);
+                 
+                    
+                }).catch(error => {
+                        alert('Error', error.res);
+                });
+    }
+    if(click===true) {
+        return(
+            <SafeAreaView>
+                <View style={styles.return}>
+                    <View style={styles.returnIcon}>
+                        <TouchableOpacity onPress={()=>{setClick(false);}}>
+                            <FontAwesome
+                                name="arrow-left"
+                                color="#05375a"
+                                size={20}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={styles.returnTextSearch}>Tìm kiếm món ăn</Text>
+                   
+                </View>
+                <ScrollView>
+                    <View>
+                        {
+                            search.map(item =>
+                                <SafeAreaView key={item.id}>
+                                    <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
+                                        <View style={styles.container_food}>
+                                            <Avatar.Image source={{uri:item.foodImage}} size={70}/>
+                                            <View style={{flex: 15}}>
+                                                <Text style={styles.textFoodTitle}>{item.foodName}</Text>
+                                                
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <Text style={styles.textFood}>Mô tả:</Text>
+                                                    <Text style={styles.textFood}>{item.foodDescription}</Text>
+                                                </View>
+                                            </View>
+                                            
+                                            <View style={{flex: 1, marginTop: 13}}>
+                                                <FontAwesome
+                                                    name="angle-right"
+                                                    color="#05375a"
+                                                    size={20}
+                                                    />
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                </SafeAreaView>
+                                )
+                        }
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        );
+    }
+
     return(
         <SafeAreaView>
             <View style={styles.return}>
@@ -95,9 +181,10 @@ export default function userScreen({navigation, route}){
                             autoCapitalize='none'
                             style={styles.textInput}
                             placeholderStyle={{color:'#FF0000'}}
+                            onChangeText={(val)=>textInputChange(val)}
                             
                         />
-                        <TouchableOpacity onPress={()=>{}}>
+                        <TouchableOpacity onPress={searchFood}>
                             <View style={styles.iconSearch}>
                                 <FontAwesome
                                     name="search"
@@ -240,6 +327,13 @@ const styles = StyleSheet.create({
     returnText:{
         marginTop: 25,
         marginLeft: 130,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: '#05375a'
+    }, 
+    returnTextSearch:{
+        marginTop: 25,
+        marginLeft: 85,
         fontWeight: 'bold',
         fontSize: 20,
         color: '#05375a'

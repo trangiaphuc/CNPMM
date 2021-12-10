@@ -1,4 +1,4 @@
-import React, {useState, useEffect}from "react";
+import React, {useState, useEffect, useCallback}from "react";
 import {
     StyleSheet,
     View,
@@ -27,12 +27,13 @@ export default function welcomScreen({navigation, route}){
     const[data, setData]=useState([]);
     const[favorites, setFavorites]=useState([]);
     const isFocused = useIsFocused();
+    
     const[dataFavorites, setDataFavorites]=useState([]);
 
     
 
 
-    const fetchdata = async() => {
+    const fetchdata =useCallback( async() => {
         const result = await API.get(`user/information/${response.id}`,
         {
             headers:{
@@ -43,8 +44,10 @@ export default function welcomScreen({navigation, route}){
         });
         //console.log(result.data.information);
         setData(result.data.information);
-    }
-    const fetchFavorite = async() => {
+        //console.log(result.data.information);
+        
+    })
+    const fetchFavorite = useCallback( async() => {
         const result = await API.get(`user/${response.id}/getFavorite/`,
         {
             headers:{
@@ -53,37 +56,51 @@ export default function welcomScreen({navigation, route}){
 
             },
         });
-        
+        //console.log('Huy',result.data.FavoriteFoodCategory);
         setFavorites(result.data.FavoriteFoodCategory);
-        //console.log(result.data.FavoriteFoodCategory);
-        //console.log(favorites);
-        //console.log(result.data.FavoriteFoodCategory.foodCategoryId);
-    }
-    const fetchDataFavorite = async() => {
-        //console.log('Huy', favorites);
-        
-        const result = await API.post("foods/favorite", {listFavoriteFoodCategory: response.favoritesFoodCategory},
-        {
-            headers:{
-                'Content-Type': 'application/json',
-                'x-access-token': response.accessToken
 
-            },
-        });
-        setDataFavorites(result.data.favoriteFoods);
-        //console.log(result.data.favoriteFoods);
-    }
+
+
+    })
     
+  
+        const fetchDataFavorite = async() => {
+            //console.log(data.favoriteFoodCategory);
+          
+            try{
+                const result = await API.post("foods/favorite", {listFavoriteFoodCategory: data.favoriteFoodCategory},
+                {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'x-access-token': response.accessToken
+                    },
+                });
+                setDataFavorites(result.data.favoriteFoods);
+        
+            } catch (err) {console.log(err);}
+        }
 
+    
     useEffect(() => {
         fetchdata();
         fetchFavorite();
         fetchDataFavorite();
-    },[setData, setFavorites]);
+    },[isFocused]);
+  
 
-    useEffect(() => {
-        fetchFavorite();
-    },[isFocused])
+
+
+    // useEffect(() => {
+    //     fetchFavorite().then(()=>{fetchDataFavorite().then(()=>{console.log('inner');}).catch(()=>{console.log('HHHHH')});}).catch((err) => {console.log(err)});
+    //     console.log("run");
+    // },[isFocused]);
+
+    // useEffect(() => {
+    //     fetchDataFavorite();
+    // },[isFocused]);
+
+  
+
 
     if(favorites.length===0){
         return (
@@ -147,81 +164,85 @@ export default function welcomScreen({navigation, route}){
                 </View>
             </View>
         );
-    }
-    return (
-        <View>
-            <View style={styles.containerTitle}>
-                <Avatar.Image source={{uri: data.userAvatar}}/>
-                <View style={styles.title}>
-                    <Text style={styles.textTitle}>{'Hello, '+ data.firstname +' '+ data.lastname +'!'}</Text>
-                </View>
-            </View>
+    } else {
+        
+        return (
             <View>
-                <Text style={styles.caption}>Bạn muốn nấu món gì hôm nay?</Text>
-            </View>
-            <View style={styles.containerButton}>
-                <View style={styles.containerFood}>
-                    <TouchableOpacity onPress={()=>{
-                        navigation.navigate('darBoardScreen',{ response: response, screen: 'Food'});
-                    }}>
-                        <FontAwesome
-                            name="bars"
-                            color="#FF0000"
-                            size={60}
-                        />
-                    </TouchableOpacity>
+                <View style={styles.containerTitle}>
+                    <Avatar.Image source={{uri: data.userAvatar}}/>
+                    <View style={styles.title}>
+                        <Text style={styles.textTitle}>{'Hello, '+ data.firstname +' '+ data.lastname +'!'}</Text>
+                    </View>
                 </View>
-                <View style={styles.containerShop}>
-                    <TouchableOpacity onPress={()=>{
-                        navigation.navigate('darBoardScreen',{ response: response});
-                    }}>
-                        <FontAwesome
-                            name="shopping-cart"
-                            color="#FF0000"
-                            size={60}
-                        />
-                    </TouchableOpacity>
+                <View>
+                    <Text style={styles.caption}>Bạn muốn nấu món gì hôm nay?</Text>
                 </View>
-            </View>
-            <View style={styles.containerText}>
-                <View style={styles.textCaption}>
-                    <Text style={styles.textCaptionDetail}>Món Ngon</Text>
-                </View>
-                <View style ={styles.textCaption}>
-                    <Text style={styles.textCaptionDetail}>Mua sắm ngay</Text>
-                </View>
-            </View>
-            <View style={styles.card}>
-                <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
-                <FlatList
-                    horizontal={true}
-                    data={dataFavorites}
-                    renderItem={({item})=>
-                        <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
-                            <Card>
-                                <Card.Image source={{uri: item.foodImage}}/>
-                                <Card.Divider/>
-                                
-                                <View style={styles.food}>
-                                    <Text style={styles.textFood}>{item.foodName}</Text>
-                                </View>
-                                <Card.Divider/>
-                            </Card>
+                <View style={styles.containerButton}>
+                    <View style={styles.containerFood}>
+                        <TouchableOpacity onPress={()=>{
+                            navigation.navigate('darBoardScreen',{ response: response, screen: 'Food'});
+                        }}>
+                            <FontAwesome
+                                name="bars"
+                                color="#FF0000"
+                                size={60}
+                            />
                         </TouchableOpacity>
-                    }
-                    keyExtractor={(item) =>item.id}
-                    
-                    />
-                {/* <View>
-                    {
-                    favorites.map(item => 
-                        <Text>{item.foodCategoryId}</Text>
-                    )
-                    }
-                </View> */}
+                    </View>
+                    <View style={styles.containerShop}>
+                        <TouchableOpacity onPress={()=>{
+                            navigation.navigate('darBoardScreen',{ response: response});
+                        }}>
+                            <FontAwesome
+                                name="shopping-cart"
+                                color="#FF0000"
+                                size={60}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={styles.containerText}>
+                    <View style={styles.textCaption}>
+                        <Text style={styles.textCaptionDetail}>Món Ngon</Text>
+                    </View>
+                    <View style ={styles.textCaption}>
+                        <Text style={styles.textCaptionDetail}>Mua sắm ngay</Text>
+                    </View>
+                </View>
+                <View style={styles.card}>
+                    <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
+                    <FlatList
+                        //horizontal={true}
+                        data={dataFavorites}
+                        renderItem={({item})=>
+                            <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
+                                <Card>
+                                    <Card.Image source={{uri: item.foodImage}}/>
+                                    <Card.Divider/>
+                                    
+                                    <View style={styles.food}>
+                                        <Text style={styles.textFood}>{item.foodName}</Text>
+                                    </View>
+                                    <Card.Divider/>
+                                </Card>
+                            </TouchableOpacity>
+                        }
+                        keyExtractor={(item) =>item.id}
+                        
+                        
+                        />
+                    {/* <View>
+                        {
+                        favorites.map(item => 
+                            <Text>{item.foodCategoryId}</Text>
+                        )
+                        }
+                    </View> */}
+                </View>
             </View>
-        </View>
-    );
+        );
+    }
+    
 }
 const styles = StyleSheet.create({
     containerTitle:{
@@ -286,7 +307,7 @@ const styles = StyleSheet.create({
     addFavoriteFood:{
         fontWeight: 'bold',
         marginTop: 10,
-        marginLeft: 50,
+        marginLeft: 30,
         color: '#FF0000'
 
     },
@@ -296,6 +317,7 @@ const styles = StyleSheet.create({
     },
     textFood:{
         fontWeight: 'bold',
+        marginLeft: 70
     },
     card:{
         marginLeft: 15,
