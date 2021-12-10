@@ -190,7 +190,7 @@ module.exports = {
         },
         //foodCategory 5
         {
-          foodCategoryId: 4 ,
+          foodCategoryId: 5 ,
           foodName: "Bánh Mochi nhân đậu đỏ",
           foodDescription: "Bánh mochi nhân đậu đỏ thơm ngon, rất được nhiều người yêu thích. Bạn đã thử chưa, hãy tham khảo cách làm sau nhé.",
           foodCalories: "NaN",
@@ -199,7 +199,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          foodCategoryId: 4 ,
+          foodCategoryId: 5 ,
           foodName: "Bánh gạo cay Hàn Quốc",
           foodDescription: "Bánh gạo cay Hàn Quốc làm rất đơn giản và không mất nhiều thời gian, bạn có thể tự làm món bánh này ngay tại căn bếp của mình nhé.",
           foodCalories: "NaN",
@@ -208,7 +208,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          foodCategoryId: 4 ,
+          foodCategoryId: 5 ,
           foodName: "Bánh bông lan",
           foodDescription: "Không nhất thiết phải có lò vi sóng mới làm được bánh bông lan, mà bạn có thể sử dụng nồi cơm điện để hấp bánh, rất đơn giản.",
           foodCalories: "NaN",
@@ -217,7 +217,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          foodCategoryId: 4 ,
+          foodCategoryId: 5 ,
           foodName: "Bánh xèo",
           foodDescription: "",
           foodCalories: "NaN",
@@ -226,7 +226,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          foodCategoryId: 4 ,
+          foodCategoryId: 5 ,
           foodName: "Bánh Sandwich 3 màu",
           foodDescription: "",
           foodCalories: "NaN",

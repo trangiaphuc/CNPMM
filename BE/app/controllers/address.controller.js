@@ -9,9 +9,11 @@ exports.getProvince = (req, res) =>{
         },
     })
     .then((provinces) =>{
+        logger.info(`Request status: ${res.status(200)} data ${provinces}`);
         res.status(200).send({provinces: provinces});
     })
     .catch((err) =>{
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({err: err});
     })
 }
@@ -24,9 +26,11 @@ exports.getDistrict = (req, res)=>{
         },
     })
     .then(districts =>{
+        logger.info(`Request status: ${res.status(200)} data ${districts}`);
         res.status(200).send({districts: districts});
     })
     .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({err: err});
     })
 }

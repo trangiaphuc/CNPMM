@@ -26,9 +26,11 @@ exports.addToNote = (req, res) =>{
     })
     if(flag)
     { 
+        logger.info(`Request status: ${res.status(201)} Created!`);
         res.status(201).send({message: "Success!"});
     }
     else{
+        logger.error(`Request status: ${res.status(500)}  error`);
         res.status(500).send({message: "Fail!"});
     }
 }
@@ -46,13 +48,16 @@ exports.getAllMarketNotes = (req, res)=>{
     })
     .then(marketNotes =>{
         if(marketNotes){
+            logger.info(`Request status: ${res.status(200)} data ${marketNotes}`);
             res.status(200).send({marketNotes: marketNotes});
         }
         else{
+            logger.info(`Request status: ${res.status(200)} data Empty!`);
             res.status(200).send({marketNotes: "Empty!"});
         }
     })
     .catch(err=>{
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({message: err.message})
     })
 }
@@ -81,17 +86,21 @@ exports.deleteMarketNote = (req, res) =>{
             })
             .then(updatedItem=>{
                 if(updatedItem){
+                    logger.info(`Request status: ${res.status(200)} data ${updatedItem}`);
                     res.status(200).send({message: 'Success!'});
                 }
                 else{
+                    logger.error(`Request status: ${res.status(500)}  error`);
                     res.status(500).send({message: 'Fail!'});
                 }
             })
             .catch(err =>{
+                logger.error(`Request status: ${res.status(500)}  error ${err}`);
                 res.status(500).send({message: err.message});
             })
         }
         else{
+            logger.error(`Request status: ${res.status(404)}  Not found`);
             res.status(404).send({message: 'Not Found!'});
         }
     })
@@ -121,18 +130,22 @@ exports.editNote = (req, res) =>{
             })
             .then(updatedItem =>{
                 if(updatedItem){
+                    logger.info(`Request status: ${res.status(200)} data ${updatedItem}`);
                     res.status(200).send({message: 'Success!'});
                 }
                 else{
+                    logger.error(`Request status: ${res.status(500)}  error`);
                     res.status(500).send({message: 'Fail!'})
                 }
             })
         }
         else{
+            logger.error(`Request status: ${res.status(404)}  Not found`);
             res.status(404).send({message: 'Not Found!'})
         }
     })
     .catch(err=>{
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({message: err.message})
     })
 }

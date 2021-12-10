@@ -270,9 +270,11 @@ var fs = require("fs");
       where: { userId: userId}
     })
     .then(favorites =>{
+      logger.info(`Request status: ${res.status(200)} data ${favorites}`);
         res.status(200).send({FavoriteFoodCategory: favorites});
     })
     .catch(err =>{
+      logger.error(`Request status: ${res.status(500)}  error ${err}`);
       res.status(500).send({message: err.message});
     })
   }

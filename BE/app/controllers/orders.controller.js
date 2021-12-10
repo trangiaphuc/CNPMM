@@ -52,13 +52,16 @@ exports.getOrderHistoryByUserId = (req, res) =>{
                 totalPrice = totalPrice + order.deliveryMethod.fee;
                 order.setDataValue('totalPrice', totalPrice);
             });
+            logger.info(`Request status: ${res.status(200)} data ${orders}`);
             res.status(200).send({orders: orders});
         }
         else{
+            logger.info(`Request status: ${res.status(200)} data Empty!`);
             res.status(200).send('Empty!');
         }
     })
     .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({message: err.message});
     })
 }
@@ -103,13 +106,16 @@ exports.getOrderDetailByUserId = (req, res) =>{
             });
             totalPrice = totalPrice + order.deliveryMethod.fee;
             order.setDataValue('totalPrice', totalPrice);
+            logger.info(`Request status: ${res.status(200)} data ${order}`);
             res.status(200).send({order: order});
         }
         else{
+            logger.error(`Request status: ${res.status(404)}  Not found`);
             res.status(404).send({message: 'Not Found!'});
         }
     })
     .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({message: err.message});
     })
 }
@@ -153,18 +159,22 @@ exports.addNewOrder = (req, res) => {
                     }
                 });
                 if(flag){
+                    logger.info(`Request status: ${res.status(200)} Success!`);
                     res.status(200).send({message: 'Success!'});
                 }
                 else{
+                    logger.error(`Request status: ${res.status(500)}  error`);
                     res.status(500).send({message: 'Fail!'});
                 }
             });
         }
         else{
+            logger.error(`Request status: ${res.status(500)}  error`);
             res.status(500).send({message:"Fail!"});
         }
     })
     .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({message: err.message});
     })
 }

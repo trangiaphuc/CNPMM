@@ -363,7 +363,7 @@ module.exports = {
         },
         {
           foodId: 11,
-          stepNumber: 4,
+          stepNumber: 5,
           stepDescription: "Tiếp theo bạn hãy đổ bớt dầu trong chảo vừa chiên mực ra 1 cái bát con đun nóng chảo dầu rồi cho số tỏi đã băm vào trong chảo phi thơm và cho mực cùng với số gừng đã thái vào trong chảo đảo thật đều. Sau đó bạn cho số nước mắm đã pha ở bước 3 vào trong chảo đảo đều. Bạn hãy đun khoảng 2 – 3 phút cho phần nước mắm cạn bám xung quanh mực và mực chuyển sang màu vàng cánh gián thì lúc đó bạn hãy tắt bếp. Cuối cùng các bạn chỉ cần cho mực ra đĩa rồi dùng nóng ăn với cơm. Để cho món mực chiên nước mắm thêm thơm ngon độc đáo hơn thì các bạn hãy chuẩn bị thêm chút rau mùi trang trí lên đĩa mực chiên nước mắm và 1 đĩa tương ớt để chấm cùng với mực.",
           createdAt: new Date(),
           updatedAt: new Date(),

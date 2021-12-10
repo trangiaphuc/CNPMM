@@ -158,14 +158,17 @@ try{
           // image.data
           foodImage
         );
+        logger.info(`Request status: ${res.status(201)} Created!`);
         res.status(201).send({message: "Success!"})
       }
       else{
+        logger.error(`Request status: ${res.status(500)}  error `);
         res.status(500).send({message:"Fail!"});
       }
     })
   }
   catch(err) {
+    logger.error(`Request status: ${res.status(500)}  error ${err}`);
     res.status(500).send({message: err.message});
   }
 }
@@ -190,14 +193,16 @@ exports.search = (req, res) =>{
         var base64Image = Buffer.from(image).toString("base64");
         food.foodImage = "data:image/png;base64,"+base64Image;
       })
-      
+      logger.info(`Request status: ${res.status(200)} data ${foods}`);
       res.status(200).send({foods: foods})
     }
     else{
+      logger.error(`Request status: ${res.status(404)}  Not found`);
       res.status(404).send({message: 'Food Not Found!'});
     }
   })
   .catch(err => {
+    logger.error(`Request status: ${res.status(500)}  error ${err}`);
     res.status(500).send({message: err.message});
   })
 }
@@ -234,16 +239,19 @@ exports.extractFoodMaterial = (req, res) =>{
           listMarketNoteItems.push(foodMaterial);
         }
       })
+      logger.info(`Request status: ${res.status(200)} data ${listCartItems} ${listMarketNoteItems}`);
       res.status(200).send({
         listCartItems: listCartItems, 
         listMarketNoteItems: listMarketNoteItems
       })
     }
     else{
-      res.status(400).send({message: "Not Found!"});
+      logger.error(`Request status: ${res.status(404)}  Not found`);
+      res.status(404).send({message: "Not Found!"});
     }
   })
   .catch(err =>{
+    logger.error(`Request status: ${res.status(500)}  error ${err}`);
     res.status(500).send({message: err.message});
   })
 }
@@ -275,8 +283,12 @@ exports.getAllFavoriteFood = (req, res) => {
         favoriteFoods.push(food);
       })
       if(count == listFavoriteFoodCategory.length) {
+        logger.info(`Request status: ${res.status(201)} Created!`);
         res.send({favoriteFoods: favoriteFoods});
       }
+    })
+    .catch(error => {
+      logger.error(`Request status: ${res.status(500)}  error ${error}`);
     })
   })
 }

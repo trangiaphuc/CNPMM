@@ -73,7 +73,7 @@ exports.getCartByUserId = (req, res) => {
                     if(data)
                     {
                         //bao la gio hang vua duoc tao
-                        logger.info(`Request status: ${res.status(200)}  data ${data}`);
+                        // logger.info(`Request status: ${res.status(200)}  data ${data}`);
                         res.status(201).send({cart: data});
                     }
                 })
@@ -401,17 +401,21 @@ exports.payCart = (req, res) => {
             })
 
             if(flag){
+                logger.info(`Request status: ${res.status(200)} Success!`);
                 res.status(200).send({message: 'Success!'});
             }
             else{
+                logger.error(`Request status: ${res.status(500)}  error ${err}`);
                 res.status(500).send({message: 'Fail!'});
             }
         }
         else{
+            logger.error(`Request status: ${res.status(404)}  Not found`);
             res.status(404).send({message:"Not Found!"});
         }
     })
     .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({message: err.message});
     })
 }
