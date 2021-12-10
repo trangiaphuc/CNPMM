@@ -131,7 +131,7 @@ export default function userScreen({navigation, route}){
                         <Text style={styles.menuItemText}>Settings</Text>
                     </View>
                 </TouchableRipple>
-                <TouchableRipple onPress={()=>{}}>
+                <TouchableRipple onPress={()=>{navigation.navigate('signInScreen')}}>
                     <View style={styles.menuItem}>
                         <Icon name="logout" color="#FE6347" size={25}/>
                         <Text style={styles.menuItemText}>Sign Out</Text>

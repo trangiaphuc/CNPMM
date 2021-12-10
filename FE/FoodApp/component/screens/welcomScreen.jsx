@@ -9,7 +9,9 @@ import {
     TextInput,
     Form,
     Alert,
-    FlatList
+    FlatList,
+    ScrollView,
+    SafeAreaView
 } from "react-native";
 import{
     Avatar,
@@ -211,8 +213,9 @@ export default function welcomScreen({navigation, route}){
                 </View>
                 <View style={styles.card}>
                     <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
+                    <ScrollView>
                     <FlatList
-                        //horizontal={true}
+                        horizontal={true}
                         data={dataFavorites}
                         renderItem={({item})=>
                             <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
@@ -220,9 +223,10 @@ export default function welcomScreen({navigation, route}){
                                     <Card.Image source={{uri: item.foodImage}}/>
                                     <Card.Divider/>
                                     
-                                    <View style={styles.food}>
+                                    {/* <View style={styles.food}>
                                         <Text style={styles.textFood}>{item.foodName}</Text>
-                                    </View>
+                                    </View> */}
+                                    <Card.Title style={{width:220}}>{item.foodName}</Card.Title>
                                     <Card.Divider/>
                                 </Card>
                             </TouchableOpacity>
@@ -231,12 +235,27 @@ export default function welcomScreen({navigation, route}){
                         
                         
                         />
-                    {/* <View>
-                        {
-                        favorites.map(item => 
-                            <Text>{item.foodCategoryId}</Text>
-                        )
-                        }
+                    </ScrollView>
+                    {/* <View style={{marginBottom: 300}}>
+                        <ScrollView>
+                            {
+                            dataFavorites.map((item) => 
+                                <SafeAreaView key ={item.id}>
+                                    <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
+                                        <Card>
+                                            <Card.Image source={{uri: item.foodImage}}/>
+                                            <Card.Divider/>
+                                            
+                                            <View style={styles.food}>
+                                                <Text style={styles.textFood}>{item.foodName}</Text>
+                                            </View>
+                                            <Card.Divider/>
+                                        </Card>
+                                    </TouchableOpacity>
+                                </SafeAreaView>
+                            )
+                            }
+                        </ScrollView>
                     </View> */}
                 </View>
             </View>
