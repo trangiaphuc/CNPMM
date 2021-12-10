@@ -13,6 +13,7 @@ import welcomScreen from '../screens/welcomScreen';
 import favoriteFoodScreen from '../screens/favoriteFoodScreen';
 
 
+
 const RootStack = createStackNavigator();
 
 const rootStackScreen = () => (
@@ -26,6 +27,7 @@ const rootStackScreen = () => (
         <RootStack.Screen name="cartScreen" component={cartScreen} options={{headerShown: false}}/>
         <RootStack.Screen name="welcomScreen" component={welcomScreen} options={{headerShown: false}}/>
         <RootStack.Screen name="favoriteFoodScreen" component={favoriteFoodScreen} options={{headerShown: false}}/>
+        
     </RootStack.Navigator>
 );
 

@@ -8,6 +8,7 @@ import {
     Platform,
     TextInput,
     Picker,
+    Alert ,
     Image,
 } from "react-native";
 import {LinearGradient} from 'expo-linear-gradient';
@@ -159,15 +160,16 @@ export default function signUp({navigation}){
                                                         
                                                     });
 
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+                                        }else {Alert.alert("Thông báo","Vui lòng nhập đầy đủ thông tin");}
+                                    }else {Alert.alert("Thông báo","Vui lòng nhập đầy đủ thông tin");}
+                                    
+                                }else {Alert.alert("Thông báo","Vui lòng nhập đầy đủ thông tin");}
+                            }else {Alert.alert("Thông báo","Vui lòng nhập đầy đủ thông tin");}
+                        }else {Alert.alert("Thông báo","Vui lòng nhập đầy đủ thông tin");}
+                    }else {Alert.alert("Thông báo","Vui lòng nhập đầy đủ thông tin");}
+                }else {Alert.alert("Thông báo","Vui lòng nhập đầy đủ thông tin");}
+            }else {Alert.alert("Thông báo","Vui lòng nhập đầy đủ thông tin");}
+        }else {Alert.alert("Thông báo","Vui lòng nhập đầy đủ thông tin");}
     }
 
 

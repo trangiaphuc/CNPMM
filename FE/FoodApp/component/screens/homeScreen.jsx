@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {View, Text, FlatList, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Button, TextInput, Item} from "react-native";
+import {View, Text, FlatList, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Button, TextInput, Item, Alert} from "react-native";
 import axios from "axios";
 import {Card} from "react-native-elements";
 import {LinearGradient} from 'expo-linear-gradient';
@@ -139,7 +139,8 @@ export default function homeScreen({navigation, route}){
                         search.map(item =>
                             
                             <SafeAreaView key={item.id}>
-                                
+                                <TouchableOpacity onPress={()=>{navigation.navigate('productDetailScreen',{productId: item.id, response: response})}}>
+                                    
                                 <Card>
                                         <Card.Title>{item.proName}</Card.Title>
                                         <Card.Divider/>
@@ -177,7 +178,7 @@ export default function homeScreen({navigation, route}){
                                                     .then(res => {
                                                         if(res.status===201)
                                                         {
-                                                            alert(res.data.message);
+                                                            Alert.alert("Thông báo",res.data.message);
                                                             
                                                             //navigation.params.resetData();
                                                             // RNRestart.Restart();
@@ -211,6 +212,7 @@ export default function homeScreen({navigation, route}){
                                             </View>
                                         </View>
                                     </Card>
+                                </TouchableOpacity>
                                 
                             </SafeAreaView>
                             
@@ -333,7 +335,7 @@ export default function homeScreen({navigation, route}){
                                                     .then(res => {
                                                         if(res.status===201)
                                                         {
-                                                            alert(res.data.message);
+                                                            Alert.alert("Thông báo",res.data.message);
                                                             
                                                             //navigation.params.resetData();
                                                             // RNRestart.Restart();
@@ -346,7 +348,7 @@ export default function homeScreen({navigation, route}){
                                                     });
                                                     }
                                                     else{
-                                                        alert("Vui lòng chọn số lượng sản phẩm")
+                                                        Alert.alert("Thông báo","Vui lòng chọn số lượng sản phẩm")
                                                     }
                                                 }}>
                                                         <LinearGradient

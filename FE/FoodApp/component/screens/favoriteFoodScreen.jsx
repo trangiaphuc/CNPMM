@@ -16,6 +16,8 @@ export default function favoriteFoodScreen({navigation, route}){
 
     const{response}=route.params;
     const [data, setData] =React.useState([]);
+    const [favoriteFoodCategory, setFavoriteCategory]=useState([]);
+    const [check, setCheck] = useState(false);
     const fetchdata = async() => {
         const result = await API.get("foodcategory/",
         {
@@ -63,7 +65,9 @@ export default function favoriteFoodScreen({navigation, route}){
                             </View>
                             <View style={styles.iconHeart}>
                                 <TouchableOpacity onPress={()=>{
-                                    API.post(`user/addFavorite/`, {userId: response.id, favorites:[item.id]},
+                                    //alert(item.id);
+
+                                    API.get(`user/${response.id}/getFavorite/`,
                                     {
                                         headers:{
                                             'Content-Type': 'application/json',
@@ -71,11 +75,58 @@ export default function favoriteFoodScreen({navigation, route}){
                                         },
                                     })
                                     .then(res => {
-                                        alert('Bạn đã thêm' + ' ' + item.catName + ' ' + 'vào danh mục món ăn yêu thích');
+                                        
+                                        setFavoriteCategory(res.data.FavoriteFoodCategory);
+                                        
+                                        const filter = favoriteFoodCategory.filter(category => {
+
+                                            if(category.foodCategoryId==item.id){
+                                                return true;
+                                            }
+                                        })
+                                        if(filter.length !==0)
+                                        {
+                                            alert("Bạn đã thêm danh mục này rồi");
+                                        }
+                                        else {
+                                            API.post(`user/addFavorite/`, {userId: response.id, favorites:[item.id]},
+                                                {
+                                                    headers:{
+                                                        'Content-Type': 'application/json',
+                                                        'x-access-token': response.accessToken,
+                                                    },
+                                                })
+                                                .then(res => {
+                                                    alert('Bạn đã thêm' + ' ' + item.catName + ' ' + 'vào danh mục món ăn yêu thích');
+                                                }).catch(error => {
+                                                        alert('Error', error.res);
+                                                    
+                                                });
+                                        }
+                                        //console.log(Object.values(favoriteFoodCategory));
+                                        //favoriteFoodCategory.includes(item.id)?alert("Có"):alert("KO");
+                                        // for(let i=0; i<favoriteFoodCategory.length; i++) {
+                                        //     //console.log(item.id);
+                                        //     //console.log(favoriteFoodCategory[i].foodCategoryId);
+                                        //     if(favoriteFoodCategory[i].foodCategoryId === item.id)
+                                        //     {
+                                                
+                                        //         alert('Có');
+                                        //         break;
+                                                
+                                        //     }
+                                        //     else{
+                                        //         alert('KO CÓ');
+                                        //     }
+                                            
+                                        // }
+
                                     }).catch(error => {
-                                            alert('Error', error.res);
+                                            console.log('Error', error.res);
                                         
                                     });
+
+                                    
                                 }}>
                                     <FontAwesome
                                         name="heart-o"

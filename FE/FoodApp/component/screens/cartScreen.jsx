@@ -70,13 +70,15 @@ export default function historyScreen({navigation, route}){
             data={cart}
             renderItem={({item})=>
             <Card>
-                
-                
                 <View style={styles.cardItem}>
                     
-                        <Avatar.Image source={{uri: item.product.productImage}} size={80}/>
-                        <View style={{marginLeft:25}}>
-                            <Card.Title>{item.product.proName}</Card.Title>
+                        <View style={{flex: 2}}>
+                      
+                            <Avatar.Image source={{uri: item.product.productImage}} size={80}/>
+                        </View>
+                        <View style={{flex: 4}}>
+                            <Text style={{fontWeight: 'bold', marginBottom: 5}}>{item.product.proName}</Text>
+                            {/* <Card.Title>{item.product.proName}</Card.Title> */}
                             
                             <NumericInput
                                 minValue={0}
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
         
     },
     deleteItem:{
-        paddingLeft: 60,
+        flex: 0,
         
     },
     recyclerImage:{
