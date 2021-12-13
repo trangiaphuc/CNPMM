@@ -3,7 +3,7 @@ const Cart = db.cart;
 const CartDetail = db.cartDetail;
 const Product = db.product;
 const logger = require('../winston/winston');
-
+const fs = require('fs');
 
 exports.getCartByUserId = (req, res) => {
     const userId = req.params.userId;
@@ -31,9 +31,20 @@ exports.getCartByUserId = (req, res) => {
     .then(data => {
         //neu co gio hang ti response ve
         if(data){
+            var cartDetails = data.cartDetails;
+            cartDetails.forEach(cartDetail => {
+                var product = cartDetail.product;
+                
+                const image = fs.readFileSync(
+                __basedir + product.productImage
+                );
+                var base64Image = Buffer.from(image).toString("base64");
+                product.productImage = "data:image/png;base64,"+base64Image;
+
+            })
             logger.info(`Request: status: ${res.status(200)}  data ${data}`);
             data.cartDetails.reverse();
-            // console.log({"HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEE":data.cartDetails.reverse()});
+            
             res.status(200).send({cart: data});
         }
         else{
