@@ -21,7 +21,7 @@ import{
 } from 'react-native-paper';
 import API from "../services/api";
 import {Card} from "react-native-elements";
-import darBoardScreen from "./darBoardScreen";
+
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useIsFocused } from '@react-navigation/native';
 export default function welcomScreen({navigation, route}){
@@ -119,7 +119,7 @@ export default function welcomScreen({navigation, route}){
                 <View style={styles.containerButton}>
                     <View style={styles.containerFood}>
                         <TouchableOpacity onPress={()=>{
-                            navigation.navigate('darBoardScreen',{ response: response, screen: 'Food'});
+                            navigation.jumpTo('Food');
                         }}>
                             <FontAwesome
                                 name="bars"
@@ -130,7 +130,7 @@ export default function welcomScreen({navigation, route}){
                     </View>
                     <View style={styles.containerShop}>
                         <TouchableOpacity onPress={()=>{
-                            navigation.navigate('darBoardScreen',{ response: response});
+                            navigation.jumpTo('Product');
                         }}>
                             <FontAwesome
                                 name="shopping-cart"
@@ -182,7 +182,7 @@ export default function welcomScreen({navigation, route}){
                 <View style={styles.containerButton}>
                     <View style={styles.containerFood}>
                         <TouchableOpacity onPress={()=>{
-                            navigation.navigate('darBoardScreen',{ response: response, screen: 'Food'});
+                            navigation.jumpTo('Food');
                         }}>
                             <FontAwesome
                                 name="bars"
@@ -193,7 +193,7 @@ export default function welcomScreen({navigation, route}){
                     </View>
                     <View style={styles.containerShop}>
                         <TouchableOpacity onPress={()=>{
-                            navigation.navigate('darBoardScreen',{ response: response});
+                            navigation.navigate('Product');
                         }}>
                             <FontAwesome
                                 name="shopping-cart"

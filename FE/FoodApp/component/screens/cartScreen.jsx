@@ -66,66 +66,66 @@ export default function historyScreen({navigation, route}){
                 <Text style={styles.returnText}>Giỏ hàng</Text>
             </View>
             
-            <FlatList
-            data={cart}
-            renderItem={({item})=>
-            <Card>
-                <View style={styles.cardItem}>
-                    
-                        <View style={{flex: 2}}>
-                      
-                            <Avatar.Image source={{uri: item.product.productImage}} size={80}/>
-                        </View>
-                        <View style={{flex: 4}}>
-                            <Text style={{fontWeight: 'bold', marginBottom: 5}}>{item.product.proName}</Text>
-                            {/* <Card.Title>{item.product.proName}</Card.Title> */}
+            <ScrollView style={{height: 670}}>
+                {cart.map((item)=>
+                    <Card key={item.id}>
+                        <View style={styles.cardItem}>
                             
-                            <NumericInput
-                                minValue={0}
-                                maxValue={50}
-                                initValue={item.quantity}
-                                step={1}
-                                totalHeight={40}
-                                onChange={(value) =>onChange(value)}
-                                rounded/>
+                                <View style={{flex: 2}}>
+                            
+                                    <Avatar.Image source={{uri: item.product.productImage}} size={80}/>
+                                </View>
+                                <View style={{flex: 4}}>
+                                    <Text style={{fontWeight: 'bold', marginBottom: 5}}>{item.product.proName}</Text>
+                                    {/* <Card.Title>{item.product.proName}</Card.Title> */}
+                                    
+                                    <NumericInput
+                                        minValue={0}
+                                        maxValue={50}
+                                        initValue={item.quantity}
+                                        step={1}
+                                        totalHeight={40}
+                                        onChange={(value) =>onChange(value)}
+                                        rounded/>
+                                </View>
+                                <View style={styles.deleteItem}>
+                                    <TouchableOpacity onPress={()=>{
+                                        const article ={title: "Delete Cart"};
+                                        API.put(`cart/${response.id}/deleteCartItem/${item.id}`,article,
+                                                            {
+                                                                headers:{
+                                                                    'Content-Type': 'application/json',
+                                                                    'x-access-token': response.accessToken,
+                                                                },
+                                                            })
+                                                            .then(res => {
+                                                                if(res.status===200){
+                                                                    fetchdata();
+                                                                }
+                                                            }).catch(error => {
+                                                                    //alert('Error', error.res);
+                                                                    console.log(error.res);
+                                                            });
+                                        }}>
+                                        <Image
+                                            style={styles.recyclerImage}
+                                            source={require('../images/recycle.png')}/>
+                                        
+                                    </TouchableOpacity>
+                                </View>
                         </View>
-                        <View style={styles.deleteItem}>
-                            <TouchableOpacity onPress={()=>{
-                                const article ={title: "Delete Cart"};
-                                API.put(`cart/${response.id}/deleteCartItem/${item.id}`,article,
-                                                    {
-                                                        headers:{
-                                                            'Content-Type': 'application/json',
-                                                            'x-access-token': response.accessToken,
-                                                        },
-                                                    })
-                                                    .then(res => {
-                                                        if(res.status===200){
-                                                            fetchdata();
-                                                        }
-                                                    }).catch(error => {
-                                                            //alert('Error', error.res);
-                                                            console.log(error.res);
-                                                     });
-                                }}>
-                                <Image
-                                    style={styles.recyclerImage}
-                                    source={require('../images/recycle.png')}/>
-                                
-                            </TouchableOpacity>
-                        </View>
-                </View>
-            </Card>
-        }
-            keyExtractor={(item) =>item.id}
+                    </Card>
+                )}
+            </ScrollView>
+          
             
-            />
+            
             <View style={styles.button}>
-                        <TouchableOpacity onPress={()=>{}}>
+                        <TouchableOpacity onPress={()=>{navigation.navigate('billScreen', {response: response, product: cart})}}>
                             <LinearGradient
                                 colors={['#FF4B3A','#FF4B3A']}
                                 style={styles.signIn}>
-                                <Text style={styles.textSign}>Thanh toán</Text>
+                                <Text style={styles.textSign}>Đặt hàng</Text>
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>

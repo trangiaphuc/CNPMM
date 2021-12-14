@@ -6,6 +6,7 @@ import homeScreen from "../screens/homeScreen";
 import userScreen from "../screens/userScreen";
 import foodScreen from "./foodScreen";
 import cartScreen from "./cartScreen";
+import welcomScreen from "./welcomScreen";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -35,15 +36,19 @@ const darBoardScreen=({route, navigation})=>{
                   else if (route.name === 'Profile'){
                     iconName = focused ? 'people-sharp': 'people-outline';
                 }
+                else if (route.name === 'Product'){
+                  iconName = focused ? 'beaker-sharp': 'beaker-outline';
+                }
       
-                  // You can return any component that you like here!
+                  
                   return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: 'tomato',
                 tabBarInactiveTintColor: 'gray',
               })}
             >
-                <Tab.Screen name="Home" component={homeScreen} initialParams={{response}} options={{headerShown: false}} />
+                <Tab.Screen name="Home" component={welcomScreen} initialParams={{response}} options={{headerShown: false}} />
+                <Tab.Screen name="Product" component={homeScreen} initialParams={{response}} options={{headerShown: false}} />
                 <Tab.Screen name="Food" component={foodScreen} initialParams={{response}} options={{headerShown:false}} />
                 <Tab.Screen name="Cart" component={cartScreen} initialParams={{response}} options={{headerShown:false}} />
                 <Tab.Screen name="Profile" component={userScreen} initialParams={{response}} options={{headerShown: false}} />
