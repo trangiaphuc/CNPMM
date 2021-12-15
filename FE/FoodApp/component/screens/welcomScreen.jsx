@@ -84,8 +84,6 @@ export default function welcomScreen({navigation, route}){
         
             } catch (err) {console.log(err);}
         }
-
-    
     useEffect(async() => {
         await fetchdata();
         await fetchFavorite();

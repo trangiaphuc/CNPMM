@@ -16,6 +16,8 @@ export default function userScreen({navigation, route}){
     const[data, setData]=useState([]);
     const [orders, setOrders] = useState([]);
     const isFocused = useIsFocused();
+    //console.log(orders);
+    // const[lengthOrder, setLengthOrder] = useState([]);
 
     data.accessToken = userData.accessToken;
     
@@ -32,14 +34,16 @@ export default function userScreen({navigation, route}){
         }
 
         const getUserOrder = async () =>{
-            const response = await API.get(`/api/order/${userData.id}`, 
+            const result = await API.get(`order/${userData.id}`, 
             {
                 headers:{
                     'Content-Type': 'application/json',
                     'x-access-token': userData.accessToken
                 },
             });
-            setOrders(result.orders)
+            setOrders(result.data.orders)
+            //console.log(result.data.orders);
+            
         }
 
 
@@ -48,6 +52,7 @@ export default function userScreen({navigation, route}){
             await getUserOrder();
         },[setData, setOrders,isFocused]);
 
+        
 
 
     return(
