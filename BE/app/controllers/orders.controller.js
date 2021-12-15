@@ -129,7 +129,8 @@ exports.addNewOrder = (req, res) => {
         },
         addressDelivery: req.body.addressDelivery,
         deliveryAt: new Date(req.body.deliveryAt),
-        orderStatus: 0,//0: not delivery; 1: deliveried
+        isCanceled: 0,
+        isDone: 0,
         userId: userId, 
         createdAt: new Date(),
         updatedAt: new Date(),

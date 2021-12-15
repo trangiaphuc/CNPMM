@@ -14,6 +14,7 @@ import {useIsFocused } from '@react-navigation/native';
 export default function userScreen({navigation, route}){
     const{userData}=route.params;
     const[data, setData]=useState([]);
+    const [orders, setOrders] = useState([]);
     const isFocused = useIsFocused();
 
     data.accessToken = userData.accessToken;
@@ -30,9 +31,22 @@ export default function userScreen({navigation, route}){
             setData(result.data.information);
         }
 
-        useEffect(() => {
-            fetchdata();
-        },[setData, isFocused]);
+        const getUserOrder = async () =>{
+            const response = await API.get(`/api/order/${userData.id}`, 
+            {
+                headers:{
+                    'Content-Type': 'application/json',
+                    'x-access-token': userData.accessToken
+                },
+            });
+            setOrders(result.orders)
+        }
+
+
+        useEffect( async() => {
+            await fetchdata();
+            await getUserOrder();
+        },[setData, setOrders,isFocused]);
 
 
 
@@ -102,12 +116,18 @@ export default function userScreen({navigation, route}){
                     borderRightWidth: 1,
                 }]}>
                     <Title>1200</Title>
-                    <Caption>Wallet</Caption>
+                    <Caption>Tổng chi tiêu</Caption>
                 </View>
-                <View style={styles.infoBox}>
-                    <Title>12</Title>
-                    <Caption>Orders</Caption>
-                </View>
+                <TouchableRipple onPress={()=>{navigation.navigate('userOrderManagementScreen',{userData: userData, orders: orders})}} 
+                style={[styles.infoBox, {
+                    borderRightColor: '#dddddd',
+                    borderRightWidth: 1,
+                }]}>
+                    <View>
+                        <Title>{orders.length}</Title>
+                        <Caption>Số đơn hàng</Caption>
+                    </View>
+                </TouchableRipple>
             </View>
             <View style={styles.menuWrapper}>
                 <TouchableRipple onPress={()=>{navigation.navigate('favoriteFoodScreen',{userData: userData})}}>
@@ -128,7 +148,7 @@ export default function userScreen({navigation, route}){
                         <Text style={styles.menuItemText}>Support</Text>
                     </View>
                 </TouchableRipple>
-                <TouchableRipple onPress={()=>{navigation.navigate('updateUserProfile',{ userData : data})}}>
+                <TouchableRipple onPress={()=>{navigation.navigate('updateUserProfileScreen',{ userData : data})}}>
                     <View style={styles.menuItem}>
                         <Icon name="cog-outline" color="#FE6347" size={25}/>
                         <Text style={styles.menuItemText}>Cập nhật thông tin cá nhân</Text>

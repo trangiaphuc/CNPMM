@@ -6,9 +6,12 @@ module.exports = (sequelize, Sequelize) => {
         deliveryAt:{
             type: Sequelize.DATEONLY,
         },
-        orderStatus:{
-            type: Sequelize.BOOLEAN,
+        isCanceled:{//0 not cancel 2 is pending cancel confirm 1 canceled
+            type: Sequelize.TINYINT
         },
+        isDone: {// 0 pending confirm 1 done 2 deliverying
+            type: Sequelize.TINYINT
+        }
         // shipperId: {
         //     type: Sequelize.INTEGER,
         // }
