@@ -52,6 +52,7 @@ exports.getOrderHistoryByUserId = (req, res) =>{
                 totalPrice = totalPrice + order.deliveryMethod.fee;
                 order.setDataValue('totalPrice', totalPrice);
             });
+            orders.orderDetails.reverse();
             logger.info(`Request status: ${res.status(200)} data ${orders}`);
             res.status(200).send({orders: orders});
         }

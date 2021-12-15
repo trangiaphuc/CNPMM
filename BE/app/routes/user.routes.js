@@ -15,9 +15,9 @@ module.exports = function(app) {
   // [authJwt.verifyToken], 
   controller.information);
   //update user information
-  app.put("/api/user/updateinfor/:id", [authJwt.verifyToken], controller.updateinfor);
+  app.post("/api/user/updateinfor/:id", [authJwt.verifyToken], controller.updateinfor);
   //change user password
-  app.put("/api/user/changepassword/:id", [authJwt.verifyToken], controller.changepassword);
+  app.post("/api/user/changepassword/:id", [authJwt.verifyToken], controller.changepassword);
   //New
   //insert user favorite food categories
   app.post("/api/user/addFavorite/", [authJwt.verifyToken], controller.addFavorites);
