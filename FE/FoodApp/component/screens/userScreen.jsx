@@ -14,6 +14,7 @@ export default function userScreen({navigation, route}){
     const{response}=route.params;
     const[data, setData]=useState([]);
 
+    data.accessToken = response.accessToken;
     
         const fetchdata = async() => {
             const result = await API.get(`user/information/${response.id}`,
@@ -127,10 +128,10 @@ export default function userScreen({navigation, route}){
                         <Text style={styles.menuItemText}>Support</Text>
                     </View>
                 </TouchableRipple>
-                <TouchableRipple onPress={()=>{}}>
+                <TouchableRipple onPress={()=>{navigation.navigate('updateUserProfile',{ userData : data})}}>
                     <View style={styles.menuItem}>
                         <Icon name="cog-outline" color="#FE6347" size={25}/>
-                        <Text style={styles.menuItemText}>Settings</Text>
+                        <Text style={styles.menuItemText}>Cập nhật thông tin cá nhân</Text>
                     </View>
                 </TouchableRipple>
                 <TouchableRipple onPress={()=>{navigation.navigate('signInScreen')}}>
