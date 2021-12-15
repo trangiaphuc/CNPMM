@@ -155,19 +155,19 @@ export default function billScreen({navigation, route}){
                                 {
                                     product.map((item) => 
                                         <SafeAreaView key={item.id}>
-                                            <Card>
-                                                
-                                                <View style={{flexDirection: 'row'}}>
-                                                    <View style={{flex: 3}}>
-                                                        <Text style={{fontWeight: 'bold'}}>{item.product.proName}</Text>
-                                                        <Text>{'Số lượng: ' + item.quantity}</Text>
+                                            
+                                                <Card>
+                                                    <View style={{flexDirection: 'row'}}>
+                                                        <View style={{flex: 3}}>
+                                                            <Text style={{fontWeight: 'bold'}}>{item.product.proName}</Text>
+                                                            <Text>{'Số lượng: ' + item.quantity}</Text>
+                                                        </View>
+                                                        <View style={{flex: 1, justifyContent: 'center'}}>
+                                                            <Text>{item.product.price*item.quantity + 'đ'}</Text>
+                                                        </View>
                                                     </View>
-                                                    <View style={{flex: 1, justifyContent: 'center'}}>
-                                                        <Text>{item.product.price*item.quantity + 'đ'}</Text>
-                                                    </View>
-                                                </View>
 
-                                            </Card>
+                                                </Card>
                                         </SafeAreaView>
                                     )
                                 }
