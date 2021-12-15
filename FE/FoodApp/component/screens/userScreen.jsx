@@ -10,9 +10,11 @@ import{
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import API from "../services/api";
+import {useIsFocused } from '@react-navigation/native';
 export default function userScreen({navigation, route}){
     const{response}=route.params;
     const[data, setData]=useState([]);
+    const isFocused = useIsFocused();
 
     data.accessToken = response.accessToken;
     
@@ -22,7 +24,6 @@ export default function userScreen({navigation, route}){
                 headers:{
                     'Content-Type': 'application/json',
                     'x-access-token': response.accessToken
-                    
                 },
             });
             //console.log(result.data.information);
@@ -31,8 +32,7 @@ export default function userScreen({navigation, route}){
 
         useEffect(() => {
             fetchdata();
-        },[setData]);
-   
+        },[setData, isFocused]);
 
 
 

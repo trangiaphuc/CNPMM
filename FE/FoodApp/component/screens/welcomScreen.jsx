@@ -35,7 +35,7 @@ export default function welcomScreen({navigation, route}){
     
 
 
-    const fetchdata =useCallback( async() => {
+    const fetchdata = async() => {
         const result = await API.get(`user/information/${response.id}`,
         {
             headers:{
@@ -46,10 +46,11 @@ export default function welcomScreen({navigation, route}){
         });
         //console.log(result.data.information);
         setData(result.data.information);
+        //console.log(result.data.information.favoriteFoodCategory);
         //console.log(result.data.information);
         
-    })
-    const fetchFavorite = useCallback( async() => {
+    }
+    const fetchFavorite = async() => {
         const result = await API.get(`user/${response.id}/getFavorite/`,
         {
             headers:{
@@ -60,10 +61,11 @@ export default function welcomScreen({navigation, route}){
         });
         //console.log('Huy',result.data.FavoriteFoodCategory);
         setFavorites(result.data.FavoriteFoodCategory);
+        //console.log(favorites.length);
 
 
 
-    })
+    }
     
   
         const fetchDataFavorite = async() => {
@@ -78,16 +80,17 @@ export default function welcomScreen({navigation, route}){
                     },
                 });
                 setDataFavorites(result.data.favoriteFoods);
+                //console.log("3");
         
             } catch (err) {console.log(err);}
         }
 
     
-    useEffect(() => {
-        fetchdata();
-        fetchFavorite();
-        fetchDataFavorite();
-    },[isFocused]);
+    useEffect(async() => {
+        await fetchdata();
+        await fetchFavorite();
+        await fetchDataFavorite();
+    },[setData, setFavorites, isFocused]);
   
 
 

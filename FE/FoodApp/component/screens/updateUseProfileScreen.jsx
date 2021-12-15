@@ -21,9 +21,11 @@ import API from "../services/api";
 import ComboBox from 'react-native-combobox';
 
 
+
 export default function updateUserProfile({navigation, route}){
     
     const {userData} = route.params; 
+    
     const[userInformation, setUserInformations]=React.useState({
         email: userData.email,
         firstname: userData.firstname,
@@ -70,8 +72,9 @@ export default function updateUserProfile({navigation, route}){
 
     const submitUpdate = ()  =>{
 
-        const article ={title: "Update UserInformation"};
-        API.put(`user/updateinfor/${userData.id}`,
+        
+        
+        API.post(`user/updateinfor/${userData.id}`,
         {
             firstname: userInformation.firstname,
             lastname: userInformation.lastname,
@@ -87,6 +90,7 @@ export default function updateUserProfile({navigation, route}){
             },
         })
         .then(res =>{
+            console.log(res);
             if(res.status == 500){
                 alert('Thất bại', 'Lỗi Server!')
             }
