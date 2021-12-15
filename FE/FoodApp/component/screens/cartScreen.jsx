@@ -32,6 +32,7 @@ export default function historyScreen({navigation, route}){
                 
             },
         });
+        //console.log(result.data.cart.cartDetails.quantity);
         setCart(result.data.cart.cartDetails);
     }
 
@@ -117,9 +118,6 @@ export default function historyScreen({navigation, route}){
                     </Card>
                 )}
             </ScrollView>
-          
-            
-            
             <View style={styles.button}>
                         <TouchableOpacity onPress={()=>{navigation.navigate('billScreen', {response: response, product: cart})}}>
                             <LinearGradient

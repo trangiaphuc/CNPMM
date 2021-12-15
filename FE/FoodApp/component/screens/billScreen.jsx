@@ -39,10 +39,6 @@ export default function billScreen({navigation, route}){
     for(let i=0; i< a.length; i++){
         tong=tong + a[i];
     }
-    var productQuantity =[];
-    for(let i=0; i< product.length; i++){
-        productQuantity.push(product[i].quantity);
-    }
    
     
  
@@ -91,15 +87,18 @@ export default function billScreen({navigation, route}){
             fetchdataPaymentMethod();
             fetchdataDeliveryMethod();
         },[setData]);
-        
+       
 
         const orders =()=> {
-            //alert(productQuantity);
-            API.post(`order/${response.id}`,
+            //console.log(ordersDetail);
+            for(let i=0; i<product.length; i++) {
+
+                //console.log(product[i].product.price);
+                API.post(`order/${response.id}`,
                 {addressDelivery: data.address,
                     paymentMethodId: pickerValue,
                         deliveryMethodId: pickerValueDelivery,
-                            orderDetails: [{quantity: productQuantity, productId: product. productId}]},
+                            orderDetails: [{quantity: product[i].quantity, productId: product[i].productId, price: product[i].product.price}]},
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -114,6 +113,8 @@ export default function billScreen({navigation, route}){
                 }).catch(error => {
                         alert('Error', error.res);
                 });
+            }
+            
         }
 
     return (
