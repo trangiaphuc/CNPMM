@@ -29,7 +29,7 @@ export default function flashScreen({navigation}) {
                         <LinearGradient
                             colors={['#FF4B3A','#FF4B3A']}
                             style={styles.signIn}>
-                            <Text style={styles.textSign}>Get Started</Text>
+                            <Text style={styles.textSign}>Bắt đầu</Text>
                         </LinearGradient>
                   </TouchableOpacity>
                 </View>

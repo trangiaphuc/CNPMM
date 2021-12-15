@@ -13,7 +13,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import API from "../services/api";
 
 export default function foodDetailScreen({route, navigation}){
-    const {foodId, response}=route.params;
+    const {foodId, userData}=route.params;
     const[data, setData]=useState([]);
     const[meterial, setMeterial]=useState([]);
     const[step, setStep]=useState([]);
@@ -25,7 +25,7 @@ export default function foodDetailScreen({route, navigation}){
         {
             headers:{
                 'Content-Type': 'application/json',
-                'x-access-token': response.accessToken
+                'x-access-token': userData.accessToken
                 
             },
         });

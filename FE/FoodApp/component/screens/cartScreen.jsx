@@ -16,7 +16,7 @@ import{
 } from 'react-native-paper';
 
 export default function historyScreen({navigation, route}){
-    const{response}=route.params;
+    const{userData}=route.params;
     const[cart, setCart]=useState([]);
     const[quantity, setQuantity]= useState([]);
     const isFocused = useIsFocused();
@@ -24,11 +24,11 @@ export default function historyScreen({navigation, route}){
 
 
     const fetchdata = async() => {
-        const result = await API.get(`cart/${response.id}`,
+        const result = await API.get(`cart/${userData.id}`,
         {
             headers:{
                 'Content-Type': 'application/json',
-                'x-access-token': response.accessToken
+                'x-access-token': userData.accessToken
                 
             },
         });
@@ -92,11 +92,11 @@ export default function historyScreen({navigation, route}){
                                 <View style={styles.deleteItem}>
                                     <TouchableOpacity onPress={()=>{
                                         const article ={title: "Delete Cart"};
-                                        API.put(`cart/${response.id}/deleteCartItem/${item.id}`,article,
+                                        API.put(`cart/${userData.id}/deleteCartItem/${item.id}`,article,
                                                             {
                                                                 headers:{
                                                                     'Content-Type': 'application/json',
-                                                                    'x-access-token': response.accessToken,
+                                                                    'x-access-token': userData.accessToken,
                                                                 },
                                                             })
                                                             .then(res => {
@@ -119,7 +119,7 @@ export default function historyScreen({navigation, route}){
                 )}
             </ScrollView>
             <View style={styles.button}>
-                        <TouchableOpacity onPress={()=>{navigation.navigate('billScreen', {response: response, product: cart})}}>
+                        <TouchableOpacity onPress={()=>{navigation.navigate('billScreen', {userData: userData, product: cart})}}>
                             <LinearGradient
                                 colors={['#FF4B3A','#FF4B3A']}
                                 style={styles.signIn}>

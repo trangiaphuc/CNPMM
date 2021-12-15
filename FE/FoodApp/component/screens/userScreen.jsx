@@ -12,18 +12,18 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import API from "../services/api";
 import {useIsFocused } from '@react-navigation/native';
 export default function userScreen({navigation, route}){
-    const{response}=route.params;
+    const{userData}=route.params;
     const[data, setData]=useState([]);
     const isFocused = useIsFocused();
 
-    data.accessToken = response.accessToken;
+    data.accessToken = userData.accessToken;
     
         const fetchdata = async() => {
-            const result = await API.get(`user/information/${response.id}`,
+            const result = await API.get(`user/information/${userData.id}`,
             {
                 headers:{
                     'Content-Type': 'application/json',
-                    'x-access-token': response.accessToken
+                    'x-access-token': userData.accessToken
                 },
             });
             //console.log(result.data.information);
@@ -110,7 +110,7 @@ export default function userScreen({navigation, route}){
                 </View>
             </View>
             <View style={styles.menuWrapper}>
-                <TouchableRipple onPress={()=>{navigation.navigate('favoriteFoodScreen',{response: response})}}>
+                <TouchableRipple onPress={()=>{navigation.navigate('favoriteFoodScreen',{userData: userData})}}>
                     <View style={styles.menuItem}>
                         <Icon name="heart-outline" color="#FE6347" size={25}/>
                         <Text style={styles.menuItemText}>Your Favourites</Text>

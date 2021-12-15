@@ -20,7 +20,7 @@ export default function billScreen({navigation, route}){
     const[data, setData]=useState([]);
     const[paymentMethod, setPaymentMethod]=useState([]);
     const[deliveryMethod, setDeliveryMethod]=useState([]);
-    const{response, product}=route.params;
+    const{userData, product}=route.params;
     const[pickerValue, setPickerValue]=useState(1);
     const[pickerValueDelivery, setPickerValueDelivery]=useState(1);
     //console.log(product.product.price);
@@ -45,11 +45,11 @@ export default function billScreen({navigation, route}){
 
     
         const fetchdata = async() => {
-            const result = await API.get(`user/information/${response.id}`,
+            const result = await API.get(`user/information/${userData.id}`,
             {
                 headers:{
                     'Content-Type': 'application/json',
-                    'x-access-token': response.accessToken
+                    'x-access-token': userData.accessToken
 
                 },
             });
@@ -64,7 +64,7 @@ export default function billScreen({navigation, route}){
             {
                 headers:{
                     'Content-Type': 'application/json',
-                    'x-access-token': response.accessToken
+                    'x-access-token': userData.accessToken
                 },
             });
             setPaymentMethod(result.data.methods);
@@ -75,7 +75,7 @@ export default function billScreen({navigation, route}){
             {
                 headers:{
                     'Content-Type': 'application/json',
-                    'x-access-token': response.accessToken
+                    'x-access-token': userData.accessToken
                 },
             });
             setDeliveryMethod(result.data.deliveries);
@@ -94,7 +94,7 @@ export default function billScreen({navigation, route}){
             for(let i=0; i<product.length; i++) {
 
                 //console.log(product[i].product.price);
-                API.post(`order/${response.id}`,
+                API.post(`order/${userData.id}`,
                 {addressDelivery: data.address,
                     paymentMethodId: pickerValue,
                         deliveryMethodId: pickerValueDelivery,
@@ -102,7 +102,7 @@ export default function billScreen({navigation, route}){
                 {
                     headers:{
                         'Content-Type': 'application/json',
-                        'x-access-token': response.accessToken,
+                        'x-access-token': userData.accessToken,
                     },
                 })
                 .then(res => {

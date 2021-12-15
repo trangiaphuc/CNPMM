@@ -14,7 +14,7 @@ import{
 
 export default function favoriteFoodScreen({navigation, route}){
 
-    const{response}=route.params;
+    const{userData}=route.params;
     const [data, setData] =React.useState([]);
     const [favoriteFoodCategory, setFavoriteCategory]=useState([]);
     const [check, setCheck] = useState(false);
@@ -23,7 +23,7 @@ export default function favoriteFoodScreen({navigation, route}){
         {
             headers:{
                 'Content-Type': 'application/json',
-                'x-access-token': response.accessToken
+                'x-access-token': userData.accessToken
                 
             },
         });
@@ -67,11 +67,11 @@ export default function favoriteFoodScreen({navigation, route}){
                                 <TouchableOpacity onPress={()=>{
                                     //alert(item.id);
 
-                                    API.get(`user/${response.id}/getFavorite/`,
+                                    API.get(`user/${userData.id}/getFavorite/`,
                                     {
                                         headers:{
                                             'Content-Type': 'application/json',
-                                            'x-access-token': response.accessToken,
+                                            'x-access-token': userData.accessToken,
                                         },
                                     })
                                     .then(res => {
@@ -89,11 +89,11 @@ export default function favoriteFoodScreen({navigation, route}){
                                             alert("Bạn đã thêm danh mục này rồi");
                                         }
                                         else {
-                                            API.post(`user/addFavorite/`, {userId: response.id, favorites:[item.id]},
+                                            API.post(`user/addFavorite/`, {userId: userData.id, favorites:[item.id]},
                                                 {
                                                     headers:{
                                                         'Content-Type': 'application/json',
-                                                        'x-access-token': response.accessToken,
+                                                        'x-access-token': userData.accessToken,
                                                     },
                                                 })
                                                 .then(res => {

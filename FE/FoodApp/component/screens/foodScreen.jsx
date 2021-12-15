@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import API from "../services/api";
 export default function userScreen({navigation, route}){
-    const{response}=route.params;
+    const{userData}=route.params;
     const[foodCategory, setfoodCategory]=useState([]);
     const[data, setData]=useState([]);
     const[dataSearch, setDataSearch]=React.useState({
@@ -28,7 +28,7 @@ export default function userScreen({navigation, route}){
             {
                 headers:{
                     'Content-Type': 'application/json',
-                    'x-access-token': response.accessToken
+                    'x-access-token': userData.accessToken
                     
                 },
             });
@@ -48,7 +48,7 @@ export default function userScreen({navigation, route}){
                 {
                     headers:{
                         'Content-Type': 'application/json',
-                        'x-access-token': response.accessToken,
+                        'x-access-token': userData.accessToken,
                         
                     },
                 })
@@ -93,7 +93,7 @@ export default function userScreen({navigation, route}){
                 {
                     headers:{
                         'Content-Type': 'application/json',
-                        'x-access-token': response.accessToken,
+                        'x-access-token': userData.accessToken,
                     },
                 })
                 .then(res => {
@@ -130,7 +130,7 @@ export default function userScreen({navigation, route}){
                         {
                             search.map(item =>
                                 <SafeAreaView key={item.id}>
-                                    <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
+                                    <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {userData: userData, foodId: item.id})}}>
                                         <View style={styles.container_food}>
                                             <Avatar.Image source={{uri:item.foodImage}} size={70}/>
                                             <View style={{flex: 15}}>
@@ -205,7 +205,7 @@ export default function userScreen({navigation, route}){
             <FlatList
             data={data}
             renderItem={({item})=>
-                <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
+                <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {userData: userData, foodId: item.id})}}>
                     <View style={styles.container_food}>
                         <Avatar.Image source={{uri:item.foodImage}} size={70}/>
                         <View style={{flex: 15}}>

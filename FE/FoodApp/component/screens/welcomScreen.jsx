@@ -25,7 +25,7 @@ import {Card} from "react-native-elements";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useIsFocused } from '@react-navigation/native';
 export default function welcomScreen({navigation, route}){
-    const{response}=route.params;
+    const{userData}=route.params;
     const[data, setData]=useState([]);
     const[favorites, setFavorites]=useState([]);
     const isFocused = useIsFocused();
@@ -36,11 +36,11 @@ export default function welcomScreen({navigation, route}){
 
 
     const fetchdata = async() => {
-        const result = await API.get(`user/information/${response.id}`,
+        const result = await API.get(`user/information/${userData.id}`,
         {
             headers:{
                 'Content-Type': 'application/json',
-                'x-access-token': response.accessToken
+                'x-access-token': userData.accessToken
                 
             },
         });
@@ -51,11 +51,11 @@ export default function welcomScreen({navigation, route}){
         
     }
     const fetchFavorite = async() => {
-        const result = await API.get(`user/${response.id}/getFavorite/`,
+        const result = await API.get(`user/${userData.id}/getFavorite/`,
         {
             headers:{
                 'Content-Type': 'application/json',
-                'x-access-token': response.accessToken
+                'x-access-token': userData.accessToken
 
             },
         });
@@ -76,7 +76,7 @@ export default function welcomScreen({navigation, route}){
                 {
                     headers:{
                         'Content-Type': 'application/json',
-                        'x-access-token': response.accessToken
+                        'x-access-token': userData.accessToken
                     },
                 });
                 setDataFavorites(result.data.favoriteFoods);
@@ -154,7 +154,7 @@ export default function welcomScreen({navigation, route}){
                 <View>
                     <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
                  
-                    <TouchableOpacity onPress={()=>{navigation.navigate('favoriteFoodScreen',{response: response})}}>
+                    <TouchableOpacity onPress={()=>{navigation.navigate('favoriteFoodScreen',{userData: userData})}}>
                    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={styles.addFavoriteFood}>Thêm món ăn yêu thích</Text>
                         <View>
@@ -223,7 +223,7 @@ export default function welcomScreen({navigation, route}){
                         horizontal={true}
                         data={dataFavorites}
                         renderItem={({item})=>
-                            <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
+                            <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {userData: userData, foodId: item.id})}}>
                                 <Card>
                                     <View style={{marginTop: 40}}>
                                         <Card.Image source={{uri: item.foodImage}}/>
@@ -249,7 +249,7 @@ export default function welcomScreen({navigation, route}){
                             {
                             dataFavorites.map((item) => 
                                 <SafeAreaView key ={item.id}>
-                                    <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {response: response, foodId: item.id})}}>
+                                    <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {userData: userData, foodId: item.id})}}>
                                         <Card>
                                             <Card.Image source={{uri: item.foodImage}}/>
                                             <Card.Divider/>

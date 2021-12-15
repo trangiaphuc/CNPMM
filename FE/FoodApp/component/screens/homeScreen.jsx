@@ -9,7 +9,7 @@ import NumericInput from 'react-native-numeric-input';
 import API from "../services/api";
 
 export default function homeScreen({navigation, route}){
-    const{response}=route.params;
+    const{userData}=route.params;
 
     const[data, setData]=useState([]);
     const[productCategory, setProductCategory]=useState([]);
@@ -20,14 +20,14 @@ export default function homeScreen({navigation, route}){
     const [search, setSearch]=useState([]);
     const [click, setClick]=useState(false);
     //console.log(click);
-    //console.log(response);
+    //console.log(userData);
 
     const fetchdata = async() => {
         const result = await API.get("productcategory/",
         {
             headers:{
                 'Content-Type': 'application/json',
-                'x-access-token': response.accessToken
+                'x-access-token': userData.accessToken
                 
             },
         });
@@ -47,7 +47,7 @@ export default function homeScreen({navigation, route}){
                 {
                     headers:{
                         'Content-Type': 'application/json',
-                        'x-access-token': response.accessToken,
+                        'x-access-token': userData.accessToken,
                     },
                 })
                 .then(response => {
@@ -99,7 +99,7 @@ export default function homeScreen({navigation, route}){
                 {
                     headers:{
                         'Content-Type': 'application/json',
-                        'x-access-token': response.accessToken,
+                        'x-access-token': userData.accessToken,
                     },
                 })
                 .then(res => {
@@ -139,7 +139,7 @@ export default function homeScreen({navigation, route}){
                         search.map(item =>
                             
                             <SafeAreaView key={item.id}>
-                                <TouchableOpacity onPress={()=>{navigation.navigate('productDetailScreen',{productId: item.id, response: response})}}>
+                                <TouchableOpacity onPress={()=>{navigation.navigate('productDetailScreen',{productId: item.id, userData: userData})}}>
                                     
                                 <Card>
                                         <Card.Title>{item.proName}</Card.Title>
@@ -167,11 +167,11 @@ export default function homeScreen({navigation, route}){
                                             <View>
                                                 <TouchableOpacity onPress={()=>{
                                                     if(quantityValue !==0){
-                                                        API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
+                                                        API.post(`cart/${userData.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
-                                                            'x-access-token': response.accessToken,
+                                                            'x-access-token': userData.accessToken,
                                                             
                                                         },
                                                     })
@@ -297,7 +297,7 @@ export default function homeScreen({navigation, route}){
                     renderItem={({item})=>
                         
                         
-                                <TouchableOpacity onPress={()=>{navigation.navigate('productDetailScreen',{productId: item.id, response: response})}}>
+                                <TouchableOpacity onPress={()=>{navigation.navigate('productDetailScreen',{productId: item.id, userData: userData})}}>
                                     <Card>
                                         <Card.Title>{item.proName}</Card.Title>
                                         <Card.Divider/>
@@ -324,11 +324,11 @@ export default function homeScreen({navigation, route}){
                                             <View>
                                                 <TouchableOpacity onPress={()=>{
                                                     if(quantityValue !==0){
-                                                        API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
+                                                        API.post(`cart/${userData.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
-                                                            'x-access-token': response.accessToken,
+                                                            'x-access-token': userData.accessToken,
                                                             
                                                         },
                                                     })

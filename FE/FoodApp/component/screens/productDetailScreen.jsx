@@ -17,7 +17,7 @@ import API from "../services/api";
 import NumericInput from 'react-native-numeric-input';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 export default function productDetailScreen({route, navigation}){
-    const {productId, response}=route.params;
+    const {productId, userData}=route.params;
     //console.log(productId);
     const [productDetail, setProductDetail]=useState([]);
     const [quantityValue, setQuantityValue] =useState([]);
@@ -27,7 +27,7 @@ export default function productDetailScreen({route, navigation}){
         {
             headers:{
                 'Content-Type': 'application/json',
-                'x-access-token': response.accessToken
+                'x-access-token': userData.accessToken
                 
             },
         });
@@ -112,11 +112,11 @@ export default function productDetailScreen({route, navigation}){
                     </View>
                     <View style={styles.button}>
                         <TouchableOpacity onPress={()=>{
-                            API.post(`cart/${response.id}/addCartItem`,{listCartItems: [{productId: productDetail.id, quantity: quantityValue}]},
+                            API.post(`cart/${userData.id}/addCartItem`,{listCartItems: [{productId: productDetail.id, quantity: quantityValue}]},
                             {
                                 headers:{
                                     'Content-Type': 'application/json',
-                                    'x-access-token': response.accessToken,
+                                    'x-access-token': userData.accessToken,
                                     
                                 },
                             })

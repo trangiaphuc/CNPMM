@@ -47,7 +47,7 @@ export default function signIn({navigation}){
                 .then(response => {
                     if (response.accessToken !== null){
                         //navigation.navigate('favoriteFoodScreen', { response: response.data});
-                        navigation.navigate('darBoardScreen', { response: response.data});
+                        navigation.navigate('darBoardScreen', { userData: response.data});
                         
                     }
                     else if (response.accessToken === null){

@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Tab =createBottomTabNavigator();
 const darBoardScreen=({route, navigation})=>{
-    const{response}=route.params;
+    const{userData}=route.params;
     //console.log(response);
     return(
        
@@ -47,11 +47,11 @@ const darBoardScreen=({route, navigation})=>{
                 tabBarInactiveTintColor: 'gray',
               })}
             >
-                <Tab.Screen name="Home" component={welcomScreen} initialParams={{response}} options={{headerShown: false}} />
-                <Tab.Screen name="Product" component={homeScreen} initialParams={{response}} options={{headerShown: false}} />
-                <Tab.Screen name="Food" component={foodScreen} initialParams={{response}} options={{headerShown:false}} />
-                <Tab.Screen name="Cart" component={cartScreen} initialParams={{response}} options={{headerShown:false}} />
-                <Tab.Screen name="Profile" component={userScreen} initialParams={{response}} options={{headerShown: false}} />
+                <Tab.Screen name="Home" component={welcomScreen} initialParams={{userData}} options={{headerShown: false}} />
+                <Tab.Screen name="Product" component={homeScreen} initialParams={{userData}} options={{headerShown: false}} />
+                <Tab.Screen name="Food" component={foodScreen} initialParams={{userData}} options={{headerShown:false}} />
+                <Tab.Screen name="Cart" component={cartScreen} initialParams={{userData}} options={{headerShown:false}} />
+                <Tab.Screen name="Profile" component={userScreen} initialParams={{userData}} options={{headerShown: false}} />
             </Tab.Navigator>
         
     );
