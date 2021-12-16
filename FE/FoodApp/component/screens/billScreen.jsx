@@ -190,8 +190,7 @@ export default function billScreen({navigation, route}){
                                                 
                                             )
                                         }
-                                        
-                                        
+
                                     </Picker>
                                 </View>
                                 <View style={styles.paymentMethod}>

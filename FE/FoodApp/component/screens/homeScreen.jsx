@@ -167,7 +167,8 @@ export default function homeScreen({navigation, route}){
                                             <View>
                                                 <TouchableOpacity onPress={()=>{
                                                     if(quantityValue !==0){
-                                                        API.post(`cart/${userData.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
+                                                        const listCartItems = [{productId: item.id, quantity: quantityValue}];
+                                                        API.post(`cart/${userData.id}/addCartItem`,{listCartItems: listCartItems},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
