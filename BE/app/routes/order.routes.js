@@ -24,4 +24,9 @@ module.exports = function(app){
     app.post('/api/order/:userId', 
     [authJwt.verifyToken],
     controller.addNewOrder);
+    
+    //add new order
+    app.post('/api/order/update/:orderId', 
+    [authJwt.verifyToken],
+    controller.updateOrder);
 }

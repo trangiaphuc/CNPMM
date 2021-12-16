@@ -180,3 +180,37 @@ exports.addNewOrder = (req, res) => {
         res.status(500).send({message: err.message});
     })
 }
+
+exports.updateOrder = (req, res) =>{
+    const orderId = req.params.orderId;
+
+    Order.findOne({
+        logging: (sql, queryObject) =>{
+            logger.info(sql, queryObject);
+        },
+        where: {id: orderId}
+    })
+    .then(order => {
+        if(order!=null){
+            order.update({
+                logging: (sql, queryObject) =>{
+                    logger.info(sql, queryObject);
+                },
+                isCanceled: req.body.isCanceled,
+                isDone: req.body.isDone,
+            })
+            .then(() => {
+                res.status(200).send({message: 'Success!'})
+            })
+            .catch(err => {
+                res.status(500).send({message: err.message});
+            })
+        }
+        else{
+            res.status(404).send('Not Found!')
+        }
+    })
+    .catch(err => {
+        res.status(500).send({message: err.message});
+    })
+}

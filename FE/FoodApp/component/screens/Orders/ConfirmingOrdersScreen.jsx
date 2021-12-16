@@ -16,11 +16,30 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 export default function confirmingOrderTab({navigation, route}){
 
-    const {userData, data} = route.params;
+    const {userData, data, confirmingOrders} = route.params;
 
     return(
         <View style={styles.container}>
            <Title>{data} </Title>
+           <ScrollView style={{height: 400}}>
+            {
+                confirmingOrders.map((item) => 
+                    <SafeAreaView key={item.id}>                            
+                        <Card>
+                            <View style={{flexDirection: 'row'}}>
+                                    <View style={{flex: 3}}>
+                                                <Text style={{fontWeight: 'bold'}}>{item.product.proName}</Text>
+                                                <Text>{'Số lượng: ' + item.quantity}</Text>
+                                    </View>
+                                    <View style={{flex: 1, justifyContent: 'center'}}>
+                                        <Text>{item.product.price*item.quantity + 'đ'}</Text>
+                                    </View>
+                            </View>
+                        </Card>
+                    </SafeAreaView>
+                    )
+            }
+            </ScrollView>
         </View>
     )
 

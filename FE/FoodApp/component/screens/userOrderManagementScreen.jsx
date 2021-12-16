@@ -13,9 +13,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import API from "../services/api";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ConfirmingOrdersScreen from './Orders/ConfirmingOrdersScreen';
-import DeliveryingOrdersScreen from './Orders/ConfirmingOrdersScreen';
-import DoneOrdersScreen from './Orders/ConfirmingOrdersScreen';
-import CancelOrdersScreen from './Orders/ConfirmingOrdersScreen';
+import DeliveryingOrdersScreen from './Orders/DeliveryingOrdersScreen';
+import DoneOrdersScreen from './Orders/DoneOrdersScreen';
+import CancelOrdersScreen from './Orders/CancelOrdersScreen';
 
 
 export default function userOrderManagementScreen({navigation, route}){
@@ -66,7 +66,7 @@ export default function userOrderManagementScreen({navigation, route}){
 
             <View style={styles.productFoodMargin}>
             <Tab.Navigator>
-                    <Tab.Screen name="Chờ duyệt" component={ConfirmingOrdersScreen} initialParams={{userData, data: confirmingContent}} options={{headerShown: false}}/>
+                    <Tab.Screen name="Chờ duyệt" component={ConfirmingOrdersScreen} initialParams={{userData, data: confirmingContent, confirmingOrders: ConfirmingOrders}} options={{headerShown: false}}/>
                     <Tab.Screen name="Đang giao" component={DeliveryingOrdersScreen} initialParams={{userData, data: deliveryContent}} options={{headerShown:false}}/>
                     <Tab.Screen name="Đã giao" component={DoneOrdersScreen} initialParams={{userData, data: DoneContent}} options={{headerShown: false}}/>
                     <Tab.Screen name="Hủy đơn" component={CancelOrdersScreen} initialParams={{userData, data: CancelContent}} options={{headerShown:false}}/>
