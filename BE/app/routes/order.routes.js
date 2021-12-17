@@ -29,4 +29,27 @@ module.exports = function(app){
     app.post('/api/order/update/:orderId', 
     [authJwt.verifyToken],
     controller.updateOrder);
+
+    //get confirming orders
+    app.get('/api/order/:userId/confirming', 
+    [authJwt.verifyToken], 
+    controller.getConfirmingOrders);
+
+    //get deliverying orders
+    app.get('/api/order/:userId/deliverying', 
+    [authJwt.verifyToken], 
+    controller.getDeliveryingOrders);
+
+    //get done orders
+    app.get('/api/order/:userId/done', 
+    [authJwt.verifyToken], 
+    controller.getDoneOrders);
+    
+    //get cancel orders
+    app.get('/api/order/:userId/cancelled',  
+    [authJwt.verifyToken], 
+    controller.getCancelledOrders);
+    
+    
+    
 }

@@ -199,7 +199,7 @@ exports.updateOrder = (req, res) =>{
                 isCanceled: req.body.isCanceled,
                 isDone: req.body.isDone,
             })
-            .then(() => {
+            .then(updatedItem => {
                 res.status(200).send({message: 'Success!'})
             })
             .catch(err => {
@@ -211,6 +211,255 @@ exports.updateOrder = (req, res) =>{
         }
     })
     .catch(err => {
+        res.status(500).send({message: err.message});
+    })
+}
+
+
+
+exports.getConfirmingOrders = (req, res) =>{
+    const userId = req.params.userId;
+    Order.findAll({ 
+        logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      where: {
+          userId: userId,
+          isDone: 0
+        },
+      include: [
+        {
+            model: Delivery,
+            attributes: ['id', 'deliveryMethod', 'fee']
+        },
+        {
+            model: PaymentMethod,
+            attributes: ['id', 'paymentType']
+        },
+        {
+            model: OrderDetail,
+            attributes: ['id', 'quantity', 'price'],
+            include: [
+                {
+                    model: Product,
+                    attributes: ['id', 'proName', 'quantityValue', 'quantityId']
+                }
+            ]
+        }
+      ]
+    })
+    .then(orders => {
+        orders.added = "added";
+        if(orders){
+            orders.forEach(order =>{
+                order.totalPrices = 'hello';
+                var orderDetails = order.orderDetails;
+                console.log(orderDetails)
+                var totalPrice = 0;
+                orderDetails.forEach(orderDetail => {
+                    var unitPrice = orderDetail.price * orderDetail.quantity;
+                    totalPrice = totalPrice + unitPrice;
+                });
+                totalPrice = totalPrice + order.deliveryMethod.fee;
+                order.setDataValue('totalPrice', totalPrice);
+            });
+            orders.reverse();
+            logger.info(`Request status: ${res.status(200)} data ${orders}`);
+            res.status(200).send({orders: orders});
+        }
+        else{
+            logger.info(`Request status: ${res.status(200)} data Empty!`);
+            res.status(200).send('Empty!');
+        }
+    })
+    .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
+        res.status(500).send({message: err.message});
+    })
+}
+
+
+exports.getCancelledOrders = (req, res) =>{
+    const userId = req.params.userId;
+    Order.findAll({ 
+        logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      where: {
+          userId: userId,
+          isCanceled: 1
+        },
+      include: [
+        {
+            model: Delivery,
+            attributes: ['id', 'deliveryMethod', 'fee']
+        },
+        {
+            model: PaymentMethod,
+            attributes: ['id', 'paymentType']
+        },
+        {
+            model: OrderDetail,
+            attributes: ['id', 'quantity', 'price'],
+            include: [
+                {
+                    model: Product,
+                    attributes: ['id', 'proName', 'quantityValue', 'quantityId']
+                }
+            ]
+        }
+      ]
+    })
+    .then(orders => {
+        orders.added = "added";
+        if(orders){
+            orders.forEach(order =>{
+                order.totalPrices = 'hello';
+                var orderDetails = order.orderDetails;
+                console.log(orderDetails)
+                var totalPrice = 0;
+                orderDetails.forEach(orderDetail => {
+                    var unitPrice = orderDetail.price * orderDetail.quantity;
+                    totalPrice = totalPrice + unitPrice;
+                });
+                totalPrice = totalPrice + order.deliveryMethod.fee;
+                order.setDataValue('totalPrice', totalPrice);
+            });
+            orders.reverse();
+            logger.info(`Request status: ${res.status(200)} data ${orders}`);
+            res.status(200).send({orders: orders});
+        }
+        else{
+            logger.info(`Request status: ${res.status(200)} data Empty!`);
+            res.status(200).send('Empty!');
+        }
+    })
+    .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
+        res.status(500).send({message: err.message});
+    })
+}
+
+
+exports.getDeliveryingOrders = (req, res) =>{
+    const userId = req.params.userId;
+    Order.findAll({ 
+        logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      where: {
+          userId: userId,
+          isDone: 2
+        },
+      include: [
+        {
+            model: Delivery,
+            attributes: ['id', 'deliveryMethod', 'fee']
+        },
+        {
+            model: PaymentMethod,
+            attributes: ['id', 'paymentType']
+        },
+        {
+            model: OrderDetail,
+            attributes: ['id', 'quantity', 'price'],
+            include: [
+                {
+                    model: Product,
+                    attributes: ['id', 'proName', 'quantityValue', 'quantityId']
+                }
+            ]
+        }
+      ]
+    })
+    .then(orders => {
+        orders.added = "added";
+        if(orders){
+            orders.forEach(order =>{
+                order.totalPrices = 'hello';
+                var orderDetails = order.orderDetails;
+                console.log(orderDetails)
+                var totalPrice = 0;
+                orderDetails.forEach(orderDetail => {
+                    var unitPrice = orderDetail.price * orderDetail.quantity;
+                    totalPrice = totalPrice + unitPrice;
+                });
+                totalPrice = totalPrice + order.deliveryMethod.fee;
+                order.setDataValue('totalPrice', totalPrice);
+            });
+            orders.reverse();
+            logger.info(`Request status: ${res.status(200)} data ${orders}`);
+            res.status(200).send({orders: orders});
+        }
+        else{
+            logger.info(`Request status: ${res.status(200)} data Empty!`);
+            res.status(200).send('Empty!');
+        }
+    })
+    .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
+        res.status(500).send({message: err.message});
+    })
+}
+
+
+exports.getDoneOrders = (req, res) =>{
+    const userId = req.params.userId;
+    Order.findAll({ 
+        logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      where: {
+          userId: userId,
+          isDone: 1
+        },
+      include: [
+        {
+            model: Delivery,
+            attributes: ['id', 'deliveryMethod', 'fee']
+        },
+        {
+            model: PaymentMethod,
+            attributes: ['id', 'paymentType']
+        },
+        {
+            model: OrderDetail,
+            attributes: ['id', 'quantity', 'price'],
+            include: [
+                {
+                    model: Product,
+                    attributes: ['id', 'proName', 'quantityValue', 'quantityId']
+                }
+            ]
+        }
+      ]
+    })
+    .then(orders => {
+        orders.added = "added";
+        if(orders){
+            orders.forEach(order =>{
+                order.totalPrices = 'hello';
+                var orderDetails = order.orderDetails;
+                console.log(orderDetails)
+                var totalPrice = 0;
+                orderDetails.forEach(orderDetail => {
+                    var unitPrice = orderDetail.price * orderDetail.quantity;
+                    totalPrice = totalPrice + unitPrice;
+                });
+                totalPrice = totalPrice + order.deliveryMethod.fee;
+                order.setDataValue('totalPrice', totalPrice);
+            });
+            orders.reverse();
+            logger.info(`Request status: ${res.status(200)} data ${orders}`);
+            res.status(200).send({orders: orders});
+        }
+        else{
+            logger.info(`Request status: ${res.status(200)} data Empty!`);
+            res.status(200).send('Empty!');
+        }
+    })
+    .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
         res.status(500).send({message: err.message});
     })
 }
