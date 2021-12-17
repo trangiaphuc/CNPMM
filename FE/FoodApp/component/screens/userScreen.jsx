@@ -62,7 +62,7 @@ export default function userScreen({navigation, route}){
 
         <SafeAreaView>
             <View style={styles.return}>
-                
+
                 <View style={styles.returnIcon}>
                     <TouchableOpacity onPress={()=>{navigation.goBack();}}>
                         <FontAwesome
@@ -72,9 +72,10 @@ export default function userScreen({navigation, route}){
                         />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.returnText}>Thông tin cá nhân</Text>
-                
-                
+                <View style={styles.containerText}>
+                    <Text style={styles.returnText}>Thông tin cá nhân</Text>
+                </View>
+
             </View>
            <ScrollView>
            <View style={styles.userInfoSection}>
@@ -123,7 +124,7 @@ export default function userScreen({navigation, route}){
                     <Title>1200</Title>
                     <Caption>Tổng chi tiêu</Caption>
                 </View>
-                <TouchableRipple onPress={()=>{navigation.navigate('userOrderManagementScreen',{userData: userData, orders: orders})}} 
+                <TouchableRipple onPress={()=>{navigation.navigate('userOrderManagementScreen',{userData: userData, orders: orders, userInfo: data})}} 
                 style={[styles.infoBox, {
                     borderRightColor: '#dddddd',
                     borderRightWidth: 1,
@@ -228,18 +229,25 @@ const styles = StyleSheet.create({
         height: 60,
         backgroundColor: '#FFFFFF',
         flexDirection: 'row',
-        
+
     },
     returnIcon:{
-        marginLeft: 15,
-        marginTop: 30,
+        flex: 2,
+        marginBottom: 5,
+        marginLeft: 10,
+        justifyContent: 'flex-end',
+
     },
     returnText:{
-        marginTop: 25,
-        marginLeft: 80,
+        marginBottom: 5,
+
         fontWeight: 'bold',
         fontSize: 20,
-        color: '#05375a'
+        color: '#05375a',
+    },
+    containerText:{
+        justifyContent: 'flex-end',
+        flex: 6,
     }
     
 });

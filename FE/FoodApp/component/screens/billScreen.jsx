@@ -23,6 +23,7 @@ export default function billScreen({navigation, route}){
     const{userData, product}=route.params;
     const[pickerValue, setPickerValue]=useState(1);
     const[pickerValueDelivery, setPickerValueDelivery]=useState(1);
+    var order=[];
     //console.log(product.product.price);
     //console.log(paymentMethod);
     // if(product.length !==0){
@@ -30,14 +31,14 @@ export default function billScreen({navigation, route}){
     //     console.log(product.quantity);
 
     // }
-    var a=[];
+    var itemPrice=[];
     for(let i=0; i< product.length; i++){
-        a.push(product[i].product.price*product[i].quantity);
+        itemPrice.push(product[i].product.price*product[i].quantity);
         
     }
     let tong=0;
-    for(let i=0; i< a.length; i++){
-        tong=tong + a[i];
+    for(let i=0; i< itemPrice.length; i++){
+        tong=tong + itemPrice[i];
     }
    
     
@@ -90,15 +91,23 @@ export default function billScreen({navigation, route}){
        
 
         const orders =()=> {
-            //console.log(ordersDetail);
-            for(let i=0; i<product.length; i++) {
 
-                //console.log(product[i].product.price);
-                API.post(`order/${userData.id}`,
-                {addressDelivery: data.address,
+            for(let i=0;i< product.length;i++) {
+                order.push({
+                    quantity: product[i].quantity,
+                    productId: product[i].productId,
+                    price: product[i].product.price
+                });
+            }
+            
+
+
+                API.post(`order/${userData.id}`,{
+                    addressDelivery: data.address,
                     paymentMethodId: pickerValue,
-                        deliveryMethodId: pickerValueDelivery,
-                            orderDetails: [{quantity: product[i].quantity, productId: product[i].productId, price: product[i].product.price}]},
+                    deliveryMethodId: pickerValueDelivery,
+                    orderDetails: order,
+                },
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -113,9 +122,8 @@ export default function billScreen({navigation, route}){
                 }).catch(error => {
                         alert('Error', error.res);
                 });
-            }
-            
         }
+
 
     return (
         <View>
@@ -129,7 +137,7 @@ export default function billScreen({navigation, route}){
                         />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.returnText}>Hóa đơn</Text>
+                <Text style={styles.returnText}>Đặt hàng</Text>
             </View>
            <View>
                 <View style={styles.container}>
@@ -206,8 +214,7 @@ export default function billScreen({navigation, route}){
                                                 <Picker.Item key={item.id} label={item.deliveryMethod} value={item.id}/>
                                             )
                                         }
-                                        
-                                        
+
                                     </Picker>
                                 </View>
                                 <View style={{flexDirection: 'row'}}>

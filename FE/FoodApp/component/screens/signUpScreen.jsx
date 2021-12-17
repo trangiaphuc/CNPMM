@@ -7,7 +7,6 @@ import {
     Dimensions,
     Platform,
     TextInput,
-    Picker,
     Alert ,
     Image,
 } from "react-native";
@@ -19,7 +18,7 @@ import axios from "axios";
 import darBoardScreen from "./darBoardScreen";
 import API from "../services/api";
 import ComboBox from 'react-native-combobox';
-
+import {Picker} from '@react-native-picker/picker';
 
 
 
@@ -38,11 +37,22 @@ export default function signUp({navigation}){
         lastname: '',
         phone: '',
         address: '',
+        gender: '',
         confirmPassword: '',
         check_TextInput: false,
         secureTextEntry: true
     });
-    const [selectedValue, setSelectedValue] = useState(0);
+    const [selectedValueGender, setSelectedValueGender] = useState(0);
+    const gender=[
+        {
+            genderId: '1',
+            genderName: 'Nam'
+        },
+        {
+            genderId: '0',
+            genderName: 'Nữ'
+        }
+    ];
     const textInputChange=(val)=>{
         if( val.length !==0){
             setData({
@@ -125,8 +135,10 @@ export default function signUp({navigation}){
             secureTextEntry: !data.secureTextEntry,
         });
     }
-    
-  
+    const setPickerGender =(val)=>{
+        setSelectedValueGender(val);
+    }
+
 
     const signUpButton =()=> {
         
@@ -141,7 +153,7 @@ export default function signUp({navigation}){
                                         if(data.password === data.confirmPassword){
                                             API.post("auth/signup",
                                             {username:data.username, email:data.email, password:data.password, firstname: data.firstname,
-                                                lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"], gender: selectedValue},
+                                                lastname: data.lastname, phone: data.phone, address:data.address, role: ["user"], gender: selectedValueGender},
                                                     {
                                                         headers:{
                                                             'Content-Type': 'application/json',
@@ -230,19 +242,18 @@ export default function signUp({navigation}){
                         onChangeText={(val)=>handleLastName(val)}
                    />
                </View>
-               {/* <View style={styles.gender}>
-                    <Image
-                        style={styles.genderImage}
-                        source={require('../images/gender.png')}/>
+                <View style={{borderBottomWidth: 1, borderBottomColor: '#f2f2f2'}}>
                     <Picker
-                        selectedValue={selectedValue}
-                        style={{ height: 30, width: 260}}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                        >
-                        <Picker.Item label="Nam" value="0" />
-                        <Picker.Item label="Nữ" value="1" />
+                        style={styles.picker}
+                        selectedValue={selectedValueGender}
+                        onValueChange={(itemValue)=>setPickerGender(itemValue)}
+                    >
+                        <Picker.Item label={'Nam'} value={1}/>
+                        <Picker.Item label={'Nữ'} value={0}/>
+
                     </Picker>
-               </View> */}
+                </View>
+              
                <View style={styles.action}>
                     <Feather
                         name="phone"
@@ -450,6 +461,10 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         marginRight: 10,
+    },
+    picker:{
+        marginLeft: 15,
+        marginRight: 15,
     }
 });
 
