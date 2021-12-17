@@ -2,6 +2,7 @@ const db = require('../models');
 const Food = db.food;
 const FoodMaterial = db.foodMaterial;
 const FoodCookStep = db.foodCookStep;
+const Product = db.product;
 const Sequelize = require("sequelize");
 const logger = require('../winston/winston');
 const fs = require('fs');
@@ -101,13 +102,16 @@ exports.getFoodCookStepById = (req, res) => {
 }
 
 //get all food with a category id
-exports.getAllWithCatId = (req, res) => {
+exports.userGetAllWithCatId = (req, res) => {
   const id = req.params.id;
   Food.findAll({
     logging: (sql, queryObject) =>{
       logger.info(sql, queryObject);
     },
-    where: {foodCategoryId: id}
+    where: {
+      foodCategoryId: id,
+      isShowing: true,
+    }
   })
     .then(foods => {
       logger.info(`Request status: ${res.status(200)} data ${foods}`);
@@ -131,54 +135,14 @@ exports.getAllWithCatId = (req, res) => {
   });
 };
 
-exports.addNewFood = (req, res) => {
 
-try{    
-    if (req.file == undefined) {
-      return res.send(`You must select a file.`);
-    }
-    const foodImage = fs.readFileSync(
-      __basedir + "/resources/static/assets/images/food/" + req.file.filename
-    );
-    Food.create({
-      logging: (sql, queryObject) =>{
-        logger.info(sql, queryObject);
-      },
-      foodName: req.body.foodName,
-      foodDescription: req.body.foodDescription,
-      foodCalories: req.body.foodCalories,
-      foodImage: "/resources/static/assets/images/food/" + req.file.filename,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    })
-    .then(food =>{
-      if(food){
-        fs.writeFileSync(
-          __basedir + "/resources/static/assets/tmp/images/food/" + req.file.filename,
-          // image.data
-          foodImage
-        );
-        logger.info(`Request status: ${res.status(201)} Created!`);
-        res.status(201).send({message: "Success!"})
-      }
-      else{
-        logger.error(`Request status: ${res.status(500)}  error `);
-        res.status(500).send({message:"Fail!"});
-      }
-    })
-  }
-  catch(err) {
-    logger.error(`Request status: ${res.status(500)}  error ${err}`);
-    res.status(500).send({message: err.message});
-  }
-}
-
-exports.search = (req, res) =>{
+exports.userSearch = (req, res) =>{
   Food.findAll({
     logging: (sql, queryObject) =>{
       logger.info(sql, queryObject);
     },
     where: Sequelize.literal('MATCH (foodName) AGAINST (:keyword)'),
+    // where: {isShowing: true},
     replacements: {
       keyword: req.body.keyword
     }
@@ -186,15 +150,20 @@ exports.search = (req, res) =>{
   .then(foods => {
     if(foods){
       
+      var searchResults = [];
       foods.forEach(food =>{
-        const image = fs.readFileSync(
-          __basedir + food.foodImage
-        );
-        var base64Image = Buffer.from(image).toString("base64");
-        food.foodImage = "data:image/png;base64,"+base64Image;
+        if(food.isShowing == true){
+          const image = fs.readFileSync(
+            __basedir + food.foodImage
+          );
+          var base64Image = Buffer.from(image).toString("base64");
+          food.foodImage = "data:image/png;base64,"+base64Image;
+          searchResults.push(food)
+        }
       })
-      logger.info(`Request status: ${res.status(200)} data ${foods}`);
-      res.status(200).send({foods: foods})
+      
+      logger.info(`Request status: ${res.status(200)} data ${searchResults}`);
+      res.status(200).send({foods: searchResults})
     }
     else{
       logger.error(`Request status: ${res.status(404)}  Not found`);
@@ -219,19 +188,26 @@ exports.extractFoodMaterial = (req, res) =>{
       {
         model: FoodMaterial,
         attributes:['id', 'foodMaterialName', 'quantityDescription', 'productId'],
+        include: [
+          {
+            model: Product,
+          }
+        ]
       }
     ]
   })
-  .then(food =>{
+  .then((food)=>{
     if(food){
       var foodMaterials = food.foodMaterials;
       var listMarketNoteItems = [];
       var listCartItems = [];
-      foodMaterials.forEach(foodMaterial =>{
+      foodMaterials.forEach( async (foodMaterial) =>{
         if(foodMaterial.productId != null){
+          
           listCartItems.push(foodMaterial);
           foodMaterial.setDataValue('isDone', true);
           listMarketNoteItems.push(foodMaterial);
+          // console.log(product);
           // console.log(listMarketNoteItems)
         }
         else{
@@ -291,4 +267,160 @@ exports.getAllFavoriteFood = (req, res) => {
       logger.error(`Request status: ${res.status(500)}  error ${error}`);
     })
   })
+}
+
+exports.merchantGetAllWithCatId = (req, res) => {
+  const id = req.params.id;
+  Food.findAll({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
+    where: {foodCategoryId: id}
+  })
+    .then(foods => {
+      logger.info(`Request status: ${res.status(200)} data ${foods}`);
+      
+      foods.forEach(food =>{
+        const image = fs.readFileSync(
+          __basedir + food.foodImage
+        );
+        var base64Image = Buffer.from(image).toString("base64");
+        food.foodImage = "data:image/png;base64,"+base64Image;
+      })
+
+      res.status(200).send({foods: foods});
+  })
+  .catch(err => {
+    logger.error(`Request status: ${res.status(500)} error ${err}`);
+    res.status(500).send({
+      message:
+      err.message || "Some error occurred while retrieving tutorials."
+    });
+  });
+};
+
+exports.merchantAddNewFood = (req, res) => {
+
+try{    
+    if (req.file == undefined) {
+      return res.send(`You must select a file.`);
+    }
+    const foodImage = fs.readFileSync(
+      __basedir + "/resources/static/assets/images/food/" + req.file.filename
+    );
+    Food.create({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      foodName: req.body.foodName,
+      foodDescription: req.body.foodDescription,
+      foodCalories: req.body.foodCalories,
+      foodImage: "/resources/static/assets/images/food/" + req.file.filename,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .then(food =>{
+      if(food){
+        fs.writeFileSync(
+          __basedir + "/resources/static/assets/tmp/images/food/" + req.file.filename,
+          // image.data
+          foodImage
+        );
+        
+        logger.info(`Request status: ${res.status(201)} Created!`);
+        res.status(201).send({message: "Success!"})
+      }
+      else{
+        logger.error(`Request status: ${res.status(500)}  error `);
+        res.status(500).send({message:"Fail!"});
+      }
+    })
+  }
+  catch(err) {
+    logger.error(`Request status: ${res.status(500)}  error ${err}`);
+    res.status(500).send({message: err.message});
+  }
+}
+
+exports.merchantSearch = (req, res) =>{
+  Food.findAll({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
+    where: Sequelize.literal('MATCH (foodName) AGAINST (:keyword)'),
+    // where: {isShowing: true},
+    replacements: {
+      keyword: req.body.keyword
+    }
+  })
+  .then(foods => {
+    if(foods){
+      
+      var searchResults = [];
+      foods.forEach(food =>{
+       
+          const image = fs.readFileSync(
+            __basedir + food.foodImage
+          );
+          var base64Image = Buffer.from(image).toString("base64");
+          food.foodImage = "data:image/png;base64,"+base64Image;
+          searchResults.push(food)
+        
+      })
+      
+      logger.info(`Request status: ${res.status(200)} data ${searchResults}`);
+      res.status(200).send({foods: searchResults})
+    }
+    else{
+      logger.error(`Request status: ${res.status(404)}  Not found`);
+      res.status(404).send({message: 'Food Not Found!'});
+    }
+  })
+  .catch(err => {
+    logger.error(`Request status: ${res.status(500)}  error ${err}`);
+    res.status(500).send({message: err.message});
+  })
+}
+
+exports.merchantUpdateFood = async (req, res) => {
+  const foodId = req.params.foodId;
+  const newFoodCookSteps = req.body.foodCookSteps;
+  const newFoodMaterials = req.body.foodMaterials;
+  var flag = true;
+  await FoodMaterial.findAll({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
+    where: {foodId: foodId}
+  })
+  .then(foodMaterials =>{
+    foodMaterials.forEach(foodMaterial =>{
+      foodMaterial.destroy();
+    })
+  })
+  .catch(err=>{
+    flag = false;
+  })
+
+  await FoodCookStep.findAll({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
+    where: {foodId : foodId}
+  })
+  .then(foodCookSteps =>{
+    foodCookSteps.forEach(foodCookStep =>{
+      foodCookStep.destroy();
+    })
+  })
+  .catch(err=>{
+    flag = false;
+  })
+
+
+  await newFoodMaterials.forEach(foodMaterial =>{
+    FoodMaterial.create
+  })
+
+
 }

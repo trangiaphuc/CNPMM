@@ -29,19 +29,19 @@ module.exports = function(app){
     //get all food with a category id
     app.get('/api/foods/category/:id', 
     [authJwt.verifyToken], 
-    controller.getAllWithCatId);
+    controller.userGetAllWithCatId);
     //search food
     app.post('/api/foods/search', 
-    [authJwt.verifyToken], 
-    controller.search);
+    // [authJwt.verifyToken], 
+    controller.userSearch);
     //add new
     app.post('/api/foods/addnewfood',
     [authJwt.verifyToken],
     upload.single("file"), 
-    controller.addNewFood)
+    controller.merchantAddNewFood)
     //lấy nguyên liêu ra note và cart
     app.get('/api/foods/foodextract/:foodId',
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     controller.extractFoodMaterial)
     //lay cac mon anh tu danh sach danh muc mon an
     app.post('/api/foods/favorite',

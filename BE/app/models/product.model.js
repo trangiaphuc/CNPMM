@@ -32,6 +32,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         productImage: {
             type : Sequelize.STRING
+        },
+        isSelling: {
+            type : Sequelize.BOOLEAN
         }
     }, {
         indexes: [

@@ -14,6 +14,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/gioluachay.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 1 ,
@@ -23,6 +24,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/mienxaothapcam.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 1 ,
@@ -32,6 +34,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/supbido.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 1 ,
@@ -41,6 +44,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/canhnamhatsen.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 1 ,
@@ -50,6 +54,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/chesanchay.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 2 ,
@@ -59,6 +64,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/canhcuamongtoi.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 2 ,
@@ -68,6 +74,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/canhchuathitbam.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 2 ,
@@ -77,6 +84,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/canhchuacalang.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 2 ,
@@ -86,6 +94,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/canhgalagiang.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 2 ,
@@ -95,6 +104,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/canhngaochua.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         //foodcategory 3
         {
@@ -105,6 +115,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/mucchiennuocmam.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         }, 
         {
           foodCategoryId: 3 ,
@@ -114,6 +125,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/vitchiencay.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },      
         {
           foodCategoryId: 3 ,
@@ -123,6 +135,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/canhgachienbo.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },  
         {
           foodCategoryId: 3 ,
@@ -132,6 +145,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/thitbachiquaygionbi.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },  
         {
           foodCategoryId: 3 ,
@@ -141,6 +155,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/tomtambotchienxu.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },  
         //foodCategory 4
         {
@@ -151,6 +166,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/longnuongnguvi.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },  
         {
           foodCategoryId: 4 ,
@@ -160,6 +176,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/suonnuongsotbbq.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },  
         {
           foodCategoryId: 4 ,
@@ -169,6 +186,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/duiganuongcay.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },  
         {
           foodCategoryId: 4 ,
@@ -178,6 +196,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/thitxiennuongraucu.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },  
         {
           foodCategoryId: 4 ,
@@ -187,6 +206,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/banhminuongmuoiot.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         //foodCategory 5
         {
@@ -197,6 +217,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/banhmochinhandaudo.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 5 ,
@@ -206,6 +227,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/banhgaocayhanquoc.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 5 ,
@@ -215,6 +237,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/banhbonglan.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 5 ,
@@ -224,6 +247,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/banhxeo.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
         {
           foodCategoryId: 5 ,
@@ -233,6 +257,7 @@ module.exports = {
           foodImage: "/resources/static/assets/images/food/banhsandwich3mau.jpg",
           createdAt: new Date(),
           updatedAt: new Date(),
+          isShowing: true,
         },
       ], {});
     /**

@@ -11,6 +11,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         foodImage:{
             type: Sequelize.STRING,
+        },
+        isShowing:{
+            type: Sequelize.BOOLEAN,
         }
     }, {
         indexes: [
