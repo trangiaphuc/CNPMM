@@ -1,27 +1,62 @@
 import React,{useState, useEffect} from "react";
 import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, Dimensions,Image, TouchableOpacity, TextInput} from "react-native";
-import axios from "axios";
-import{
-    Avatar,
-    Title,
-    Caption,
-    TouchableRipple
-} from 'react-native-paper';
+
+
 import {Card} from "react-native-elements";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-// import API from "../services/api";
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 
 
-export default function DoneOrderTab({navigation, route}){
 
-    const {userData, orders} = route.params;
 
+export default function DoneOrdersTab({navigation, route}){
+
+    const{userData, DoneOrders, userInfo} = route.params;
+    //console.log(userData);
     return(
         <View style={styles.container}>
-           <Title>Done </Title>
+           
+            <ScrollView>
+            {
+                   DoneOrders.map((item)=>
+                       <SafeAreaView key={item.id}>
+                           <TouchableOpacity onPress={()=>{navigation.navigate('ordersDetailBillScreen',{orders: item, userData: userData, userInfo: userInfo})}}>
+                            <Card>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontWeight: 'bold'}}>Mã đơn hàng: </Text>
+                                        <Text>{item.id}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontWeight: 'bold'}}>Phương thức thanh toán: </Text>
+                                        <Text>{item.paymentMethod.paymentType}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontWeight: 'bold'}}>Phương thức giao hàng: </Text>
+                                        <Text>{item.deliveryMethod.deliveryMethod}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontWeight: 'bold'}}>Ngày nhận: </Text>
+                                        <Text>{item.deliveryAt}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontWeight: 'bold'}}>Tổng tiền: </Text>
+                                        <Text>{item.totalPrice + 'đ'}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontWeight: 'bold'}}>Địa chỉ: </Text>
+                                        <Text>{item.addressDelivery}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontWeight: 'bold'}}>Tình trạng đơn hàng: </Text>
+                                        <Text>Đã giao</Text>
+                                    </View>
+                            </Card>
+                           </TouchableOpacity>
+                       </SafeAreaView>
+                   )
+               }
+            </ScrollView>
+           
+           
         </View>
     )
 
@@ -30,7 +65,7 @@ export default function DoneOrderTab({navigation, route}){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop:30,
+        
     },
     text: {
         marginLeft: 10,

@@ -54,7 +54,7 @@ export default function historyScreen({navigation, route}){
         
         <SafeAreaView>
             <View style={styles.return}>
-            
+
                 <View style={styles.returnIcon}>
                     <TouchableOpacity onPress={()=>{navigation.goBack();}}>
                         <FontAwesome
@@ -64,7 +64,10 @@ export default function historyScreen({navigation, route}){
                         />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.returnText}>Giỏ hàng</Text>
+                <View style={styles.containerText}>
+                    <Text style={styles.returnText}>Giỏ hàng</Text>
+                </View>
+
             </View>
             
             <ScrollView style={{height: 670}}>
@@ -79,15 +82,15 @@ export default function historyScreen({navigation, route}){
                                 <View style={{flex: 4}}>
                                     <Text style={{fontWeight: 'bold', marginBottom: 5}}>{item.product.proName}</Text>
                                     {/* <Card.Title>{item.product.proName}</Card.Title> */}
-                                    
-                                    <NumericInput
+                                    <Text>{'Số lượng: ' + item.quantity}</Text>
+                                    {/* <NumericInput
                                         minValue={0}
                                         maxValue={50}
                                         initValue={item.quantity}
                                         step={1}
                                         totalHeight={40}
                                         onChange={(value) =>onChange(value)}
-                                        rounded/>
+                                        rounded/> */}
                                 </View>
                                 <View style={styles.deleteItem}>
                                     <TouchableOpacity onPress={()=>{
@@ -158,18 +161,25 @@ const styles = StyleSheet.create({
         height: 60,
         backgroundColor: '#FFFFFF',
         flexDirection: 'row',
-        
+
     },
     returnIcon:{
-        marginLeft: 15,
-        marginTop: 30,
+        flex: 3,
+        marginBottom: 5,
+        marginLeft: 10,
+        justifyContent: 'flex-end',
+
     },
     returnText:{
-        marginTop: 25,
-        marginLeft: 127,
+        marginBottom: 5,
+
         fontWeight: 'bold',
         fontSize: 20,
-        color: '#05375a'
+        color: '#05375a',
+    },
+    containerText:{
+        justifyContent: 'flex-end',
+        flex: 5,
     },
     button: {
         alignItems: 'center',

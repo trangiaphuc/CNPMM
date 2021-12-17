@@ -113,8 +113,9 @@ export default function userScreen({navigation, route}){
         return(
             <SafeAreaView>
                 <View style={styles.return}>
+
                     <View style={styles.returnIcon}>
-                        <TouchableOpacity onPress={()=>{setClick(false);}}>
+                        <TouchableOpacity onPress={()=>{navigation.goBack();}}>
                             <FontAwesome
                                 name="arrow-left"
                                 color="#05375a"
@@ -122,8 +123,10 @@ export default function userScreen({navigation, route}){
                             />
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.returnTextSearch}>Tìm kiếm món ăn</Text>
-                   
+                    <View style={styles.containerTextSearch}>
+                        <Text style={styles.returnText}>Tìm kiếm món ăn</Text>
+                    </View>
+
                 </View>
                 <ScrollView>
                     <View>
@@ -160,6 +163,7 @@ export default function userScreen({navigation, route}){
     return(
         <SafeAreaView>
             <View style={styles.return}>
+
                 <View style={styles.returnIcon}>
                     <TouchableOpacity onPress={()=>{navigation.goBack();}}>
                         <FontAwesome
@@ -169,7 +173,10 @@ export default function userScreen({navigation, route}){
                         />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.returnText}>Món ăn</Text>
+                <View style={styles.containerText}>
+                    <Text style={styles.returnText}>Món ăn</Text>
+                </View>
+
             </View>
             <View style={styles.productFoodMargin}>
                 <View style={styles.search}>
@@ -312,24 +319,35 @@ const styles = StyleSheet.create({
         height: 60,
         backgroundColor: '#FFFFFF',
         flexDirection: 'row',
-        
+
     },
     returnIcon:{
-        marginLeft: 15,
-        marginTop: 30,
+        flex: 3,
+        marginBottom: 5,
+        marginLeft: 10,
+        justifyContent: 'flex-end',
+
     },
     returnText:{
-        marginTop: 25,
-        marginLeft: 130,
+        marginBottom: 5,
+
         fontWeight: 'bold',
         fontSize: 20,
-        color: '#05375a'
-    }, 
+        color: '#05375a',
+    },
+    containerText:{
+        justifyContent: 'flex-end',
+        flex: 5,
+    },
     returnTextSearch:{
         marginTop: 25,
         marginLeft: 85,
         fontWeight: 'bold',
         fontSize: 20,
         color: '#05375a'
+    },
+    containerTextSearch:{
+        justifyContent: 'flex-end',
+        flex: 8,
     }
 });
