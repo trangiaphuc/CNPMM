@@ -34,11 +34,7 @@ module.exports = function(app){
     app.post('/api/foods/search', 
     // [authJwt.verifyToken], 
     controller.userSearch);
-    //add new
-    app.post('/api/foods/addnewfood',
-    [authJwt.verifyToken],
-    upload.single("file"), 
-    controller.merchantAddNewFood)
+    
     //lấy nguyên liêu ra note và cart
     app.get('/api/foods/foodextract/:foodId',
     // [authJwt.verifyToken],
@@ -47,5 +43,40 @@ module.exports = function(app){
     app.post('/api/foods/favorite',
     [authJwt.verifyToken], 
     controller.getAllFavoriteFood)
+
+    //merchant
+    //add new
+    app.post('/api/merchant/foods/addnewfood',
+    [authJwt.verifyToken],
+    upload.single("file"), 
+    controller.merchantAddNewFood)
+
+    
+    app.post('/api/merchant/foods/addnewfood/detail/:foodId',
+    [authJwt.verifyToken],
+    controller.merchantAddNewFoodDetails
+    )
+
+    app.get('/api/merchant/foods/search',
+    [authJwt.verifyToken],
+    controller.merchantSearch)
+
+    app.get('/api/merchant/foods/category/:id',
+    [authJwt.verifyToken],
+    controller.merchantGetAllWithCatId
+    )
+
+    app.post('/api/merchant/foods/update/:foodId',
+    [authJwt.verifyToken],
+    controller.merchantUpdateFood
+    )
+
+    
+    app.post('/api/merchant/foods/update/image/:foodId',
+    [authJwt.verifyToken],
+    controller.merchantUpdateFoodImage
+    )
+
+
     
 }

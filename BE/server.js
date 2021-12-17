@@ -57,6 +57,8 @@ require('./app/routes/deliveryMethod.routes')(app);
 require('./app/routes/order.routes')(app);
 //market note zone
 require('./app/routes/marketNote.routes')(app)
+//images Zone
+require('./app/routes/images.routes')(app)
 
 
 // simple route

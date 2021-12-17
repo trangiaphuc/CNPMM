@@ -306,7 +306,7 @@ try{
       return res.send(`You must select a file.`);
     }
     const foodImage = fs.readFileSync(
-      __basedir + "/resources/static/assets/images/food/" + req.file.filename
+      __basedir + "/resources/static/assets/uploads/" + req.file.filename
     );
     Food.create({
       logging: (sql, queryObject) =>{
@@ -326,9 +326,14 @@ try{
           // image.data
           foodImage
         );
-        
+
+        console.log({"foodDes ":req.foodDescription});
+        FoodDes =  new Object(food.foodDescription);
+        console.log(FoodDes.id, FoodDes);
+
+
         logger.info(`Request status: ${res.status(201)} Created!`);
-        res.status(201).send({message: "Success!"})
+        res.status(201).send({message: "Success!", data: food})
       }
       else{
         logger.error(`Request status: ${res.status(500)}  error `);
@@ -340,6 +345,63 @@ try{
     logger.error(`Request status: ${res.status(500)}  error ${err}`);
     res.status(500).send({message: err.message});
   }
+}
+
+exports.merchantAddNewFoodDetails = async (req, res) => {
+  const foodId = req.params.foodId;
+  const foodMaterials = req.body.foodMaterials;
+  const foodCookSteps = req.body.foodCookSteps;
+
+  var flag = true;
+
+  await foodMaterials.forEach(foodMaterial =>{
+    FoodMaterial.create({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      foodId: foodId,
+      foodMaterialName: foodMaterial.foodMaterialName,
+      quantityDescription: foodMaterial.quantityDescription,
+      quantityValue: foodMaterial.quantityValue,
+      productId: foodMaterial.productId,
+      quantityId: foodMaterial.quantityId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .catch(err => {
+      if(err){
+        flag = false;
+        console.error(err);
+      }
+    })
+  })
+
+  await foodCookSteps.forEach(foodCookStep => {
+    FoodCookStep.create({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      foodId: foodId,
+      stepNumber: foodCookStep.stepNumber,
+      stepDescription: foodCookStep.stepDescription,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .catch(err => {
+      if(err){
+        flag = false;
+        console.error(err);
+      }
+    })
+  })
+
+  if(flag === true){
+    res.status(200).send('Success!')
+  }
+  else{
+    res.status(500).send('Fail!');
+  }
+
 }
 
 exports.merchantSearch = (req, res) =>{
@@ -387,6 +449,33 @@ exports.merchantUpdateFood = async (req, res) => {
   const newFoodCookSteps = req.body.foodCookSteps;
   const newFoodMaterials = req.body.foodMaterials;
   var flag = true;
+
+  Food.findOne({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
+    where:{id: foodId}
+  })
+  .then(food => {
+    food.update({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      foodName: req.body.foodName,
+      foodDescription: req.body.foodDescription,
+      foodCalories: req.body.foodCalories,
+      isShowing: req.body.isShowing,
+      foodCategory: req.body.foodCategory,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .catch(err => {
+      if(err){
+        flag = false;
+      }
+    })
+  })
+
   await FoodMaterial.findAll({
     logging: (sql, queryObject) =>{
       logger.info(sql, queryObject);
@@ -399,7 +488,8 @@ exports.merchantUpdateFood = async (req, res) => {
     })
   })
   .catch(err=>{
-    flag = false;
+    if(err)
+    {flag = false;}
   })
 
   await FoodCookStep.findAll({
@@ -414,13 +504,102 @@ exports.merchantUpdateFood = async (req, res) => {
     })
   })
   .catch(err=>{
-    flag = false;
+    if(err)
+    {flag = false;}
   })
 
 
+  
   await newFoodMaterials.forEach(foodMaterial =>{
-    FoodMaterial.create
+    FoodMaterial.create({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      foodId: foodId,
+      foodMaterialName: foodMaterial.foodMaterialName,
+      quantityDescription: foodMaterial.quantityDescription,
+      quantityValue: foodMaterial.quantityValue,
+      productId: foodMaterial.productId,
+      quantityId: foodMaterial.quantityId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .catch(err => {
+      if(err){
+        flag = false;
+      }
+    })
   })
 
+  await newFoodCookSteps.forEach(foodCookStep =>{
+    FoodCookStep.create({
+      logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      foodId: foodId,
+      stepNumber: foodCookStep.stepNumber,
+      stepDescription: foodCookStep.stepDescription,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .catch(err=>{
+      if(err){
+        flag = false;
+      }
+    })
+  })
 
+  if(flag){
+    res.status(200).send("Success!")
+  }
+  else{
+    res.status(500).send("Fail!");
+  }
 }
+
+
+exports.merchantUpdateFoodImage = (req, res) => {
+  const foodId = req.params.foodId;
+  try{    
+      if (req.file == undefined) {
+        return res.send(`You must select a file.`);
+      }
+      const foodImage = fs.readFileSync(
+        __basedir + "/resources/static/assets/uploads/" + req.file.filename
+      );
+      Food.findOne({
+        logging: (sql, queryObject) =>{
+          logger.info(sql, queryObject);
+        },
+        where: {id: foodId}
+      })
+      .then(food =>{
+        food.update({
+          logging: (sql, queryObject) =>{
+            logger.info(sql, queryObject);
+          },
+          foodImage: "/resources/static/assets/images/food/" + req.file.filename,
+          updatedAt: new Date(),
+        })
+        .then(food =>{
+          if(food){
+            fs.writeFileSync(
+              __basedir + "/resources/static/assets/tmp/images/food/" + req.file.filename,
+              // image.data
+              foodImage
+            );
+            logger.info(`Request status: ${res.status(201)} Created!`);
+            res.status(201).send({message: "Success!", data: food})
+          }
+          else{
+            logger.error(`Request status: ${res.status(500)}  error `);
+            res.status(500).send({message:"Fail!"});
+          }
+        })
+      })
+    }
+    catch(err) {
+      logger.error(`Request status: ${res.status(500)}  error ${err}`);
+      res.status(500).send({message: err.message});
+    }
+  }
