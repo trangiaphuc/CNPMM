@@ -18,22 +18,45 @@ module.exports = function(app){
     app.get('/api/products/',
     [authJwt.verifyToken],  
     controller.getAll);
+
     //get a product detail
     app.get('/api/products/detail/:id',
     [authJwt.verifyToken],  
     controller.getOneWithDetail);
+
     //get all products with category id
     app.get('/api/products/category/:id', 
     [authJwt.verifyToken], 
-    controller.getAllProWithCatId);
+    controller.userGetAllProWithCatId);
+
      //product search     app.get('/api/products/category/:id', 
-     app.post('/api/products/search/', 
+    app.post('/api/products/search/', 
      [authJwt.verifyToken], 
-     controller.search);
+     controller.userSearch);
+
+     //merchant
     //add new product
-     app.post('/api/products/addnewproduct', 
+    app.post('/api/merchant/products/addnewproduct', 
      [authJwt.verifyToken],
      upload.single("file"),
      controller.addNewProduct)
+
+    app.get('/api/merchant/products/category/:id', 
+     [authJwt.verifyToken],
+     controller.merchantGetAllProWithCatId
+     )
+
+    app.get('/api/merchant/products/search/', 
+     [authJwt.verifyToken],
+     controller.merchantSearch)
+
+    app.post('/api/merchant/products/update/:productId',
+     [authJwt.verifyToken],
+     controller.merchantUpdateProduct)
+
+    app.post('/api/merchant/products/update/image/:productId',
+    [authJwt.verifyToken],
+    upload.single("file"),
+    controller.merchantUpdateProductImage)
     
 }

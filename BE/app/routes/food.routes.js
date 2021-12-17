@@ -74,6 +74,7 @@ module.exports = function(app){
     
     app.post('/api/merchant/foods/update/image/:foodId',
     [authJwt.verifyToken],
+    upload.single("file"),
     controller.merchantUpdateFoodImage
     )
 

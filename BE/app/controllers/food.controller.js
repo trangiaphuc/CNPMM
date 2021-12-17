@@ -322,7 +322,7 @@ try{
     .then(food =>{
       if(food){
         fs.writeFileSync(
-          __basedir + "/resources/static/assets/tmp/images/food/" + req.file.filename,
+          __basedir + "/resources/static/assets/images/food/" + req.file.filename,
           // image.data
           foodImage
         );
@@ -584,7 +584,7 @@ exports.merchantUpdateFoodImage = (req, res) => {
         .then(food =>{
           if(food){
             fs.writeFileSync(
-              __basedir + "/resources/static/assets/tmp/images/food/" + req.file.filename,
+              __basedir + "/resources/static/assets/images/food/" + req.file.filename,
               // image.data
               foodImage
             );
