@@ -5,11 +5,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import homeScreen from "../screens/homeScreen";
 import userScreen from "../screens/userScreen";
 import foodScreen from "./foodScreen";
-import cartScreen from "./cartScreen";
-import welcomScreen from "./welcomScreen";
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
+
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Tab =createBottomTabNavigator();
 const darBoardScreen=({route, navigation})=>{
@@ -47,10 +45,10 @@ const darBoardScreen=({route, navigation})=>{
                 tabBarInactiveTintColor: 'gray',
               })}
             >
-                <Tab.Screen name="Home" component={welcomScreen} initialParams={{userData}} options={{headerShown: false}} />
+                
                 <Tab.Screen name="Product" component={homeScreen} initialParams={{userData}} options={{headerShown: false}} />
                 <Tab.Screen name="Food" component={foodScreen} initialParams={{userData}} options={{headerShown:false}} />
-                <Tab.Screen name="Cart" component={cartScreen} initialParams={{userData}} options={{headerShown:false}} />
+                
                 <Tab.Screen name="Profile" component={userScreen} initialParams={{userData}} options={{headerShown: false}} />
             </Tab.Navigator>
         

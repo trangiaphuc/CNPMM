@@ -62,7 +62,7 @@ export default function confirmingOrderTab({navigation, route}){
                    ConfirmingOrders.map((item)=>
                        <SafeAreaView key={item.id}>
                            <TouchableOpacity onPress={()=>{navigation.navigate('ordersDetailBillScreen',{orders: item, userData: userData, userInfo: userInfo})}}>
-                            <Card>
+                            <Card containerStyle={{backgroundColor:'#00FF66'}}>
                                     
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Mã đơn hàng: </Text>
@@ -86,7 +86,7 @@ export default function confirmingOrderTab({navigation, route}){
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Địa chỉ: </Text>
-                                        <Text>{item.addressDelivery}</Text>
+                                        <Text style={{marginRight: 30}}>{item.addressDelivery}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Tình trạng đơn hàng: </Text>

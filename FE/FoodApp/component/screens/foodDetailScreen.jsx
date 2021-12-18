@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, Image, FlatList, VirtualizedList, TouchableOpacity} from "react-native";
+import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, Image, FlatList, Alert, TouchableOpacity} from "react-native";
 import axios from "axios";
 import{
     Avatar,
@@ -14,11 +14,14 @@ import API from "../services/api";
 
 export default function foodDetailScreen({route, navigation}){
     const {foodId, userData}=route.params;
+
+    console.log("HUY111111",foodId);
+
+
     const[data, setData]=useState([]);
     const[meterial, setMeterial]=useState([]);
     const[step, setStep]=useState([]);
 
-  
 
     const fetchdata = async() => {
         const result = await API.get(`foods/detail/${foodId}`,
@@ -38,12 +41,14 @@ export default function foodDetailScreen({route, navigation}){
         
     }
 
+    
+
     useEffect(() => {
         fetchdata();
+        
     },[setData]);
 
    
-    
     return(
         
       
@@ -69,40 +74,25 @@ export default function foodDetailScreen({route, navigation}){
                 <Text style={styles.textTitle}>{data.foodName}</Text>
             </View>
            <Text style={{marginLeft: 15, marginRight: 15, marginBottom: 10, marginTop: 15}}>{data.foodDescription}</Text>
-           <Text style={styles.textMeterial}>1. Nguyên liệu</Text>
-            
-            
-            <View style={styles.cardMeterial}>
-                {
-                    meterial.map((item) => 
-                        <View key={item.id}>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.textMeterialTitle}>{'- '+item.foodMaterialName+ ' '}</Text>
-                                <Text>{item.quantityDescription}</Text>
-                            </View>
+           <View style={{flexDirection: 'row', marginRight: 25}}>
+                <View style={{flex: 5}}>
+                    <Text style={styles.textMeterial}>1. Nguyên liệu</Text>
+                    <View style={styles.cardMeterial}>
+                        {
+                            meterial.map((item) => 
+                                <View key={item.id}>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={styles.textMeterialTitle}>{'- '+item.foodMaterialName+ ' '}</Text>
+                                        <Text>{item.quantityDescription}</Text>
+                                    </View>
 
-                        </View>
-                    )
-                }
-            </View>
-            {/* <FlatList
+                                </View>
+                            )
+                        }
+                    </View>
+                </View>
                 
-                data={meterial}
-                renderItem={({item})=>
-                   
-                        <View>
-                            <View>
-                                <Text style={styles.textMeterialTitle}>{'- '+item.foodMaterialName }</Text>
-                            </View>
-                            <View style={styles.weightMeterial}>
-                                <Text style={{marginLeft: 40}}>Khối lượng: </Text>
-                                <Text>{item.quantityDescription}</Text>
-                            </View>
-                        </View>
-                   
-                }
-                keyExtractor={(item) =>item.id}/> */}
-            
+           </View>
             
             <Text style={[styles.textMeterial,{marginTop: 10}]}>2. Các bước thực hiện</Text>
 
@@ -127,7 +117,20 @@ export default function foodDetailScreen({route, navigation}){
                     })
 
                 }
+                <TouchableOpacity onPress={()=>{navigation.navigate('foodMaterialsScreen',{userData: userData, foodId: foodId})}}>
+                    <View style={{ 
+                        marginTop: 15,
+                        marginLeft: 50,
+                        marginRight: 50,
+                        alignItems: 'center',
+                        backgroundColor:'#FF4B3A',
+                        borderRadius: 10
+                        }}>
+                        <Text style={{paddingTop: 10, paddingBottom: 10, fontWeight: 'bold', color: '#FFFFFF'}}>Chuẩn bị nguyên liệu</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
+            
             </ScrollView>
            
        </SafeAreaView>
