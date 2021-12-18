@@ -19,7 +19,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/ba-roi-heo-khay-500g.jpg"
+          productImage: "/resources/static/assets/images/product/ba-roi-heo-khay-500g.jpg", 
+          isSelling: true
         },
         {
           proName: "Cốt lết heo có xương khay 300 gram",
@@ -35,7 +36,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/thit-vai-heo-g-kitchen-khay-300g.jpg"
+          productImage: "/resources/static/assets/images/product/thit-vai-heo-g-kitchen-khay-300g.jpg", 
+          isSelling: true
         },
         {
           proName: "Xương ống heo khay 350 gram",
@@ -51,7 +53,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/xuong-ong-khay-1kg.jpg"
+          productImage: "/resources/static/assets/images/product/xuong-ong-khay-1kg.jpg", 
+          isSelling: true
         },
         {
           proName: "Ba rọi heo khay 300g",
@@ -67,7 +70,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/nac-dam-heo-g-kitchen-khay-300g.jpg"
+          productImage: "/resources/static/assets/images/product/nac-dam-heo-g-kitchen-khay-300g.jpg", 
+          isSelling: true
         },
         {
           proName: "Đuôi heo Meat Master khay 400g (6-8 miếng)",
@@ -83,7 +87,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/duoi-heo-meat-master-khay-400g.jpg"
+          productImage: "/resources/static/assets/images/product/duoi-heo-meat-master-khay-400g.jpg", 
+          isSelling: true
         },
         {
           proName: "Đùi tỏi gà túi 500g (2-4 đùi)",
@@ -99,7 +104,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/dui-toi-ga-tui-500g.jpg"
+          productImage: "/resources/static/assets/images/product/dui-toi-ga-tui-500g.jpg", 
+          isSelling: true
         },
         {
           proName: "Gà dai nguyên con nhập khẩu đông lạnh túi 1.2-1.5kg",
@@ -115,7 +121,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/ga-dai-nhap-khau-dong-lanh-tui-12-15kg.jpeg"
+          productImage: "/resources/static/assets/images/product/ga-dai-nhap-khau-dong-lanh-tui-12-15kg.jpeg", 
+          isSelling: true
         },
         {
           proName: "Cánh gà túi 500g (2-4 cánh)",
@@ -131,7 +138,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/canh-ga-tui-500g.jpg"
+          productImage: "/resources/static/assets/images/product/canh-ga-tui-500g.jpg", 
+          isSelling: true
         },
         {
           proName: "Hộp 6 trứng vịt T.Food 6 trứng",
@@ -147,7 +155,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/hop-6-trung-vit.jpg"
+          productImage: "/resources/static/assets/images/product/hop-6-trung-vit.jpg", 
+          isSelling: true
         },
         {
           proName: "Hộp 10 trứng gà tươi Happy Egg",
@@ -163,7 +172,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/hop-10-trung-ga-tuoi-happy-egg.jpg"
+          productImage: "/resources/static/assets/images/product/hop-10-trung-ga-tuoi-happy-egg.jpg", 
+          isSelling: true
         },
         {
           proName: "Cá hồi đông lạnh túi 300g (1-2 miếng)",
@@ -179,7 +189,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/ca-hoi-dong-lanh-tui-300g.jpeg"
+          productImage: "/resources/static/assets/images/product/ca-hoi-dong-lanh-tui-300g.jpeg", 
+          isSelling: true
         },
         {
           proName: "Mực nang túi 200g",
@@ -195,7 +206,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/muc-nang-lam-sach-tui-200g.jpg"
+          productImage: "/resources/static/assets/images/product/muc-nang-lam-sach-tui-200g.jpg", 
+          isSelling: true
         },
         {
           proName: "Mực lá đại dương túi 300g",
@@ -211,7 +223,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/muc-la-dai-duong-lam-sach-tui-500g.jpg"
+          productImage: "/resources/static/assets/images/product/muc-la-dai-duong-lam-sach-tui-500g.jpg", 
+          isSelling: true
         },
         {
           proName: "Hàu sống nguyên con túi 1kg",
@@ -227,7 +240,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 1,
-          productImage: "/resources/static/assets/images/product/hau-song-nguyen-con-tui-1kg.jpeg"
+          productImage: "/resources/static/assets/images/product/hau-song-nguyen-con-tui-1kg.jpeg", 
+          isSelling: true
         },
         //productCategory 2
         {
@@ -244,7 +258,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/gia-dau-xanh-tui-300g.jpg"
+          productImage: "/resources/static/assets/images/product/gia-dau-xanh-tui-300g.jpg", 
+          isSelling: true
         },
         {
           proName: "Tỏi cô đơn Huy Vũ gói 250g",
@@ -260,7 +275,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/toi-co-don-250g.jpeg"
+          productImage: "/resources/static/assets/images/product/toi-co-don-250g.jpeg", 
+          isSelling: true
         },
         {
           proName: "Rau má bịch 200g",
@@ -276,7 +292,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/rau-ma-bich-200g.jpg"
+          productImage: "/resources/static/assets/images/product/rau-ma-bich-200g.jpg", 
+          isSelling: true
         },
         {
           proName: "Bông cải trắng túi 500g",
@@ -292,7 +309,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/bong-cai-trang-tui-500g.jpg"
+          productImage: "/resources/static/assets/images/product/bong-cai-trang-tui-500g.jpg", 
+          isSelling: true
         },
         {
           proName: "Xà lách xoong túi 500g",
@@ -308,7 +326,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/xa-lach-xoong-tui-500g.jpg"
+          productImage: "/resources/static/assets/images/product/xa-lach-xoong-tui-500g.jpg", 
+          isSelling: true
         },
         {
           proName: "Bí đỏ hồ lô túi 700g",
@@ -324,7 +343,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/bi-do-ho-lo-tui-700g.jpg"
+          productImage: "/resources/static/assets/images/product/bi-do-ho-lo-tui-700g.jpg", 
+          isSelling: true
         },
         {
           proName: "Ớt chuông xanh túi 300g (1-3 trái)",
@@ -340,7 +360,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/ot-chuong-xanh-tui-300g.jpg"
+          productImage: "/resources/static/assets/images/product/ot-chuong-xanh-tui-300g.jpg", 
+          isSelling: true
         },
         {
           proName: "Ớt chuông đỏ túi 300g (1-2 quả)",
@@ -356,7 +377,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/ot-chuong-do-tui-300g.jpg"
+          productImage: "/resources/static/assets/images/product/ot-chuong-do-tui-300g.jpg", 
+          isSelling: true
         },
         {
           proName: "Cà chua túi 500g (7-9 trái)",
@@ -372,7 +394,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/ca-chua-tui-500g.jpg"
+          productImage: "/resources/static/assets/images/product/ca-chua-tui-500g.jpg", 
+          isSelling: true
         },
         {
           proName: "Dưa leo baby khay 500g (10-12 trái)",
@@ -388,7 +411,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/dua-leo-baby-vi-500g.jpg"
+          productImage: "/resources/static/assets/images/product/dua-leo-baby-vi-500g.jpg", 
+          isSelling: true
         },
         {
           proName: "Nấm đùi gà túi 200g (2-4 cái)",
@@ -404,7 +428,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 2,
-          productImage: "/resources/static/assets/images/product/nam-dui-ga-vi-200g.jpg"
+          productImage: "/resources/static/assets/images/product/nam-dui-ga-vi-200g.jpg", 
+          isSelling: true
         },
         //productCategory 3
         {
@@ -421,7 +446,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 3,
-          productImage: "/resources/static/assets/images/product/hu-tieu-nam-vang-cung-dinh-goi-78g.jpg"
+          productImage: "/resources/static/assets/images/product/hu-tieu-nam-vang-cung-dinh-goi-78g.jpg", 
+          isSelling: true
         },
         {
           proName: "Thùng 30 gói phở gà Cung Đình Hà Nội 68g",
@@ -437,7 +463,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 3,
-          productImage: "/resources/static/assets/images/product/thung-pho-ga-ha-noi-cung-dinh-goi-68g-30-goi-4-org.jpg"
+          productImage: "/resources/static/assets/images/product/thung-pho-ga-ha-noi-cung-dinh-goi-68g-30-goi-4-org.jpg", 
+          isSelling: true
         },
         {
           proName: "Thùng 24 ly miến cua Vifon 50g",
@@ -453,7 +480,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 3,
-          productImage: "/resources/static/assets/images/product/thung-24-ly-mien-cua-vifon-50g-201912271545200371.jpg"
+          productImage: "/resources/static/assets/images/product/thung-24-ly-mien-cua-vifon-50g-201912271545200371.jpg", 
+          isSelling: true
         },
         {
           proName: "Bánh đa cua Vifon tô 125g (có gói riêu cua thật)",
@@ -469,7 +497,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 3,
-          productImage: "/resources/static/assets/images/product/banh-da-cua-rieu-cua-vifon-to-125g.jpg"
+          productImage: "/resources/static/assets/images/product/banh-da-cua-rieu-cua-vifon-to-125g.jpg", 
+          isSelling: true
         },
         {
           proName: "Bánh gạo cắt lát tokpokki Matamun gói 600g",
@@ -485,7 +514,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 3,
-          productImage: "/resources/static/assets/images/product/banh-gao-cat-lat-tokpokki-matamun-goi-600g.jpg"
+          productImage: "/resources/static/assets/images/product/banh-gao-cat-lat-tokpokki-matamun-goi-600g.jpg", 
+          isSelling: true
         },
         //productCategory 4:
         {
@@ -502,7 +532,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/muoi-iot-ban-lieu-cao-cap-500gam-4-org.jpg"
+          productImage: "/resources/static/assets/images/product/muoi-iot-ban-lieu-cao-cap-500gam-4-org.jpg", 
+          isSelling: true
         },
         {
           proName: "Tiêu chín đỏ Phú Quốc DH Foods Natural có nắp xay 45g",
@@ -518,7 +549,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/tieu-chin-do-phu-quoc-natural-dh-foods-hu-co-coi-xay-45g.jpg"
+          productImage: "/resources/static/assets/images/product/tieu-chin-do-phu-quoc-natural-dh-foods-hu-co-coi-xay-45g.jpg", 
+          isSelling: true
         },
         {
           proName: "Đường mía thượng hạng Biên Hòa gói 1kg",
@@ -534,7 +566,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/duong-tinh-luyen-bien-hoa-pure-goi-1kg.jpg"
+          productImage: "/resources/static/assets/images/product/duong-tinh-luyen-bien-hoa-pure-goi-1kg.jpg", 
+          isSelling: true
         },
         {
           proName: "Dầu thực vật Tường An Cooking Oil chai 1 lít",
@@ -550,7 +583,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/dau-thuc-vat-tuong-an-cooking-oil-chai-1-lit.jpg"
+          productImage: "/resources/static/assets/images/product/dau-thuc-vat-tuong-an-cooking-oil-chai-1-lit.jpg", 
+          isSelling: true
         },
         {
           proName: "Hạt nêm ngọt tôm thơm thịt Chinsu gói 800g",
@@ -566,7 +600,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/hat-nem-ngot-tom-thom-thit-chinsu-goi-800g.jpg"
+          productImage: "/resources/static/assets/images/product/hat-nem-ngot-tom-thom-thit-chinsu-goi-800g.jpg", 
+          isSelling: true
         },
         {
           proName: "Bột ngọt Ajinomoto gói 454g",
@@ -582,7 +617,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/bot-ngot-ajinomoto-goi-454g.jpg"
+          productImage: "/resources/static/assets/images/product/bot-ngot-ajinomoto-goi-454g.jpg", 
+          isSelling: true
         },
         {
           proName: "Nước chấm Nam Ngư Đệ Nhị chai 900ml",
@@ -598,7 +634,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/nuoc-mam-nam-ngu-de-nhi-900ml-15-3-org.jpg"
+          productImage: "/resources/static/assets/images/product/nuoc-mam-nam-ngu-de-nhi-900ml-15-3-org.jpg", 
+          isSelling: true
         },
         {
           proName: "Muối ớt chanh vị wasabi Fadely chai 200g",
@@ -614,7 +651,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/muoi-ot-chanh-vi-wasabi-fadely-tinh-nguyen-chai-200g.jpg"
+          productImage: "/resources/static/assets/images/product/muoi-ot-chanh-vi-wasabi-fadely-tinh-nguyen-chai-200g.jpg", 
+          isSelling: true
         },
         {
           proName: "Nước chấm Nam Ngư Đệ Nhị chai 900ml",
@@ -630,7 +668,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/nuoc-mam-nam-ngu-de-nhi-900ml-15-3-org.jpg"
+          productImage: "/resources/static/assets/images/product/nuoc-mam-nam-ngu-de-nhi-900ml-15-3-org.jpg", 
+          isSelling: true
         },
         {
           proName: "Tương ớt Chinsu chai 250g",
@@ -646,7 +685,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 4,
-          productImage: "/resources/static/assets/images/product/tuong-ot-chinsu-250g-24-4-org.jpg"
+          productImage: "/resources/static/assets/images/product/tuong-ot-chinsu-250g-24-4-org.jpg", 
+          isSelling: true
         },
         //productCategory 5:
         {
@@ -663,7 +703,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 5,
-          productImage: "/resources/static/assets/images/product/xuc-xich-heo-hao-hang-pinku-oji-goi-175g.jpg"
+          productImage: "/resources/static/assets/images/product/xuc-xich-heo-hao-hang-pinku-oji-goi-175g.jpg", 
+          isSelling: true
         },
         {
           proName: "Bột rau câu giòn Bà Bảy gói 25g",
@@ -679,7 +720,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 5,
-          productImage: "/resources/static/assets/images/product/bot-rau-cau-gion-ba-bay-goi-25g.jpg"
+          productImage: "/resources/static/assets/images/product/bot-rau-cau-gion-ba-bay-goi-25g.jpg", 
+          isSelling: true
         },
         {
           proName: "Sương sáo đen VinaThạch gói 50g",
@@ -695,7 +737,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 5,
-          productImage: "/resources/static/assets/images/product/bot-suong-sao-den-vinathach-goi-50gr-2-org.jpg"
+          productImage: "/resources/static/assets/images/product/bot-suong-sao-den-vinathach-goi-50gr-2-org.jpg", 
+          isSelling: true
         },
         {
           proName: "Bột gạo New Grade gói 400g",
@@ -711,7 +754,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 5,
-          productImage: "/resources/static/assets/images/product/bot-gao-new-grade-goi-400g.jpg"
+          productImage: "/resources/static/assets/images/product/bot-gao-new-grade-goi-400g.jpg", 
+          isSelling: true
         },
         {
           proName: "Bột mì đa dụng Địa Cầu gói 500g",
@@ -727,7 +771,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 5,
-          productImage: "/resources/static/assets/images/product/bot-mi-da-dung-dia-cau-goi-500g.jpg"
+          productImage: "/resources/static/assets/images/product/bot-mi-da-dung-dia-cau-goi-500g.jpg", 
+          isSelling: true
         },
         {
           proName: "Bột năng Tài Ký gói 1kg",
@@ -743,7 +788,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 5,
-          productImage: "/resources/static/assets/images/product/bot-nang-tai-ky-goi-1kg.jpg"
+          productImage: "/resources/static/assets/images/product/bot-nang-tai-ky-goi-1kg.jpg", 
+          isSelling: true
         },
         {
           proName: "Bột baking soda Arm & Hammer hộp 454g",
@@ -759,7 +805,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 5,
-          productImage: "/resources/static/assets/images/product/bot-noi-baking-soda-arm-hammer-hop-454g.jpg"
+          productImage: "/resources/static/assets/images/product/bot-noi-baking-soda-arm-hammer-hop-454g.jpg", 
+          isSelling: true
         },
         {
           proName: "Bột chiên Tempura Dali Food gói 150g",
@@ -775,7 +822,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           productCategoryId: 5,
-          productImage: "/resources/static/assets/images/product/bot-chien-tempura-dali-food-goi-150g.jpg"
+          productImage: "/resources/static/assets/images/product/bot-chien-tempura-dali-food-goi-150g.jpg", 
+          isSelling: true
         },
 
       ]);
