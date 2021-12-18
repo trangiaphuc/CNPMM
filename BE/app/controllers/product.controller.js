@@ -297,3 +297,65 @@ exports.merchantUpdateProductImage = (req, res) => {
       res.status(500).send({message: err.message});
     }
 }
+
+
+exports.merchantSearch = (req, res) =>{
+  Product.findAll({
+    where: Sequelize.literal('MATCH (proName) AGAINST (:keyword)'),
+    replacements: {
+      keyword: req.body.keyword
+    }
+  })
+  .then(products => {
+    if(products){
+
+      var searchResults = [];
+
+      products.forEach(product =>{
+       
+        const image = fs.readFileSync(
+          __basedir + product.productImage
+        );
+        var base64Image = Buffer.from(image).toString("base64");
+        product.productImage = "data:image/png;base64,"+base64Image;
+
+        searchResults.push(product);
+        
+      });
+      res.status(200).send({products: searchResults})
+    }
+    else{
+      res.status(404).send({message: 'Product Not Found!'});
+    }
+  })
+  .catch(err => {
+    res.status(500).send({message: err.message});
+  })
+}
+
+exports.merchantGetAllProWithCatId = (req, res) => {
+const id = req.params.id;
+Product.findAll({
+  logging: (sql, queryObject) =>{
+    logger.info(sql, queryObject);
+  },
+  where: {
+    productCategoryId: id,
+  },  
+  })
+  .then(products => {
+    logger.info(`Request status: ${res.status(200)} data ${products}`);
+    products.forEach(product =>{
+      const image = fs.readFileSync(
+        __basedir + product.productImage
+      );
+      var base64Image = Buffer.from(image).toString("base64");
+      product.productImage = "data:image/png;base64,"+base64Image;
+    });
+    res.status(200).send({products: products});
+  })
+  .catch(err => {
+      logger.error(`Request status: ${res.status(500)} error ${err}`);
+      res.status(500).send({message:err.message});
+});
+};
