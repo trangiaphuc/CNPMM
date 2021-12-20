@@ -396,10 +396,10 @@ exports.merchantAddNewFoodDetails = async (req, res) => {
   })
 
   if(flag === true){
-    res.status(200).send('Success!')
+    res.status(200).send({message: 'Success!'} )
   }
   else{
-    res.status(500).send('Fail!');
+    res.status(500).send( {message: 'Fail!'});
   }
 
 }
@@ -550,10 +550,10 @@ exports.merchantUpdateFood = async (req, res) => {
   })
 
   if(flag){
-    res.status(200).send("Success!")
+    res.status(200).send( {message:"Success!"})
   }
   else{
-    res.status(500).send("Fail!");
+    res.status(500).send( {message:"Fail!"});
   }
 }
 

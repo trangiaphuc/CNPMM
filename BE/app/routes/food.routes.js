@@ -47,33 +47,35 @@ module.exports = function(app){
     //merchant
     //add new
     app.post('/api/merchant/foods/addnewfood',
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     upload.single("file"), 
     controller.merchantAddNewFood)
 
-    
+    //
     app.post('/api/merchant/foods/addnewfood/detail/:foodId',
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     controller.merchantAddNewFoodDetails
     )
 
-    app.get('/api/merchant/foods/search',
-    [authJwt.verifyToken],
+    //
+    app.post('/api/merchant/foods/search',
+    // [authJwt.verifyToken],
     controller.merchantSearch)
 
+    //
     app.get('/api/merchant/foods/category/:id',
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     controller.merchantGetAllWithCatId
     )
 
+    //
     app.post('/api/merchant/foods/update/:foodId',
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     controller.merchantUpdateFood
     )
 
-    
     app.post('/api/merchant/foods/update/image/:foodId',
-    [authJwt.verifyToken],
+    // [authJwt.verifyToken],
     upload.single("file"),
     controller.merchantUpdateFoodImage
     )

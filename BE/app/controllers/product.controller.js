@@ -163,13 +163,17 @@ exports.merchantAddNewProduct = (req, res) => {
     if (req.file == undefined) {
       return res.send(`You must select a file.`);
     }  
+    const productImage = fs.readFileSync(
+      __basedir + "/resources/static/assets/uploads/" + req.file.filename
+    );
+
     Product.create({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
       },
       proName: req.body.proName,
       proDescription: req.body.proDescription,
-      quantity: req.body.quantity,
+      quantityValue: req.body.quantityValue,
       price: req.body.price,
       brand: req.body.brand,
       origin: req.body.origin,
@@ -177,27 +181,19 @@ exports.merchantAddNewProduct = (req, res) => {
       expireAt: req.body.expireAt,
       manual: req.body.manual,
       preserve: req.body.preserve,
-      productImage: __basedir + "/resources/static/assets/images/product/" + req.file.filename,
+      productImage: "/resources/static/assets/images/product/" + req.file.filename,
+      productCategoryId: req.body.productCategoryId,
       isSelling: req.body.isSelling,
       createdAt: new Date(),
       updatedAt: new Date(),
     })
     .then(product =>{
-      if(product)
-      {  
-        const productImage = fs.readFileSync(
-          "/resources/static/assets/uploads/" + req.file.filename
-        );
         fs.writeFileSync(
-          "/resources/static/assets/images/product/" + req.file.filename,
+          __basedir + "/resources/static/assets/images/product/" + req.file.filename,
           // image.data
           productImage
         );
         res.status(201).send({message: "Success!"})
-      }
-      else{
-        res.status(500).send({message:"Fail!"});
-      }
     })
     .catch(err => {
       res.status(500).send({message: err.message});
@@ -218,13 +214,15 @@ exports.merchantUpdateProduct = (req, res) => {
     where: {id: productId}
   })
   .then(product => {
+    console.log(product);
+    console.log(req.body.proName);
     product.update({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
       },
       proName: req.body.proName,
       proDescription: req.body.proDescription,
-      quantity: req.body.quantity,
+      quantityValue: req.body.quantityValue,
       price: req.body.price,
       brand: req.body.brand,
       origin: req.body.origin,
@@ -233,6 +231,7 @@ exports.merchantUpdateProduct = (req, res) => {
       manual: req.body.manual,
       preserve: req.body.preserve,
       isSelling: req.body.isSelling,
+      productCategory: req.body.productCategory,
       updatedAt: new Date(),
     })
     .then(updatedItem => {
@@ -258,7 +257,7 @@ exports.merchantUpdateProductImage = (req, res) => {
       if (req.file == undefined) {
         return res.send(`You must select a file.`);
       }
-      const foodImage = fs.readFileSync(
+      const productImage = fs.readFileSync(
         __basedir + "/resources/static/assets/uploads/" + req.file.filename
       );
       Product.findOne({
@@ -272,23 +271,20 @@ exports.merchantUpdateProductImage = (req, res) => {
           logging: (sql, queryObject) =>{
             logger.info(sql, queryObject);
           },
-          foodImage: "/resources/static/assets/images/product/" + req.file.filename,
+          productImage: "/resources/static/assets/images/product/" + req.file.filename,
           updatedAt: new Date(),
         })
         .then(product =>{
-          if(product){
+          
+            console.log(req.file.filename);
             fs.writeFileSync(
               __basedir + "/resources/static/assets/images/product/" + req.file.filename,
               // image.data
-              foodImage
+              productImage
             );
             logger.info(`Request status: ${res.status(201)} Created!`);
-            res.status(201).send({message: "Success!", data: product})
-          }
-          else{
-            logger.error(`Request status: ${res.status(500)}  error `);
-            res.status(500).send({message:"Fail!"});
-          }
+            res.status(201).send({message: "Success!"})
+         
         })
       })
     }
