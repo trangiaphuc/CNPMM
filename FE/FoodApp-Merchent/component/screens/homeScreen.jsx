@@ -7,21 +7,23 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import RNRestart from 'react-native-restart';
 import NumericInput from 'react-native-numeric-input';
 import API from "../services/api";
+import {useIsFocused } from '@react-navigation/native';
 
 export default function homeScreen({navigation, route}){
     const{userData}=route.params;
 
     const[data, setData]=useState([]);
     const[productCategory, setProductCategory]=useState([]);
+
+    
     const[quantityValue, setQuantityValue]=useState([]);
     const[dataSearch, setDataSearch]=React.useState({
         textSearch: '',
     });
     const [search, setSearch]=useState([]);
     const [click, setClick]=useState(false);
-    //console.log(click);
-    //console.log(userData);
-
+    const isFocused = useIsFocused();
+  
     const fetchdata = async() => {
         const result = await API.get("productcategory/",
         {
@@ -37,13 +39,11 @@ export default function homeScreen({navigation, route}){
         
     }
 
-    useEffect(() => {
-        fetchdata();
-    },[setData]);
+   
 
     const renderItem=({item})=> {
         const itemCategory=()=> {
-            API.get(`products/category/${item.id}`,
+            API.get(`merchant/products/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -60,6 +60,7 @@ export default function homeScreen({navigation, route}){
                         alert('Error', error.response);
                 });
         }
+        
 
 
         return(
@@ -77,10 +78,12 @@ export default function homeScreen({navigation, route}){
             
         );
     }
+    useEffect(() => {
+        fetchdata();
+        
+    },[setData, isFocused]);
 
-    const onChange=(value)=>{
-        setQuantityValue(value);
-    }
+   
 
     const textInputChange=(val)=>{
         
@@ -92,10 +95,79 @@ export default function homeScreen({navigation, route}){
     }
 
 
+    const ButtonSet =(item)=>{
+
+        //console.log(item)
+        if(item.isSelling===true)
+        {
+            return(
+                <TouchableOpacity onPress={()=>{
+                    API.post(`merchant/products/update/${item.id}`,{isSelling: false},
+                        {
+                            headers:{
+                                'Content-Type': 'application/json',
+                                'x-access-token': userData.accessToken,
+                            },
+                        })
+                        .then(res => {
+                            //console.log(res.data);
+                            if(res.status===200){
+                                Alert.alert("Thông báo","Cập nhật thành công")
+                            }
+                        }).catch(error => {
+                                alert('Error', error.res);
+                        });
+                }} isFocused={isFocused}>
+                    <LinearGradient
+                        colors={['#FF4B3A','#FF4B3A']}
+                        style={styles.signIn}>
+                                                                
+                        <Text style={styles.textSign}>Dừng bán</Text>
+                                                            
+                    </LinearGradient>
+                </TouchableOpacity>
+            );
+        }
+        else{
+            return(
+                <TouchableOpacity onPress={()=>{
+                    API.post(`merchant/products/update/${item.id}`,{isSelling: true},
+                    {
+                        headers:{
+                            'Content-Type': 'application/json',
+                            'x-access-token': userData.accessToken,
+                        },
+                    })
+                    .then(res => {
+                        //console.log(res.data);
+                        if(res.status===200){
+                            Alert.alert("Thông báo","Cập nhật thành công")
+                        }
+                    }).catch(error => {
+                            alert('Error', error.res);
+                    });
+                }}>
+                    <LinearGradient
+                        colors={['#00FF00','#00FF00']}
+                        style={styles.signIn}>
+                                                                
+                        <Text style={styles.textSign}>Bán lại</Text>
+                                                            
+                    </LinearGradient>
+                </TouchableOpacity>
+            );
+        }
+        
+        
+  
+    }
+ 
+
+
     const searchProduct =()=>{
         //alert(dataSearch.textSearch);
         
-        API.post(`products/search`,{keyword: dataSearch.textSearch},
+        API.post(`merchant/products/search`,{keyword: dataSearch.textSearch},
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -153,63 +225,12 @@ export default function homeScreen({navigation, route}){
                                         </View>
                                         <Card.Divider/>
                                         
-                                        <View style={styles.button}>
-                                            <View style={{marginRight: 20}}>
-                                                <NumericInput
-                                                    minValue={1}
-                                                    maxValue={50}
-                                                    step={1}
-                                                    
-                                                    totalHeight={40}
-                                                    onChange={(value) =>onChange(value)}
-                                                    rounded/>
-                                            </View>
-                                            <View>
-                                                <TouchableOpacity onPress={()=>{
-                                                    if(quantityValue !==0){
-                                                        const listCartItems = [{productId: item.id, quantity: quantityValue}];
-                                                        API.post(`cart/${userData.id}/addCartItem`,{listCartItems: listCartItems},
-                                                    {
-                                                        headers:{
-                                                            'Content-Type': 'application/json',
-                                                            'x-access-token': userData.accessToken,
-                                                            
-                                                        },
-                                                    })
-                                                    .then(res => {
-                                                        if(res.status===201)
+                                        <View style={{alignItems: 'flex-end'}}>
+                                            <View style={{alignItems: 'center'}}>
                                                         {
-                                                            Alert.alert("Thông báo",res.data.message);
-                                                            
-                                                            //navigation.params.resetData();
-                                                            // RNRestart.Restart();
+                                                            ButtonSet(item)
                                                         }
                                                         
-                                                    }).catch(error => {
-                                                            //alert('Error', error.res);
-                                                            console.log(error.res);
-                                                        
-                                                    });
-                                                    }
-                                                    else{
-                                                        alert("Vui lòng chọn số lượng sản phẩm")
-                                                    }
-
-
-                                                }}>
-                                                        <LinearGradient
-                                                            colors={['#FF4B3A','#FF4B3A']}
-                                                            style={styles.signIn}>
-                                                                <FontAwesome
-                                                                name="shopping-cart"
-                                                                color="#FFFFFF"
-                                                                size={20}
-                                                            />
-                                                            <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
-                                                            
-                                                        </LinearGradient>
-                                                        
-                                                </TouchableOpacity>
                                             </View>
                                         </View>
                                     </Card>
@@ -267,33 +288,54 @@ export default function homeScreen({navigation, route}){
                     <FlatList
                     horizontal={true}
                     data={data}
+                    
                     renderItem={renderItem}
                     keyExtractor={(item) =>item.id}/>
                 </ScrollView>
             </View>
+            <ScrollView>
+                {
+                    productCategory.map((item)=>
+                        <SafeAreaView key ={item.id}>
+                            <TouchableOpacity onPress={()=>{navigation.navigate('productDetailScreen',{productId: item.id, userData: userData})}}>
+                                    <Card>
+                                        <Card.Title>{item.proName}</Card.Title>
+                                        <Card.Divider/>
+                                        <Card.Image source = {{uri:item.productImage}} />
+
+                                        
+                                        <View style={{flex: 1, flexDirection: 'row', padding:10}}>
+                                            <Text style={styles.price}>Giá:</Text>
+                                            <Text style={{flex: 2}}>{item.price}đ/kg</Text>
+                                        </View>
+                                        <Card.Divider/>
+                                        
+                                        <View style={styles.button}>
+
+                                                
+                                                <View style={{alignItems: 'center'}}>
+                                                    {
+                                                        ButtonSet(item)
+                                                    }
+                                                    
+                                                </View>
+                                            
+                                        </View>
+                                        
+                                        
+                                    </Card>
+                                    
+                                    
+                                </TouchableOpacity>
+                        </SafeAreaView>
+                    )
+                }
+            </ScrollView>
 
 
-            {/* <FlatList
-                data={productCategory}
-                renderItem={({}) =>(
-                    <View
-                        style={{
-                        flex: 1,
-                        flexDirection: 'column',
-                        margin: 1
-                        }}>
-                        <Card>
-                            <Card.Title>{item.proName}</Card.Title>
-                        </Card>
-                    </View>
-                )}
-                numColumns={2}
-                keyExtractor = {(item) => item.id}/> */}
 
 
-
-
-               <FlatList
+               {/* <FlatList
                     data={productCategory}
                     renderItem={({item})=>
                         
@@ -312,60 +354,15 @@ export default function homeScreen({navigation, route}){
                                         <Card.Divider/>
                                         
                                         <View style={styles.button}>
-                                            <View style={{marginRight: 20}}>
-                                                <NumericInput
-                                                    minValue={1}
-                                                    maxValue={50}
-                                                    step={1}
+
+                                                <View style={{flex: 1}}>
+                                              
+                                                </View>
+                                                <View style={{flex: 0}}>
+                                                    <ButtonSet/>
                                                     
-                                                    totalHeight={40}
-                                                    onChange={(value) =>onChange(value)}
-                                                    rounded/>
-                                            </View>
-                                            <View>
-                                                <TouchableOpacity onPress={()=>{
-                                                    if(quantityValue !==0){
-                                                        API.post(`cart/${userData.id}/addCartItem`,{listCartItems: [{productId: item.id, quantity: quantityValue}]},
-                                                    {
-                                                        headers:{
-                                                            'Content-Type': 'application/json',
-                                                            'x-access-token': userData.accessToken,
-                                                            
-                                                        },
-                                                    })
-                                                    .then(res => {
-                                                        if(res.status===201)
-                                                        {
-                                                            Alert.alert("Thông báo",res.data.message);
-                                                            
-                                                            //navigation.params.resetData();
-                                                            // RNRestart.Restart();
-                                                        }
-                                                        
-                                                    }).catch(error => {
-                                                            //alert('Error', error.res);
-                                                            console.log(error.res);
-                                                        
-                                                    });
-                                                    }
-                                                    else{
-                                                        Alert.alert("Thông báo","Vui lòng chọn số lượng sản phẩm")
-                                                    }
-                                                }}>
-                                                        <LinearGradient
-                                                            colors={['#FF4B3A','#FF4B3A']}
-                                                            style={styles.signIn}>
-                                                                <FontAwesome
-                                                                name="shopping-cart"
-                                                                color="#FFFFFF"
-                                                                size={20}
-                                                            />
-                                                            <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
-                                                            
-                                                        </LinearGradient>
-                                                        
-                                                </TouchableOpacity>
-                                            </View>
+                                                </View>
+                                            
                                         </View>
                                         
                                         
@@ -377,7 +374,7 @@ export default function homeScreen({navigation, route}){
                     
                     }
                     
-                    keyExtractor = {(item) => item.id}/>
+                    keyExtractor = {(item) => item.id}/> */}
 
         </SafeAreaView>
         
@@ -409,8 +406,8 @@ const styles = StyleSheet.create({
         marginLeft: 3,
     },
     button: {
-        marginLeft: 30,
-        flexDirection: 'row'
+        alignItems: 'flex-end'
+        //flexDirection: 'row',
     },
     signIn: {
         width: 150,

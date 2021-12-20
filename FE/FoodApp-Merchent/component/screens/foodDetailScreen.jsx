@@ -102,8 +102,7 @@ export default function foodDetailScreen({route, navigation}){
                    
                 }
                 keyExtractor={(item) =>item.id}/> */}
-            
-            
+
             <Text style={[styles.textMeterial,{marginTop: 10}]}>2. Các bước thực hiện</Text>
 
             <View style={{marginBottom: 70}}>

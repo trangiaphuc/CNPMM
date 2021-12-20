@@ -123,7 +123,7 @@ export default function userScreen({navigation, route}){
                     <Title>1200</Title>
                     <Caption>Tổng chi tiêu</Caption>
                 </View>
-                <TouchableRipple onPress={()=>{navigation.navigate('userOrderManagementScreen',{userData: userData, orders: orders})}} 
+                <TouchableRipple onPress={()=>{navigation.navigate('userOrderManagementScreen',{userData: userData, orders: orders, userInfo: data})}} 
                 style={[styles.infoBox, {
                     borderRightColor: '#dddddd',
                     borderRightWidth: 1,
