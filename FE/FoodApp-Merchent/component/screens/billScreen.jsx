@@ -1,13 +1,7 @@
 import React,{useState, useEffect} from "react";
 import {View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image} from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import axios from "axios";
-import{
-    Avatar,
-    Title,
-    Caption,
-    TouchableRipple
-} from 'react-native-paper';
+
 import API from "../services/api";
 import {Card} from "react-native-elements";
 import {Picker} from '@react-native-picker/picker';

@@ -238,7 +238,7 @@ export default function homeScreen({navigation, route}){
                         />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.returnText}>Mua sắm</Text>
+                <Text style={styles.returnText}>Sản phẩm</Text>
             </View>
             <View>
                 <View style={styles.search}>

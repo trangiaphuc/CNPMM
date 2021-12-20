@@ -60,35 +60,37 @@ export default function CancelOrdersTab({navigation, route}){
                    CancelOrders.map((item)=>
                        <SafeAreaView key={item.id}>
                            <TouchableOpacity onPress={()=>{navigation.navigate('ordersDetailBillScreen',{orders: item, userData: userData, userInfo: userInfo})}}>
-                            <Card>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontWeight: 'bold'}}>Mã đơn hàng: </Text>
-                                        <Text>{item.id}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontWeight: 'bold'}}>Phương thức thanh toán: </Text>
-                                        <Text>{item.paymentMethod.paymentType}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontWeight: 'bold'}}>Phương thức giao hàng: </Text>
-                                        <Text>{item.deliveryMethod.deliveryMethod}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontWeight: 'bold'}}>Ngày nhận: </Text>
-                                        <Text>{item.deliveryAt}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontWeight: 'bold'}}>Tổng tiền: </Text>
-                                        <Text>{item.totalPrice + 'đ'}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontWeight: 'bold'}}>Địa chỉ: </Text>
-                                        <Text>{item.addressDelivery}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontWeight: 'bold'}}>Tình trạng đơn hàng: </Text>
-                                        <Text>Đã hủy</Text>
-                                    </View>
+                            <Card containerStyle={{backgroundColor: '#FF0000'}}>
+                                    
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Mã đơn hàng: </Text>
+                                            <Text>{item.id}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Phương thức thanh toán: </Text>
+                                            <Text>{item.paymentMethod.paymentType}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Phương thức giao hàng: </Text>
+                                            <Text>{item.deliveryMethod.deliveryMethod}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Ngày nhận: </Text>
+                                            <Text>{item.deliveryAt}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Tổng tiền: </Text>
+                                            <Text>{item.totalPrice + 'đ'}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Địa chỉ: </Text>
+                                            <Text style={{marginRight: 30}}>{item.addressDelivery}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Tình trạng đơn hàng: </Text>
+                                            <Text>Đã hủy</Text>
+                                        </View>
+                                    
                             </Card>
                            </TouchableOpacity>
                        </SafeAreaView>

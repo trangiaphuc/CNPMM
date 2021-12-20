@@ -15,6 +15,7 @@ import billScreen from '../screens/billScreen'
 import updateUserProfile from '../screens/updateUseProfileScreen';
 import userOrderManagementScreen from '../screens/userOrderManagementScreen';
 import ordersDetailBillScreen from '../screens/Orders/orderDetailBillScreen';
+import foodMaterialsScreen from '../screens/foodMeterialScreen';
 
 const RootStack = createStackNavigator();
 
@@ -33,6 +34,7 @@ const rootStackScreen = () => (
         <RootStack.Screen name="updateUserProfileScreen" component={updateUserProfile} options={{headerShown: false}}/>
         <RootStack.Screen name="userOrderManagementScreen" component={userOrderManagementScreen} options={{headerShown: false}}/>
         <RootStack.Screen name="ordersDetailBillScreen" component={ordersDetailBillScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name="foodMaterialsScreen" component={foodMaterialsScreen} options={{headerShown: false}}/>
     </RootStack.Navigator>
 );
 
