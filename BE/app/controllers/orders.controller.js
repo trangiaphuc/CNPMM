@@ -198,6 +198,7 @@ exports.updateOrder = (req, res) =>{
                 },
                 isCanceled: req.body.isCanceled,
                 isDone: req.body.isDone,
+                deliveryAt: new Date(req.body.deliveryAt),
             })
             .then(updatedItem => {
                 res.status(200).send({message: 'Success!'})

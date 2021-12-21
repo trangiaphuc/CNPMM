@@ -11,6 +11,11 @@ module.exports = {
           updatedAt: new Date(),
       },
       {
+        name: "merchant",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
         name: "moderator",
         createdAt: new Date(),
         updatedAt: new Date(),

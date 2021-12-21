@@ -5,6 +5,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         catIcon: {
             type: Sequelize.STRING
+        },
+        isShowing: {
+            type: Sequelize.BOOLEAN,
         }
     });
 

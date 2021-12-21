@@ -1,5 +1,7 @@
 const controller = require('../controllers/productCategory.controller');
 const { authJwt } = require('../middleware');
+const upload = require('../middleware/upload');
+const express = require('express');
 
 module.exports = function(app){
     app.use(function(req, res, next) {
@@ -10,9 +12,27 @@ module.exports = function(app){
         next();
     });
 
+    app.use(express.static("../../resources/static/assets/"));
+
     //get all categories
     app.get('/api/productcategory/',
     [authJwt.verifyToken], 
-    controller.getAll);
+    controller.usergetAllProductsCategory);
     
+    //merchant
+    //get all categories
+    app.get('/api/productcategory/',
+    // [authJwt.verifyToken, authJwt.isMerchant], 
+    controller.merchantgetAllProductsCategory);
+
+    //
+    app.post('/api/merchant/productcategory/addnew',
+    // [authJwt.verifyToken, authJwt.isMerchant], 
+    upload.single("file"),
+    controller.merchantAddNewProductCategory);
+
+    app.post('/api/merchant/productcategory/update/:id',
+    // [authJwt.verifyToken, authJwt.isMerchant], 
+    upload.single("file"),
+    controller.merchantUpdateProductCategory);
 }
