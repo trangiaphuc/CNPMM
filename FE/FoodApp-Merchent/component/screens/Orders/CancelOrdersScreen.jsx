@@ -1,27 +1,104 @@
 import React,{useState, useEffect} from "react";
 import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, Dimensions,Image, TouchableOpacity, TextInput} from "react-native";
-import axios from "axios";
-import{
-    Avatar,
-    Title,
-    Caption,
-    TouchableRipple
-} from 'react-native-paper';
+
+
 import {Card} from "react-native-elements";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-// import API from "../services/api";
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import {useIsFocused } from '@react-navigation/native';
+import API from "../../services/api";
 
 
 
-export default function cancelgOrderTab({navigation, route}){
 
-    const {userData, orders} = route.params;
+
+export default function CancelOrdersTab({navigation, route}){
+
+    const{userData, userInfo} = route.params;
+    const isFocused = useIsFocused();
+    const [dataCancel, setDataCancel]=useState([]);
+    //console.log(userData);
+    var ConfirmingOrders = [];
+    var DeliveryingOrders = [];
+    var DoneOrders = [];
+    var CancelOrders =[];
+
+    const getUserOrder = async () =>{
+        const result = await API.get(`order/${userData.id}`,
+        {
+            headers:{
+                'Content-Type': 'application/json',
+                'x-access-token': userData.accessToken
+            },
+        });
+        setDataCancel(result.data.orders)
+        //console.log(result.data.orders);
+        
+    }
+    useEffect(() => {
+        getUserOrder();
+    },[isFocused]);
+    dataCancel.forEach(order =>{
+        
+        if(order.isCanceled !==0){
+            CancelOrders.push(order);
+        }
+        else if(order.isDone == 0){
+            ConfirmingOrders.push(order);
+        }
+        else if(order.isDone == 2){
+            DeliveryingOrders.push(order);
+        }
+        else if(order.isDone ==1){
+            DoneOrders.push(order);
+        }
+    })
 
     return(
         <View style={styles.container}>
-           <Title>Cancel </Title>
+           
+            <ScrollView>
+            {
+                   CancelOrders.map((item)=>
+                       <SafeAreaView key={item.id}>
+                           <TouchableOpacity onPress={()=>{navigation.navigate('ordersDetailBillScreen',{orders: item, userData: userData, userInfo: userInfo})}}>
+                            <Card containerStyle={{backgroundColor: '#FF0000'}}>
+                                    
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Mã đơn hàng: </Text>
+                                            <Text>{item.id}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Phương thức thanh toán: </Text>
+                                            <Text>{item.paymentMethod.paymentType}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Phương thức giao hàng: </Text>
+                                            <Text>{item.deliveryMethod.deliveryMethod}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Ngày nhận: </Text>
+                                            <Text>{item.deliveryAt}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Tổng tiền: </Text>
+                                            <Text>{item.totalPrice + 'đ'}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Địa chỉ: </Text>
+                                            <Text style={{marginRight: 30}}>{item.addressDelivery}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontWeight: 'bold'}}>Tình trạng đơn hàng: </Text>
+                                            <Text>Đã hủy</Text>
+                                        </View>
+                                    
+                            </Card>
+                           </TouchableOpacity>
+                       </SafeAreaView>
+                   )
+               }
+            </ScrollView>
+           
+           
         </View>
     )
 
@@ -30,7 +107,7 @@ export default function cancelgOrderTab({navigation, route}){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop:30,
+        
     },
     text: {
         marginLeft: 10,
@@ -97,6 +174,22 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20,
         color: '#05375a'
-    }
+    },
+    button: {
+        alignItems: 'center',
+        backgroundColor:'#FF4B3A',
+        margin: 5,
+    },
+    signIn: {
+        width: '100%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    textSign: {
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
     
 });

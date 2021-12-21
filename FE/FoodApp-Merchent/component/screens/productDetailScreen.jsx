@@ -16,11 +16,13 @@ import React, {useState, useEffect} from "react";
 import API from "../services/api";
 import NumericInput from 'react-native-numeric-input';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useIsFocused } from '@react-navigation/native';
 export default function productDetailScreen({route, navigation}){
     const {productId, userData}=route.params;
     //console.log(productId);
     const [productDetail, setProductDetail]=useState([]);
     const [quantityValue, setQuantityValue] =useState([]);
+    const isFocused = useIsFocused();
     
     const fetchdata = async() => {
         const result = await API.get(`products/detail/${productId}`,
@@ -28,7 +30,6 @@ export default function productDetailScreen({route, navigation}){
             headers:{
                 'Content-Type': 'application/json',
                 'x-access-token': userData.accessToken
-                
             },
         });
         //console.log(result);
@@ -39,16 +40,13 @@ export default function productDetailScreen({route, navigation}){
 
     useEffect(() => {
         fetchdata();
-    },[setProductDetail]);
+    },[setProductDetail, isFocused]);
 
 
 
 
     
-    const onChange=(value)=>{
-        setQuantityValue(value);
-    }
-
+ 
 
     return(
         <View style={styles.container}>
@@ -101,43 +99,13 @@ export default function productDetailScreen({route, navigation}){
                 
                 <Card.Divider/>
                 <View style={styles.addQuantityToCart}>
-                    <View style={{marginRight: 20}}>
-                        <NumericInput
-                            minValue={1}
-                            maxValue={50}
-                            step={1}
-                            totalHeight={40}
-                            onChange={(value) =>onChange(value)}
-                            rounded/>
-                    </View>
+                   
                     <View style={styles.button}>
-                        <TouchableOpacity onPress={()=>{
-                            API.post(`cart/${userData.id}/addCartItem`,{listCartItems: [{productId: productDetail.id, quantity: quantityValue}]},
-                            {
-                                headers:{
-                                    'Content-Type': 'application/json',
-                                    'x-access-token': userData.accessToken,
-                                    
-                                },
-                            })
-                            .then(res => {
-                                if(res.status===201)
-                                {
-                                    alert(res.data.message);
-                                    //navigation.params.resetData();
-                                    // RNRestart.Restart();
-                                }
-                                
-                            }).catch(error => {
-                                    //alert('Error', error.res);
-                                    console.log(error.res);
-                                
-                            });
-                        }}>
+                        <TouchableOpacity onPress={()=>{navigation.navigate('updateProductScreen',{product: productDetail, userData: userData, productId: productId})}}>
                             <LinearGradient
                                 colors={['#FF4B3A','#FF4B3A']}
                                 style={styles.signIn}>
-                                <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
+                                <Text style={styles.textSign}>Chỉnh sửa</Text>
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>

@@ -11,6 +11,7 @@ import welcomScreen from '../screens/welcomScreen';
 import billScreen from '../screens/billScreen'
 import updateUserProfile from '../screens/updateUseProfileScreen';
 import userOrderManagementScreen from '../screens/userOrderManagementScreen'
+import updateProductScreen from '../screens/updateProductScreen'
 
 const RootStack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const rootStackScreen = () => (
         <RootStack.Screen name="billScreen" component={billScreen} options={{headerShown: false}}/>
         <RootStack.Screen name="updateUserProfileScreen" component={updateUserProfile} options={{headerShown: false}}/>
         <RootStack.Screen name="userOrderManagementScreen" component={userOrderManagementScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name="updateProductScreen" component={updateProductScreen} options={{headerShown: false}}/>
     </RootStack.Navigator>
 );
 

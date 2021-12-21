@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import homeScreen from "../screens/homeScreen";
 import userScreen from "../screens/userScreen";
 import foodScreen from "./foodScreen";
+import userOrderManagementScreen from '../screens/userOrderManagementScreen';
 
 
 
@@ -14,11 +15,8 @@ const darBoardScreen=({route, navigation})=>{
     const{userData}=route.params;
     //console.log(response);
     return(
-       
             <Tab.Navigator
-            
             screenOptions={({ route }) => ({
-                
                 tabBarIcon: ({ focused, color, size }) => {
                   let iconName;
       
