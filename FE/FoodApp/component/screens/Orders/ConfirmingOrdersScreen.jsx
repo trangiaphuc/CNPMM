@@ -10,6 +10,7 @@ import {useIsFocused } from '@react-navigation/native';
 
 
 
+
 export default function confirmingOrderTab({navigation, route}){
 
     const{userData, userInfo} = route.params;
@@ -62,7 +63,7 @@ export default function confirmingOrderTab({navigation, route}){
                    ConfirmingOrders.map((item)=>
                        <SafeAreaView key={item.id}>
                            <TouchableOpacity onPress={()=>{navigation.navigate('ordersDetailBillScreen',{orders: item, userData: userData, userInfo: userInfo})}}>
-                            <Card containerStyle={{backgroundColor:'#00FF66'}}>
+                            <Card containerStyle={{backgroundColor:'#00FF00'}}>
                                     
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Mã đơn hàng: </Text>

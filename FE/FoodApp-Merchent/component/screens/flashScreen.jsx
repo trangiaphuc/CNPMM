@@ -22,7 +22,7 @@ export default function flashScreen({navigation}) {
             </View>
             <View style={styles.footer}>
               
-                <Text style={styles.title}>Food for everyone</Text>
+                <Text style={styles.title}>App for Merchant</Text>
                 <Text style={styles.text}>Sign in with account</Text>
                 <View style={styles.button}>
                   <TouchableOpacity onPress={()=>navigation.navigate('signInScreen')}>

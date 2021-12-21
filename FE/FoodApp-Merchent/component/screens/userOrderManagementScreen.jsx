@@ -20,54 +20,21 @@ const Tab =createMaterialTopTabNavigator();
 
 export default function userOrderManagementScreen({navigation, route}){
 
-    const {userData, orders, userInfo} = route.params;
-    // console.log(userData);
-    // console.log(orders);
-    
-    
-    //const orderStatus = ['Chờ duyệt', 'Đang giao', 'Đã giao', 'Hủy đơn']
+    const {userData,userInfo} = route.params;
 
-    var ConfirmingOrders = [];
-    var DeliveryingOrders = [];
-    var DoneOrders = [];
-    var CancelOrders =[];
-    
-    orders.forEach(order =>{
-        
-        if(order.isCanceled !==0){
-            CancelOrders.push(order);
-        }
-        else if(order.isDone == 0){
-            ConfirmingOrders.push(order);
-        }
-        else if(order.isDone == 2){
-            DeliveryingOrders.push(order);
-        }
-        else if(order.isDone ==1){
-            DoneOrders.push(order);
-        }
-    })
-    // console.log("Confirm",ConfirmingOrders);
-    // console.log("Deli",DeliveryingOrders);
-    // console.log("Done",DoneOrders);
-    // console.log("Cancel",CancelOrders);
     return(
       
         <Tab.Navigator
         screenOptions={{
             tabBarStyle: { height: 70, justifyContent:'flex-end'}
         }}>
-            <Tab.Screen name="Chờ duyệt" component={ConfirmingOrdersScreen} initialParams={{ConfirmingOrders, userData, userInfo}} options={{headerShown: false}}/>
-            <Tab.Screen name="Đang giao" component={DeliveryingOrdersScreen} initialParams={{DeliveryingOrders, userData, userInfo}} options={{headerShown:false}}/>
-            <Tab.Screen name="Đã giao" component={DoneOrdersScreen} initialParams={{DoneOrders, userData, userInfo}} options={{headerShown: false}}/>
-            <Tab.Screen name="Hủy đơn" component={CancelOrdersScreen} initialParams={{CancelOrders, userData, userInfo}} options={{headerShown:false}}/>
+            <Tab.Screen name="Chờ duyệt" component={ConfirmingOrdersScreen} initialParams={{userData, userInfo}} options={{headerShown: false}}/>
+            <Tab.Screen name="Đang giao" component={DeliveryingOrdersScreen} initialParams={{userData, userInfo}} options={{headerShown:false}}/>
+            <Tab.Screen name="Đã giao" component={DoneOrdersScreen} initialParams={{userData, userInfo}} options={{headerShown: false}}/>
+            <Tab.Screen name="Hủy đơn" component={CancelOrdersScreen} initialParams={{userData, userInfo}} options={{headerShown:false}}/>
         </Tab.Navigator>
 
 
     )
 
 }
-
-const styles = StyleSheet.create({
-   
-});

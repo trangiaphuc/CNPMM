@@ -60,9 +60,6 @@ export default function homeScreen({navigation, route}){
                         alert('Error', error.response);
                 });
         }
-        
-
-
         return(
             <TouchableOpacity onPress={itemCategory}>
                 <View style={styles.container_product}>
@@ -112,7 +109,8 @@ export default function homeScreen({navigation, route}){
                         .then(res => {
                             //console.log(res.data);
                             if(res.status===200){
-                                Alert.alert("Thông báo","Cập nhật thành công")
+                                Alert.alert("Thông báo","Cập nhật thành công");
+                                
                             }
                         }).catch(error => {
                                 alert('Error', error.res);
@@ -150,9 +148,9 @@ export default function homeScreen({navigation, route}){
                     <LinearGradient
                         colors={['#00FF00','#00FF00']}
                         style={styles.signIn}>
-                                                                
+
                         <Text style={styles.textSign}>Bán lại</Text>
-                                                            
+
                     </LinearGradient>
                 </TouchableOpacity>
             );
@@ -230,7 +228,6 @@ export default function homeScreen({navigation, route}){
                                                         {
                                                             ButtonSet(item)
                                                         }
-                                                        
                                             </View>
                                         </View>
                                     </Card>

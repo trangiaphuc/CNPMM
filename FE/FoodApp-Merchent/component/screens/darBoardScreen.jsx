@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import homeScreen from "../screens/homeScreen";
 import userScreen from "../screens/userScreen";
 import foodScreen from "./foodScreen";
+import homeMainScreen from "./homeMainScreen";
 import userOrderManagementScreen from '../screens/userOrderManagementScreen';
 
 
@@ -43,10 +44,10 @@ const darBoardScreen=({route, navigation})=>{
                 tabBarInactiveTintColor: 'gray',
               })}
             >
-                
-                <Tab.Screen name="Product" component={homeScreen} initialParams={{userData}} options={{headerShown: false}} />
+
+                <Tab.Screen name="Home" component={homeMainScreen} initialParams={{userData}} options={{headerShown: false}} />
+                {/* <Tab.Screen name="Product" component={homeScreen} initialParams={{userData}} options={{headerShown: false}} /> */}
                 <Tab.Screen name="Food" component={foodScreen} initialParams={{userData}} options={{headerShown:false}} />
-                
                 <Tab.Screen name="Profile" component={userScreen} initialParams={{userData}} options={{headerShown: false}} />
             </Tab.Navigator>
         

@@ -17,11 +17,9 @@ export default function confirmingOrderTab({navigation, route}){
     const [dataConfirm, setDataConfirm]=useState([]);
     
     var ConfirmingOrders = [];
-    var DeliveryingOrders = [];
-    var DoneOrders = [];
-    var CancelOrders =[];
+    
     const getUserOrder = async () =>{
-        const result = await API.get(`order/${userData.id}`, 
+        const result = await API.get(`order/${userData.id}`,
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -38,19 +36,10 @@ export default function confirmingOrderTab({navigation, route}){
 
     
     dataConfirm.forEach(order =>{
-        
-        if(order.isCanceled !==0){
-            CancelOrders.push(order);
-        }
-        else if(order.isDone == 0){
+        if(order.isDone == 0 && order.isCanceled==0){
             ConfirmingOrders.push(order);
         }
-        else if(order.isDone == 2){
-            DeliveryingOrders.push(order);
-        }
-        else if(order.isDone ==1){
-            DoneOrders.push(order);
-        }
+      
     })
 
 
@@ -92,29 +81,7 @@ export default function confirmingOrderTab({navigation, route}){
                                         <Text style={{fontWeight: 'bold'}}>Tình trạng đơn hàng: </Text>
                                         <Text>Đang chờ duyệt</Text>
                                     </View>
-                                    <View style={{alignItems: 'flex-end'}}>
-                                        <TouchableOpacity onPress={()=>{
-                                            API.post(`order/update/${item.id}`,{isCanceled: 1},
-                                            {
-                                                headers:{
-                                                    'Content-Type': 'application/json',
-                                                    'x-access-token': userData.accessToken,
-                                                },
-                                            })
-                                            .then(response => {
-                                                if(response.status===200)
-                                                {
-                                                    alert("Hủy đơn hàng thành công");
-                                                }
-                                            }).catch(error => {
-                                                    console.log(error);
-                                            });
-                                        }}>
-                                            <View style={styles.deleteOrders}>
-                                                <Text style={styles.deleteOrdersText}>Hủy đơn</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
+                                    
                             </Card>
                            </TouchableOpacity>
                        </SafeAreaView>

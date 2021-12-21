@@ -170,7 +170,7 @@ export default function signIn({navigation}){
                     </TouchableOpacity>
 
                     
-                    <Text style={[styles.textSignUp,{color:'#ff4700'}]} onPress={()=>navigation.navigate('signUpScreen')}>Bạn chưa có tài khoản! Đăng ký</Text>
+                    
                     
                 </View>
             </View>
