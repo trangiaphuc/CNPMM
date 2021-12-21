@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, Dimensions,Image, TouchableOpacity, TextInput} from "react-native";
+import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
 
 
 import {Card} from "react-native-elements";
@@ -14,13 +14,10 @@ export default function CancelOrdersTab({navigation, route}){
 
     const{userData, userInfo} = route.params;
     const isFocused = useIsFocused();
-    const [dataCancel, setDataCancel]=useState([]);
-    //console.log(userData);
-    var ConfirmingOrders = [];
-    var DeliveryingOrders = [];
-    var DoneOrders = [];
-    var CancelOrders =[];
-
+    const [cancel, setCancel]=useState([]);
+    
+    var CancelOrders = [];
+    
     const getUserOrder = async () =>{
         const result = await API.get(`order/${userData.id}`,
         {
@@ -29,39 +26,28 @@ export default function CancelOrdersTab({navigation, route}){
                 'x-access-token': userData.accessToken
             },
         });
-        setDataCancel(result.data.orders)
+        setCancel(result.data.orders)
         //console.log(result.data.orders);
         
     }
     useEffect(() => {
         getUserOrder();
     },[isFocused]);
-    dataCancel.forEach(order =>{
-        
-        if(order.isCanceled !==0){
+
+    cancel.forEach(order =>{
+        if(order.isCanceled==1){
             CancelOrders.push(order);
-        }
-        else if(order.isDone == 0){
-            ConfirmingOrders.push(order);
-        }
-        else if(order.isDone == 2){
-            DeliveryingOrders.push(order);
-        }
-        else if(order.isDone ==1){
-            DoneOrders.push(order);
         }
     })
 
     return(
         <View style={styles.container}>
-           
             <ScrollView>
             {
                    CancelOrders.map((item)=>
                        <SafeAreaView key={item.id}>
                            <TouchableOpacity onPress={()=>{navigation.navigate('ordersDetailBillScreen',{orders: item, userData: userData, userInfo: userInfo})}}>
                             <Card containerStyle={{backgroundColor: '#FF0000'}}>
-                                    
                                         <View style={{flexDirection: 'row'}}>
                                             <Text style={{fontWeight: 'bold'}}>Mã đơn hàng: </Text>
                                             <Text>{item.id}</Text>

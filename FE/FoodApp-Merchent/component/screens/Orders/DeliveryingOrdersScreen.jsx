@@ -3,6 +3,8 @@ import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, D
 
 
 import {Card} from "react-native-elements";
+import API from "../../services/api";
+import {useIsFocused } from '@react-navigation/native';
 
 
 
@@ -10,8 +12,35 @@ import {Card} from "react-native-elements";
 
 export default function DeliveryingOrdersTab({navigation, route}){
 
-    const{userData, DeliveryingOrders, userInfo} = route.params;
-    //console.log(userData);
+    const{userData, userInfo} = route.params;
+    const isFocused = useIsFocused();
+    const [delivery, setDelivery]=useState([]);
+    
+    var DeliveryingOrders = [];
+    
+    const getUserOrder = async () =>{
+        const result = await API.get(`order/${userData.id}`, 
+        {
+            headers:{
+                'Content-Type': 'application/json',
+                'x-access-token': userData.accessToken
+            },
+        });
+        setDelivery(result.data.orders)
+        //console.log(result.data.orders);
+        
+    }
+    useEffect(() => {
+        getUserOrder();
+    },[isFocused]);
+
+    
+    delivery.forEach(order =>{
+        if(order.isDone == 2 && order.isCanceled==0){
+            DeliveryingOrders.push(order);
+        }
+      
+    })
     return(
         <View style={styles.container}>
            
@@ -20,7 +49,7 @@ export default function DeliveryingOrdersTab({navigation, route}){
                    DeliveryingOrders.map((item)=>
                        <SafeAreaView key={item.id}>
                            <TouchableOpacity onPress={()=>{navigation.navigate('ordersDetailBillScreen',{orders: item, userData: userData, userInfo: userInfo})}}>
-                            <Card>
+                            <Card containerStyle={{backgroundColor:'#FFFF66'}}>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Mã đơn hàng: </Text>
                                         <Text>{item.id}</Text>
@@ -43,7 +72,7 @@ export default function DeliveryingOrdersTab({navigation, route}){
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Địa chỉ: </Text>
-                                        <Text>{item.addressDelivery}</Text>
+                                        <Text style={{marginRight: 30}}>{item.addressDelivery}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Tình trạng đơn hàng: </Text>

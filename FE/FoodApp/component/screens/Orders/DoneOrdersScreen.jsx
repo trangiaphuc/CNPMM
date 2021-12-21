@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from "react";
 import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, Dimensions,Image, TouchableOpacity, TextInput} from "react-native";
-
-
+import API from "../../services/api";
+import {useIsFocused } from '@react-navigation/native';
 import {Card} from "react-native-elements";
 
 
@@ -10,8 +10,37 @@ import {Card} from "react-native-elements";
 
 export default function DoneOrdersTab({navigation, route}){
 
-    const{userData, DoneOrders, userInfo} = route.params;
+    const{userData, userInfo} = route.params;
     //console.log(userData);
+    const[done, setDone] = useState([]);
+    const isFocused = useIsFocused();
+    
+    var DoneOrders = [];
+    
+    const getUserOrder = async () =>{
+        const result = await API.get(`order/${userData.id}`, 
+        {
+            headers:{
+                'Content-Type': 'application/json',
+                'x-access-token': userData.accessToken
+            },
+        });
+        setDone(result.data.orders)
+        //console.log(result.data.orders);
+        
+    }
+    useEffect(() => {
+        getUserOrder();
+    },[isFocused]);
+
+    
+    done.forEach(order =>{
+      
+        if(order.isDone ==1){
+            DoneOrders.push(order);
+        }
+    })
+
     return(
         <View style={styles.container}>
            
@@ -20,7 +49,7 @@ export default function DoneOrdersTab({navigation, route}){
                    DoneOrders.map((item)=>
                        <SafeAreaView key={item.id}>
                            <TouchableOpacity onPress={()=>{navigation.navigate('ordersDetailBillScreen',{orders: item, userData: userData, userInfo: userInfo})}}>
-                            <Card>
+                            <Card containerStyle={{backgroundColor:'#CCFF99'}}>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Mã đơn hàng: </Text>
                                         <Text>{item.id}</Text>
@@ -43,7 +72,7 @@ export default function DoneOrdersTab({navigation, route}){
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Địa chỉ: </Text>
-                                        <Text>{item.addressDelivery}</Text>
+                                        <Text style={{marginRight: 30}}>{item.addressDelivery}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row'}}>
                                         <Text style={{fontWeight: 'bold'}}>Tình trạng đơn hàng: </Text>

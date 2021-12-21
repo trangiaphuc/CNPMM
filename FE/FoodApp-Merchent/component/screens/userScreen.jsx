@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
+import {View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, NativeModules} from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import axios from "axios";
 import{
@@ -11,11 +11,16 @@ import{
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import API from "../services/api";
 import {useIsFocused } from '@react-navigation/native';
+//import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 export default function userScreen({navigation, route}){
     const{userData}=route.params;
     const[data, setData]=useState([]);
     const [orders, setOrders] = useState([]);
     const isFocused = useIsFocused();
+  
+    const [image, setImage] = useState(null);
     //console.log(orders);
     // const[lengthOrder, setLengthOrder] = useState([]);
 
@@ -52,13 +57,43 @@ export default function userScreen({navigation, route}){
             await getUserOrder();
         },[setData, setOrders,isFocused]);
 
-        
 
+        
+        const chooseImage = async () => {
+            // No permissions request is necessary for launching the image library
+            let result = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.All,
+              allowsEditing: false,
+              aspect: [4, 3],
+              quality: 1,
+            });
+        
+            //console.log(result);
+        
+            if (!result.cancelled) {
+                console.log(result.uri)
+                // let fileInfo = await FileSystem.getInfoAsync(result.uri);
+                // console.log(fileInfo);
+
+                // API.post(`upload`,{file: result.uri, name: 'avatar', alt: 'avatar'},
+                // {
+                //     headers:{
+                //         'Content-Type': 'application/json',
+                        
+                //     },
+                // })
+                // .then(res => {
+                //     console.log(res.data);
+                // }).catch(error => {
+                //     console.log(error);
+                // });
+              
+            }
+            //console.log(image);
+        };
 
     return(
-        // <View>
-        //     <Text>{JSON.stringify(data.username)}</Text>
-        // </View>
+       
 
         <SafeAreaView>
             <View style={styles.return}>
@@ -73,17 +108,17 @@ export default function userScreen({navigation, route}){
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.returnText}>Thông tin cá nhân</Text>
-                
-                
+
             </View>
            <ScrollView>
            <View style={styles.userInfoSection}>
                 <View style={{flexDirection: 'row', marginTop: 15}}>
                     <Avatar.Image
                     source={{
-                        uri: data.userAvatar,
+                        uri: data.userAvatar
                     }}
                     size={80}/>
+
                     <View style={{marginLeft:20}}>
                         <Title style={[styles.title,{
                             marginTop: 15,
@@ -94,6 +129,11 @@ export default function userScreen({navigation, route}){
                 </View>
             </View>
             <View style={styles.userInfoSection}>
+                <View style={styles.row}>
+                    <TouchableOpacity onPress={chooseImage}>
+                        <Icon name="camera" size={20}/>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.row}>
                     <Icon name="map-marker-radius" size={20}/>
                     <Text style={styles.text}>Viet Nam</Text>
@@ -135,7 +175,7 @@ export default function userScreen({navigation, route}){
                 </TouchableRipple>
             </View>
             <View style={styles.menuWrapper}>
-                <TouchableRipple onPress={()=>{navigation.navigate('favoriteFoodScreen',{userData: userData})}}>
+                <TouchableRipple onPress={()=>{}}>
                     <View style={styles.menuItem}>
                         <Icon name="heart-outline" color="#FE6347" size={25}/>
                         <Text style={styles.menuItemText}>Your Favourites</Text>

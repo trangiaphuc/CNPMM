@@ -224,8 +224,7 @@ export default function billScreen({navigation, route}){
                                 </View>
                             </View>
                 </View>
-                
-                
+
            </View>
            
         </View>
