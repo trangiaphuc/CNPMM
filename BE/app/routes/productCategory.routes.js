@@ -21,7 +21,7 @@ module.exports = function(app){
     
     //merchant
     //get all categories
-    app.get('/api/productcategory/',
+    app.get('/api/merchant/productcategory/',
     // [authJwt.verifyToken, authJwt.isMerchant], 
     controller.merchantgetAllProductsCategory);
 
