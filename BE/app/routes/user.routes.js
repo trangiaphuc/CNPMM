@@ -26,6 +26,12 @@ module.exports = function(app) {
   //show user favorite food categories
   app.get("/api/user/:userId/getFavorite/", [authJwt.verifyToken], controller.getAllFavorites);
 
+  //merchant
+  app.get('/api/merchant/user',
+  [authJwt.verifyToken],
+  isMerchant,
+  controller.merchantGetAllUser)
+
 // // test ROLE
 //   app.get("/api/test/all", controller.allAccess);
 

@@ -7,26 +7,31 @@ module.exports = {
       [ 
         {
           catName: "Thịt, cá, hải sản",
+          isShowing: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           catName: "Rau, củ, trái cây",
+          isShowing: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           catName: "Mì, cháo, phở bún",
+          isShowing: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           catName: "Dầu ăn, gia vị",
+          isShowing: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           catName: "Gạo, bột, đồ khô",
+          isShowing: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

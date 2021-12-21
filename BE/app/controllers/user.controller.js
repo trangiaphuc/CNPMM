@@ -12,7 +12,7 @@ var fs = require("fs");
     User.findByPk(id, {
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
-      },
+      }
     })
     .then(user => {
       if(user){
@@ -92,6 +92,7 @@ var fs = require("fs");
           email: req.body.email,
           birthday: new Date(req.body.birthday),
           address: req.body.address,
+          isActive: req.body.isActive,
         })
         .then(updatedRecord => {
           if(updatedRecord){
@@ -278,6 +279,30 @@ var fs = require("fs");
       res.status(500).send({message: err.message});
     })
   }
+
+
+//merchant
+exports.merchantGetAllUser = (req, res) => {
+  User.findAll({
+    logging: (sql, queryObject) =>{
+      logger.info(sql, queryObject);
+    },
+  })
+  .then(users =>{
+    users.forEach(user =>{
+      const image = fs.readFileSync(
+        __basedir + user.userAvatar
+      );
+      var base64Image = Buffer.from(image).toString("base64");
+      user.userAvatar = "data:image/png;base64,"+base64Image;
+    })
+    res.status(200).send({users: users});
+  })
+  .catch(err => {
+    res.status(200).send({message: err.message});
+  })
+}
+
 
   // exports.changeAvatar = (req, res) =>{
   //   const userId = req.params.userId;

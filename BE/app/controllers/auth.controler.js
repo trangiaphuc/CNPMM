@@ -32,7 +32,8 @@ exports.signup = (req, res) => {
     birthday: new Date(req.body.birthday),
     address: req.body.address,
     gender: req.body.gender,
-    userAvatar: userAvatar
+    userAvatar: userAvatar,
+    isActive: true,
     // "/resources/static/assets/images/userAvatar/female.png",
   })
     .then(user => {
@@ -72,7 +73,8 @@ exports.signin = (req, res) => {
             logger.info(sql, queryObject);
           },
     where: {
-      username: req.body.username
+      username: req.body.username,
+      isActive: true,
     }
   })
     .then(user => {

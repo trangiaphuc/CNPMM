@@ -32,6 +32,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       userAvatar: {
         type: Sequelize.STRING
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN
       }
     });
   
