@@ -19,6 +19,7 @@ import homeScreen from '../screens/homeScreen';
 import foodScreen from '../screens/foodScreen';
 import addNewProductScreen from '../screens/Product/addNewProductScreen';
 import addFoodCategoryScreen from '../screens/Food/addFoodCategoryScreen';
+import addNewFoodScreen from '../screens/Food/addNewFoodScreen';
 
 
 
@@ -43,6 +44,7 @@ const rootStackScreen = () => (
         <RootStack.Screen name ="foodScreen" component={foodScreen} options={{headerShown: false}}/>
         <RootStack.Screen name ="addNewProductScreen" component={addNewProductScreen} options={{headerShown: false}}/>
         <RootStack.Screen name ="addFoodCategoryScreen" component={addFoodCategoryScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name ="addNewFoodScreen" component={addNewFoodScreen} options={{headerShown: false}}/>
     </RootStack.Navigator>
 );
 

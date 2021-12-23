@@ -60,7 +60,6 @@ export default function addFoodCategoryScreen({navigation, route}){
         {
             headers:{
                 'Content-Type': 'multipart/form-data',
-                
             },
 
         })

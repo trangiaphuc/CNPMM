@@ -167,6 +167,7 @@ exports.merchantAddNewProduct = (req, res) => {
       __basedir + "/resources/static/assets/uploads/" + req.file.filename
     );
 
+    
     Product.create({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);

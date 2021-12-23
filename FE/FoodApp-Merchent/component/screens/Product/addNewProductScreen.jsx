@@ -108,6 +108,7 @@ export default function updateUserProfile({navigation, route}){
         }
 
     };
+    
     form.append('proName', dataAddNewPro.proName);
     form.append('proDescription', dataAddNewPro.description);
     form.append('quantityValue', dataAddNewPro.quantity);
@@ -119,6 +120,7 @@ export default function updateUserProfile({navigation, route}){
     form.append('productCategoryId', selectedValueCatName)
     form.append('file', image);
     form.append('isSelling', dataAddNewPro.isSelling);
+    //console.log(form);
     
     const submitAddNewProduct = ()  =>{
         //console.log(form);
