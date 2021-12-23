@@ -395,7 +395,7 @@ try{
             logging: (sql, queryObject) =>{
               logger.info(sql, queryObject);
             },
-            foodId: foodId,
+            foodId: food.id,
             foodMaterialName: foodMaterial.foodMaterialName,
             quantityDescription: foodMaterial.quantityDescription,
             quantityValue: foodMaterial.quantityValue,
@@ -417,7 +417,7 @@ try{
             logging: (sql, queryObject) =>{
               logger.info(sql, queryObject);
             },
-            foodId: foodId,
+            foodId: food.id,
             stepNumber: foodCookStep.stepNumber,
             stepDescription: foodCookStep.stepDescription,
             createdAt: new Date(),
@@ -437,8 +437,6 @@ try{
         else{
           res.status(500).send( {message: 'Fail!'});
         }
-
-
       }
       else{
         logger.error(`Request status: ${res.status(500)}  error `);
