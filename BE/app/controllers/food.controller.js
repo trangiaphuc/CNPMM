@@ -315,6 +315,7 @@ try{
       foodName: req.body.foodName,
       foodDescription: req.body.foodDescription,
       foodCalories: req.body.foodCalories,
+      foodCategoryId: req.body.foodCategoryId,
       foodImage: "/resources/static/assets/images/food/" + req.file.filename,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -465,7 +466,7 @@ exports.merchantUpdateFood = async (req, res) => {
       foodDescription: req.body.foodDescription,
       foodCalories: req.body.foodCalories,
       isShowing: req.body.isShowing,
-      foodCategory: req.body.foodCategory,
+      foodCategoryId: req.body.foodCategoryId,
       createdAt: new Date(),
       updatedAt: new Date(),
     })
