@@ -53,6 +53,10 @@ export default function homeMainScreen({navigation, route}){
                 </View>
             </View>
             <View >
+                <View style={{alignItems: 'center'}}>
+                    <Image source={require('../images/logo1.png')} style={{width: 250, height: 250}}>
+                    </Image>
+                </View>
                 <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate('productCategoryScreen',{userData: userData})}}>
                         <View >
@@ -71,9 +75,11 @@ export default function homeMainScreen({navigation, route}){
                             <Text style={styles.buttonText}>Quản lý danh mục món ăn</Text>
                         </View>
                     </TouchableOpacity>
-                    <View style={styles.button}>
-                        <Text style={styles.buttonText}>Quản lý món ăn</Text>
-                    </View>
+                    <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate('foodScreen',{userData: userData})}}>
+                        <View>
+                            <Text style={styles.buttonText}>Quản lý món ăn</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
             <View>

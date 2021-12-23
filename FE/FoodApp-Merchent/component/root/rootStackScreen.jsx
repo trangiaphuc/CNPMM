@@ -16,6 +16,9 @@ import ordersDetailBillScreen from '../screens/Orders/ordersDetailBillScreen';
 import productCategoryScreen from '../screens/Product/productCategoryScreen';
 import foodCategoryScreen from '../screens/Food/foodCategoryScreen';
 import homeScreen from '../screens/homeScreen';
+import foodScreen from '../screens/foodScreen';
+import addNewProductScreen from '../screens/Product/addNewProductScreen';
+import addFoodCategoryScreen from '../screens/Food/addFoodCategoryScreen';
 
 
 
@@ -37,7 +40,9 @@ const rootStackScreen = () => (
         <RootStack.Screen name="productCategoryScreen" component={productCategoryScreen} options={{headerShown: false}}/>
         <RootStack.Screen name="foodCategoryScreen" component={foodCategoryScreen} options={{headerShown: false}}/>
         <RootStack.Screen name ="homeScreen" component={homeScreen} options={{headerShown: false}}/>
-        
+        <RootStack.Screen name ="foodScreen" component={foodScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name ="addNewProductScreen" component={addNewProductScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name ="addFoodCategoryScreen" component={addFoodCategoryScreen} options={{headerShown: false}}/>
     </RootStack.Navigator>
 );
 

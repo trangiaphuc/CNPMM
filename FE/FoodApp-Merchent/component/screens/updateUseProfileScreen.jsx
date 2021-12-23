@@ -81,7 +81,8 @@ export default function updateUserProfile({navigation, route}){
             phone: userInformation.phone,
             email: userInformation.email,
             address: userInformation.address,
-            birthday: ''
+            birthday: '',
+            isActive: true,
         } ,
             {
                 headers:{

@@ -12,6 +12,7 @@ import {
     TouchableOpacity,
     TextInput
 } from "react-native";
+import { Avatar } from "react-native-paper";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import API from "../../services/api";
 import {Card} from "react-native-elements";
@@ -23,7 +24,7 @@ export default function productCategoryScreen({navigation, route}){
     
 
     const fetchdataCategory = async() => {
-        const result = await API.get('foodcategory/',
+        const result = await API.get('merchant/foodcategory/',
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -37,12 +38,24 @@ export default function productCategoryScreen({navigation, route}){
     useEffect(() => {
         fetchdataCategory();
     },[setCategory, isFocused]);
+
+    const ButtonSet=(item)=>{
+        return (
+            <TouchableOpacity onPress={()=>{}}>
+                <FontAwesome
+                    name="trash"
+                    color="#05375a"
+                    size={20}
+                />
+            </TouchableOpacity>
+        );
+    }
     
     return (
         <SafeAreaView>
             <View style={styles.return}>
                 <View style={styles.returnIcon}>
-                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                    <TouchableOpacity onPress={() => { navigation.goBack(); }}>
                         <FontAwesome
                             name="arrow-left"
                             color="#05375a"
@@ -51,27 +64,36 @@ export default function productCategoryScreen({navigation, route}){
                     </TouchableOpacity>
                 </View>
                 <View style={styles.containerText}>
-                    <Text style={styles.returnText}>Danh mục sản phẩm</Text>
+                    <Text style={styles.returnText}>Danh mục món ăn</Text>
+                </View>
+                <View style={styles.addProduct}>
+                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {navigation.navigate('addFoodCategoryScreen',{userData: userData})}}>
+                        <FontAwesome
+                            name="plus"
+                            color="#05375a"
+                            size={30}
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
-            <View>
-                <ScrollView style={{height: '75%'}}>
+            
+                <ScrollView style={{height: '92%',}}>
                     {
                         category.map((item)=>
                         <View key={item.id}>
                             <Card containerStyle={{backgroundColor: '#FF9933', borderRadius: 5}}>
                                 <View style={{flexDirection: 'row'}}>
-                                    <View style={{flex: 1}}>
-                                        <Text>{item.catName}</Text>
+                                    <View style={{marginRight: 20}}>
+                                        <Avatar.Image source={{uri: item.catIcon}} size={50}/>
                                     </View>
-                                    <View>
-                                        <TouchableOpacity onPress={()=>{}}>
-                                            <FontAwesome
-                                                name="trash"
-                                                color="#05375a"
-                                                size={20}
-                                            />
-                                        </TouchableOpacity>
+                                    <View style={{flex: 1, justifyContent: 'center'}}>
+                                        <Text style={{fontWeight: 'bold'}}>{item.catName}</Text>
+                                    </View>
+                                    <View style={{justifyContent: 'center'}}>
+                                        {
+                                            ButtonSet(item)
+                                        }
+                                        
                                     </View>
                                 </View>
                             </Card>
@@ -79,23 +101,7 @@ export default function productCategoryScreen({navigation, route}){
                         )
                     }
                 </ScrollView>
-                <View style={{height:'25%'}}>
-                    <TouchableOpacity onPress={()=>{}}>
-                        <View style={{alignItems: 'flex-end', marginRight: 30}}>
-                            <Text style={{borderWidth: 0.5,
-                                backgroundColor: '#FF0000',
-                                paddingLeft: 15,
-                                paddingRight: 15,
-                                paddingTop: 5,
-                                paddingBottom: 5,
-                                borderRadius: 20,
-                                color: '#FFFF00',
-                                fontWeight: 'bold',
-                                }}>Thêm danh mục</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            
         </SafeAreaView>
     );
 }
@@ -107,22 +113,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
 
     },
-    returnIcon:{
-        flex: 2,
+    returnIcon: {
+        flex: 3,
         marginBottom: 5,
         marginLeft: 10,
         justifyContent: 'flex-end',
 
-    },
-    returnText:{
-        marginBottom: 5,
 
+    },
+    returnText: {
+        marginBottom: 5,
         fontWeight: 'bold',
         fontSize: 20,
         color: '#05375a',
     },
-    containerText:{
+    containerText: {
         justifyContent: 'flex-end',
-        flex: 6,
+        flex: 5,
+    },
+    addProduct: {
+        justifyContent: 'flex-end',
+        flex: 2,
     },
 });

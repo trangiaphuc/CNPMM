@@ -19,6 +19,7 @@ export default function userScreen({navigation, route}){
     const[data, setData]=useState([]);
     const [orders, setOrders] = useState([]);
     const isFocused = useIsFocused();
+    const baseURL= `http://192.168.1.5:8080/api/`;
   
     const [image, setImage] = useState(null);
     //console.log(orders);
@@ -71,25 +72,30 @@ export default function userScreen({navigation, route}){
             //console.log(result);
         
             if (!result.cancelled) {
-                console.log(result.uri)
-                // let fileInfo = await FileSystem.getInfoAsync(result.uri);
-                // console.log(fileInfo);
+                    let form =new FormData();
+                    let file = {
+                        name:'avatar.jpg',
+                        uri: result.uri,
+                        type: "image/jpeg",
+                    }
+                    form.append('file', file);
 
-                // API.post(`upload`,{file: result.uri, name: 'avatar', alt: 'avatar'},
-                // {
-                //     headers:{
-                //         'Content-Type': 'application/json',
-                        
-                //     },
-                // })
-                // .then(res => {
-                //     console.log(res.data);
-                // }).catch(error => {
-                //     console.log(error);
-                // });
-              
+
+                    API.post('upload',form,
+                    {
+                        headers:{
+                            'Content-Type': 'multipart/form-data',
+                        },
+
+                    })
+                    .then(res => {
+                        console.log(res.data);
+                    }).catch(error => {
+                            console.log('Error', error.res);
+                    });
+
             }
-            //console.log(image);
+            
         };
 
     return(
