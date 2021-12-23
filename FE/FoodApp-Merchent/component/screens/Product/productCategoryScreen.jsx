@@ -23,7 +23,7 @@ export default function productCategoryScreen({navigation, route}){
     
 
     const fetchdataCategory = async() => {
-        const result = await API.get('productcategory/',
+        const result = await API.get('merchant/productcategory/',
         {
             headers:{
                 'Content-Type': 'application/json',

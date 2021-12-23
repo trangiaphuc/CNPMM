@@ -24,7 +24,7 @@ export default function userScreen({navigation, route}){
 
     
         const fetchfoodCategory = async() => {
-            const result = await API.get("foodcategory/",
+            const result = await API.get("merchant/foodcategory/",
             {
                 headers:{
                     'Content-Type': 'application/json',

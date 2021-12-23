@@ -47,7 +47,7 @@ const darBoardScreen=({route, navigation})=>{
 
                 <Tab.Screen name="Home" component={homeMainScreen} initialParams={{userData}} options={{headerShown: false}} />
                 {/* <Tab.Screen name="Product" component={homeScreen} initialParams={{userData}} options={{headerShown: false}} /> */}
-                <Tab.Screen name="Food" component={foodScreen} initialParams={{userData}} options={{headerShown:false}} />
+                {/* <Tab.Screen name="Food" component={foodScreen} initialParams={{userData}} options={{headerShown:false}} /> */}
                 <Tab.Screen name="Profile" component={userScreen} initialParams={{userData}} options={{headerShown: false}} />
             </Tab.Navigator>
         
