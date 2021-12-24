@@ -37,13 +37,13 @@ export default function productCategoryScreen({navigation, route}){
     }
     useEffect(() => {
         fetchdataCategory();
-    },[setCategory, isFocused]);
+    },[setCategory]);
     
     return (
         <SafeAreaView>
             <View style={styles.return}>
                 <View style={styles.returnIcon}>
-                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                    <TouchableOpacity onPress={() => { navigation.goBack(); }}>
                         <FontAwesome
                             name="arrow-left"
                             color="#05375a"
@@ -54,9 +54,18 @@ export default function productCategoryScreen({navigation, route}){
                 <View style={styles.containerText}>
                     <Text style={styles.returnText}>Danh mục sản phẩm</Text>
                 </View>
+                <View style={styles.addProduct}>
+                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => {navigation.navigate('addNewProductCategoryScreen',{userData: userData})}}>
+                        <FontAwesome
+                            name="plus"
+                            color="#05375a"
+                            size={30}
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
             <View>
-                <ScrollView style={{height: '75%'}}>
+                <ScrollView style={{height: '90%'}}>
                     {
                         category.map((item)=>
                         <View key={item.id}>
@@ -80,22 +89,7 @@ export default function productCategoryScreen({navigation, route}){
                         )
                     }
                 </ScrollView>
-                <View style={{height:'25%'}}>
-                    <TouchableOpacity onPress={()=>{}}>
-                        <View style={{alignItems: 'flex-end', marginRight: 30}}>
-                            <Text style={{borderWidth: 0.5,
-                                backgroundColor: '#FF0000',
-                                paddingLeft: 15,
-                                paddingRight: 15,
-                                paddingTop: 5,
-                                paddingBottom: 5,
-                                borderRadius: 20,
-                                color: '#FFFF00',
-                                fontWeight: 'bold',
-                                }}>Thêm danh mục</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                
             </View>
         </SafeAreaView>
     );
@@ -108,22 +102,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
 
     },
-    returnIcon:{
-        flex: 2,
+    returnIcon: {
+        flex: 3,
         marginBottom: 5,
         marginLeft: 10,
         justifyContent: 'flex-end',
 
-    },
-    returnText:{
-        marginBottom: 5,
 
+    },
+    returnText: {
+        marginBottom: 5,
         fontWeight: 'bold',
         fontSize: 20,
         color: '#05375a',
     },
-    containerText:{
+    containerText: {
         justifyContent: 'flex-end',
-        flex: 6,
+        flex: 7,
+    },
+    addProduct: {
+        justifyContent: 'flex-end',
+        flex: 2,
     },
 });
