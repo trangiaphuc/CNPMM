@@ -28,11 +28,11 @@ module.exports = function(app){
     //
     app.post('/api/merchant/productcategory/addnew',
     // [authJwt.verifyToken, authJwt.isMerchant], 
-    upload.single("file"),
+    // upload.single("file"),
     controller.merchantAddNewProductCategory);
 
     app.post('/api/merchant/productcategory/update/:id',
     // [authJwt.verifyToken, authJwt.isMerchant], 
-    upload.single("file"),
+    // upload.single("file"),
     controller.merchantUpdateProductCategory);
 }

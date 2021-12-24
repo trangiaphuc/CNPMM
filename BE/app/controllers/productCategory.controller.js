@@ -63,31 +63,19 @@ exports.merchantgetAllProductsCategory = (req, res) => {
 };
 
 exports.merchantAddNewProductCategory = (req, res) =>{
-  try{    
-    if (req.file == undefined) {
-      return res.send(`You must select a file.`);
-    }
-    const productCategoryIcon = fs.readFileSync(
-      __basedir + "/resources/static/assets/uploads/" + req.file.filename
-    );
 
     ProductCategory.create({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
       },
       catName: req.body.catName,
-      catIcon: "/resources/static/assets/icon/productCategoryIcon/" + req.file.filename,
+      catIcon: "",
       isShowing: req.body.isShowing,
       createdAt: new Date(),
       updatedAt: new Date(),
     })
     .then(productCategory =>{
       if(productCategory){
-        fs.writeFileSync(
-          __basedir + "/resources/static/assets/icon/productCategoryIcon/" + req.file.filename,
-          // image.data
-          productCategoryIcon
-        );
         logger.info(`Request status: ${res.status(201)} Created!`);
         res.status(201).send({message: "Success!", data: productCategory})
       }
@@ -99,21 +87,10 @@ exports.merchantAddNewProductCategory = (req, res) =>{
     .catch(err => {
       res.status(500).send({message: err.message})
     })
-  }
-  catch (err) {
-    res.status(500).send({ message: err.message});
-  }
 }
 
 
 exports.merchantUpdateProductCategory = (req, res) =>{
-  try{    
-    if (req.file == undefined) {
-      return res.send(`You must select a file.`);
-    }
-    const productCategoryIcon = fs.readFileSync(
-      __basedir + "/resources/static/assets/uploads/" + req.file.filename
-    );
     ProductCategory.findOne({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
@@ -126,18 +103,13 @@ exports.merchantUpdateProductCategory = (req, res) =>{
           logger.info(sql, queryObject);
         },
         catName: req.body.catName,
-        catIcon: "/resources/static/assets/icon/productCategoryIcon/" + req.file.filename,
+        catIcon: "",
         isShowing: req.body.isShowing,
         createdAt: new Date(),
         updatedAt: new Date(),
       })
       .then(productCategory =>{
         if(productCategory){
-          fs.writeFileSync(
-            __basedir + "/resources/static/assets/icon/productCategoryIcon/" + req.file.filename,
-            // image.data
-            productCategoryIcon
-          );
           logger.info(`Request status: ${res.status(201)} Created!`);
           res.status(201).send({message: "Success!", data: productCategory})
         }
@@ -153,10 +125,6 @@ exports.merchantUpdateProductCategory = (req, res) =>{
     .catch(err => {
       res.status(500).send({message:err.message});
     })
-  }
-  catch (err) {
-    res.status(500).send({ message: err.message});
-  }
 }
 
 
