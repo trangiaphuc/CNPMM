@@ -23,7 +23,7 @@ export default function productCategoryScreen({navigation, route}){
     
 
     const fetchdataCategory = async() => {
-        const result = await API.get('merchant/productcategory/',
+        const result =await API.get('merchant/productcategory/',
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -35,9 +35,9 @@ export default function productCategoryScreen({navigation, route}){
         setCategory(result.data.productCategories);
         //console.log(data);
     }
-    useEffect(() => {
-        fetchdataCategory();
-    },[setCategory]);
+    useEffect(async() => {
+        await fetchdataCategory();
+    },[isFocused]);
     
     return (
         <SafeAreaView>

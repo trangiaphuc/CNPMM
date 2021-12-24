@@ -11,16 +11,7 @@ exports.usergetAllProductsCategory = (req, res) => {
       where: {isShowing: true}
     })
       .then(productCategories => {
-        productCategories.forEach(productCategory =>{          
-          if(productCategory.catIcon != null)
-          { 
-            const image = fs.readFileSync(
-              __basedir + productCategory.catIcon
-            );
-            var base64Image = Buffer.from(image).toString("base64");
-            productCategory.catIcon = "data:image/png;base64,"+base64Image;
-          }
-        });
+      
         logger.info(`Request status: ${res.status(200)} data ${productCategories}`);
         res.status(200).send({ productCategories: productCategories });
       })
@@ -40,16 +31,7 @@ exports.merchantgetAllProductsCategory = (req, res) => {
     }
   })
     .then(productCategories => {
-      productCategories.forEach(productCategory =>{          
-        if(productCategory.catIcon != null)
-        { 
-          const image = fs.readFileSync(
-            __basedir + productCategory.catIcon
-          );
-          var base64Image = Buffer.from(image).toString("base64");
-          productCategory.catIcon = "data:image/png;base64,"+base64Image;
-        }
-      });
+      
       logger.info(`Request status: ${res.status(200)} data ${productCategories}`);
       res.status(200).send({ productCategories: productCategories });
     })
