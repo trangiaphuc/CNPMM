@@ -24,19 +24,26 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Picker} from '@react-native-picker/picker';
 
 export default function addNewFoodScreen({navigation, route}){
-    const {userData}= route.params;
+    const {userData, foodId}= route.params;
     const [category, setCategory]=useState([]);
     const [image, setImage] = useState([]);
     //const [initImage, setInitImage]=useState([]);
     const[num, setNum]=useState(1);
-    const[selectedValueCatName, setSelectedCatName]=useState(1);
+
     let form =new FormData();
-    const[foodName, setFoodName]=useState([]);
-    const[foodDescription, setFoodDescription]=useState([]);
+    const[foodName, setFoodName]=useState();
+    const[foodDescription, setFoodDescription]=useState();
     const[foodCalories, setFoodCalories]=useState(null);
+
+    const[data, setData]=useState([]);
+    const[meterial, setMeterial]=useState([]);
+    const[step, setStep]=useState([]);
+    const[selectedValueCatName, setSelectedCatName]=useState();
+
 
 
     const fetchdataCategory = async() => {
+        
         const result = await API.get('merchant/foodcategory/',
         {
             headers:{
@@ -48,7 +55,30 @@ export default function addNewFoodScreen({navigation, route}){
         setCategory(result.data.foodCategories);
         //console.log(data);
     }
-    useEffect(() => {
+
+
+  
+
+    const fetchdata = async() => {
+        const result = await API.get(`foods/detail/${foodId}`,
+        {
+            headers:{
+                'Content-Type': 'application/json',
+                'x-access-token': userData.accessToken
+            },
+        });
+        setData(result.data.food);
+        //console.log(result.data.food.foodName);
+        setMeterial(result.data.food.foodMaterials);
+        setStep(result.data.food.foodCookSteps);
+        //console.log(result.data.food.foodCategoryId);
+        setSelectedCatName(result.data.food.foodCategoryId)
+        setInputFields(result.data.food.foodCookSteps);
+        setInputFieldsMaterial(result.data.food.foodMaterials)
+    }
+
+    useEffect(async() => {
+        await fetchdata();
         fetchdataCategory();
     },[setCategory]);
 
@@ -74,6 +104,9 @@ export default function addNewFoodScreen({navigation, route}){
         values.push({ stepNumber: '', stepDescription: '' });
         setInputFields(values);
     }
+   
+        
+    
     const addFieldMaterial=()=>{
         const values = [...inputFieldsMaterial];
         values.push({ 
@@ -109,77 +142,57 @@ export default function addNewFoodScreen({navigation, route}){
         }
         setInputFieldsMaterial(valuesMaterial);
     }
-    
+    const handleRemoveStepDes=index=>{
+        const values = [...inputFields];
+        values.splice(index, 1);
+        setInputFields(values);
+    }
+    const handleRemoveMaterial=index=>{
+        const values = [...inputFieldsMaterial];
+        values.splice(index, 1);
+        setInputFieldsMaterial(values);
+    }
     const handleFoodName=(val)=>{
         setFoodName(val);
     }
     const handleDesFood=(val)=>{
         setFoodDescription(val);
     }
-    const uploadImage = async()=>{
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: false,
-            aspect: [4, 3],
-            quality: 1,
-        });
-          if (!result.cancelled) {
-              
-              Alert.alert("Thông báo","Chọn hình thành công")
-              //setImage(result.uri);
-              let file = {
-                  name:'avatar.jpg',
-                  uri: result.uri,
-                  type: "image/jpeg",
-              }
-              //formImage.append('file', file);
-              setImage(file);
-              //console.log(formImage);
-        }
-    }
-    form.append('file', image);
-    form.append('foodName',foodName);
-    form.append('foodDescription', foodDescription);
-    form.append('foodCalories', null);
-    form.append('foodCategoryId', selectedValueCatName);
-    //form.append('foodMaterials', inputFieldsMaterial);
-    //form.append('foodCookSteps', inputFields);
-    const addNewFood=()=>{
-        //console.log(JSON.stringify(form));
-        //console.log('foodMaterials',inputFieldsMaterial);
-        const data={
+
+    // let dataUpdate={
+    //         foodName: foodName,
+    //         foodDescription: foodDescription,
+    //         foodCalories: foodCalories,
+    //         isShowing: true,
+    //         foodCategory: selectedValueCatName,
+    //         foodMaterials: inputFieldsMaterial,
+    //         foodCookSteps: inputFields
+    // }
+    const updateFood=()=>{
+        //console.log(dataUpdate);
+        API.post(`merchant/foods/update/${foodId}`,
+        {
+            foodName: foodName,
+            foodDescription: foodDescription,
+            foodCalories: foodCalories,
+            isShowing: true,
+            foodCategory: selectedValueCatName,
             foodMaterials: inputFieldsMaterial,
             foodCookSteps: inputFields
-        }
-        
-        API.post('merchant/foods/addnewfood',form,
-        {
-            headers:{
-                'Content-Type': 'multipart/form-data',
-            },
-
-        })
-        .then(res => {
-            if(res.status===201){
-                API.post(`merchant/foods/addnewfood/detail/${res.data.data.id}`,data,
-                    {
-                        headers:{
-                            'Content-Type': 'application/json',
-                            'x-access-token': userData.accessToken
-                        },
-
-                    })
-                    .then(res => {
-                        Alert.alert('Thông báo','Thêm thành công');
-                    }).catch(error => {
-                            console.log('Error', error.res);
-                    });
-            }
-            //navigation.goBack();
-        }).catch(error => {
-                console.log('Error', error.res);
-        });
+        },
+                {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'x-access-token': userData.accessToken,
+                    },
+                })
+                .then(res => {
+                    Alert.alert('Thông báo', 'Lưu thành công');
+                }).catch(error => {
+                        Alert.alert('Error', error.res);
+                });
     }
+
     return (
         <SafeAreaView>
             <View style={styles.return}>
@@ -193,32 +206,11 @@ export default function addNewFoodScreen({navigation, route}){
                     </TouchableOpacity>
                 </View>
                 <View style={styles.containerText}>
-                    <Text style={styles.returnText}>Thêm món ăn</Text>
+                    <Text style={styles.returnText}>Chỉnh sửa món ăn</Text>
                 </View>
             </View>
             <ScrollView style={{height: '85%'}}>
-                <Card>
-                    <View style={{marginTop: 5, flexDirection: 'row'}}>
-                        <View style={{justifyContent: 'center'}}>
-                            <Text style={{fontWeight: 'bold', fontSize: 15}}>Hình ảnh</Text>
-                        </View>
-                        <TouchableOpacity style={{marginLeft: 20, justifyContent: 'center'}} onPress={uploadImage}>
-                            <Text style={{
-                                backgroundColor: '#DDDDDD',
-                                borderWidth: 0.5,
-                                paddingLeft: 20,
-                                paddingRight: 20,
-                                paddingTop: 2,
-                                paddingBottom: 2,
-                                borderRadius: 5
-                                }}>Upload</Text>
-                        </TouchableOpacity>
-                        {/* <View style={{marginLeft: 30}}>
-                            <Avatar.Image size={70} src={{uri: initImage}}/>
-                        </View> */}
-                    </View>
-                    
-                </Card>
+                
                 <Card>
                     <Text style={{fontWeight: 'bold', fontSize: 15}}>Tên món ăn</Text>
                     <TextInput
@@ -227,6 +219,7 @@ export default function addNewFoodScreen({navigation, route}){
                         autoCapitalize='none'
                         style={{borderWidth:0.5, height:40, paddingLeft: 10}}
                         onChangeText={(val)=>handleFoodName(val)}
+                        defaultValue={data.foodName}
                     />
                 </Card>
                 <Card>
@@ -237,6 +230,7 @@ export default function addNewFoodScreen({navigation, route}){
                         autoCapitalize='none'
                         style={{borderWidth:0.5, height:80, paddingLeft: 10}}
                         onChangeText={(val)=>handleDesFood(val)}
+                        defaultValue={data.foodDescription}
                     />
                 </Card>
                 <Card>
@@ -249,7 +243,7 @@ export default function addNewFoodScreen({navigation, route}){
                             >
                                 {
                                     category.map((item)=>
-                                        <Picker.Item key={item.id} label={item.catName} value={item.id} style={{color: '#05375a'}}/>
+                                        <Picker.Item key={item.id} label={item.catName} value={item.id}  style={{color: '#05375a'}}/>
                                     )
                                 }
 
@@ -268,6 +262,7 @@ export default function addNewFoodScreen({navigation, route}){
                                             autoCapitalize='none'
                                             style={{borderWidth:0.5, height:40, paddingLeft: 10}}
                                             //value={inputFields.id}
+                                            defaultValue = {inputFieldsMaterial.foodMaterialName}
                                             onChangeText={(val)=>handleMaterial(index, val, 'foodMaterialName')}
                                         />
                                     </View>
@@ -279,10 +274,19 @@ export default function addNewFoodScreen({navigation, route}){
                                             autoCapitalize='none'
                                             style={{borderWidth:0.5, height:40, paddingLeft: 10}}
 
-                                            //defaultValue = {inputFields.step.toString()}
+                                            defaultValue = {inputFieldsMaterial.quantityDescription}
                                             onChangeText={(val)=>handleMaterial(index, val,'quantity')}
                                         />
                                     </View>
+                                   
+                                    
+                                    <TouchableOpacity style={{flex:1, alignItems: 'center', justifyContent: 'center'}} onPress={()=>handleRemoveMaterial(index)}>
+                                        <FontAwesome
+                                            name="minus"
+                                            color="#05375a"
+                                            size={20}
+                                        />
+                                    </TouchableOpacity>
                                     <TouchableOpacity style={{flex:1, alignItems: 'center', justifyContent: 'center'}} onPress={addFieldMaterial}>
                                         <FontAwesome
                                             name="plus"
@@ -306,8 +310,9 @@ export default function addNewFoodScreen({navigation, route}){
                                             name="step"
                                             placeholder="Bước"
                                             autoCapitalize='none'
-                                            style={{borderWidth:0.5, height:40, paddingLeft: 10}}
+                                            style={{borderWidth:0.5, height:100, paddingLeft: 10}}
                                             //value={inputFields.id}
+                                            defaultValue = {inputFields.stepNumber.toString()}
                                             onChangeText={(val)=>handleStepDes(index, val,'step')}
                                         />
                                     </View>
@@ -317,13 +322,19 @@ export default function addNewFoodScreen({navigation, route}){
                                             multiline={true}
                                             placeholder="Chi tiết"
                                             autoCapitalize='none'
-                                            style={{borderWidth:0.5, height:40, paddingLeft: 10}}
+                                            style={{borderWidth:0.5, height:100, paddingLeft: 10}}
 
-                                            //defaultValue = {inputFields.step.toString()}
+                                            defaultValue = {inputFields.stepDescription}
                                             onChangeText={(val)=>handleStepDes(index, val,'des')}
                                         />
                                     </View>
-                                    
+                                    <TouchableOpacity style={{flex:1, alignItems: 'center', justifyContent: 'center'}} onPress={()=>handleRemoveStepDes(index)}>
+                                        <FontAwesome
+                                            name="minus"
+                                            color="#05375a"
+                                            size={20}
+                                        />
+                                    </TouchableOpacity>
                                     <TouchableOpacity style={{flex:1, alignItems: 'center', justifyContent: 'center'}} onPress={addFieldStep}>
                                         <FontAwesome
                                             name="plus"
@@ -339,7 +350,7 @@ export default function addNewFoodScreen({navigation, route}){
             </ScrollView>
             <View style={styles.button}>
                 <TouchableOpacity
-                   onPress = {addNewFood}
+                   onPress = {updateFood}
                    style={[styles.signIn,{
                        borderColor:'#ff4700',
                        borderWidth: 1,
@@ -349,7 +360,7 @@ export default function addNewFoodScreen({navigation, route}){
                            color:'#ffffff',
                            fontSize: 20
                         }]}
-                        >Thêm</Text>
+                        >Lưu thay đổi</Text>
                 </TouchableOpacity>
             </View>
             
@@ -380,7 +391,7 @@ const styles = StyleSheet.create({
     },
     containerText:{
         justifyContent: 'flex-end',
-        flex: 6,
+        flex: 7.5,
     },
     button: {
         alignItems: 'center',
