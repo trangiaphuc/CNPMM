@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, Image, FlatList, VirtualizedList, TouchableOpacity} from "react-native";
+import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView,Alert, Image, FlatList, VirtualizedList, TouchableOpacity} from "react-native";
 import axios from "axios";
 import{
     Avatar,
@@ -11,12 +11,15 @@ import {Card} from "react-native-elements";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import API from "../services/api";
+import * as ImagePicker from 'expo-image-picker';
 
 export default function foodDetailScreen({route, navigation}){
     const {foodId, userData}=route.params;
     const[data, setData]=useState([]);
     const[meterial, setMeterial]=useState([]);
     const[step, setStep]=useState([]);
+    const[image, setImage]=useState([]);
+    let form =new FormData();
 
   
 
@@ -35,6 +38,41 @@ export default function foodDetailScreen({route, navigation}){
         setStep(result.data.food.foodCookSteps);
         //console.log(result.data.food.foodMaterials);
         //console.log(meterial);
+    }
+    const UploadImage = async()=>{
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: false,
+            aspect: [4, 3],
+            quality: 1,
+          });
+          if (!result.cancelled) {
+              //Alert.alert("Thông báo","Chọn hình thành công")
+              //setImage(result.uri);
+              let file = {
+                  name:'avatar.jpg',
+                  uri: result.uri,
+                  type: "image/jpeg",
+              }
+              form.append('file', file);
+              API.post(`merchant/foods/update/image/${foodId}`,form,
+                {
+                    headers:{
+                        'Content-Type': 'multipart/form-data',
+                    },
+
+                })
+                .then(res => {
+                    if(res.status===201){
+                        fetchdata();
+                    }
+                    //navigation.goBack();
+                }).catch(error => {
+                        console.log('Error', error.res);
+                });
+
+  
+        }
         
     }
 
@@ -61,10 +99,17 @@ export default function foodDetailScreen({route, navigation}){
                 </View>
                 <Text style={styles.returnText}>Chi tiết</Text>
             </View>
-            <ScrollView>
+            <ScrollView style={{height: '85%'}}>
             <View style={styles.image}>
                 <Avatar.Image source={{uri: data.foodImage}} size={300}/>
             </View>
+            <TouchableOpacity onPress={UploadImage} style={{alignItems: 'center'}}>
+                        <FontAwesome
+                            name="camera"
+                            color="#05375a"
+                            size={20}
+                        />
+                    </TouchableOpacity>
             <View style={styles.title}>
                 <Text style={styles.textTitle}>{data.foodName}</Text>
             </View>
@@ -85,23 +130,7 @@ export default function foodDetailScreen({route, navigation}){
                     )
                 }
             </View>
-            {/* <FlatList
-                
-                data={meterial}
-                renderItem={({item})=>
-                   
-                        <View>
-                            <View>
-                                <Text style={styles.textMeterialTitle}>{'- '+item.foodMaterialName }</Text>
-                            </View>
-                            <View style={styles.weightMeterial}>
-                                <Text style={{marginLeft: 40}}>Khối lượng: </Text>
-                                <Text>{item.quantityDescription}</Text>
-                            </View>
-                        </View>
-                   
-                }
-                keyExtractor={(item) =>item.id}/> */}
+           
 
             <Text style={[styles.textMeterial,{marginTop: 10}]}>2. Các bước thực hiện</Text>
 
@@ -127,7 +156,24 @@ export default function foodDetailScreen({route, navigation}){
 
                 }
             </View>
+            
             </ScrollView>
+            <TouchableOpacity style={{justifyContent: 'center',
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    marginTop: 10,
+                    marginLeft: 30,
+                    marginRight: 30,
+                    backgroundColor: '#FF4B3A'
+                    }} onPress={()=>{navigation.navigate('updateFoodScreen', {userData: userData, foodId: foodId})}}>
+                <Text style={{fontWeight: 'bold',
+                        fontSize: 17,
+                        paddingTop: 10,
+                        paddingBottom: 10,
+                        color:'#FFFFFF'
+                        }}>Chỉnh sửa</Text>
+            </TouchableOpacity>
            
        </SafeAreaView>
        
