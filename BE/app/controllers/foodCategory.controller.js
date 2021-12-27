@@ -41,7 +41,6 @@ exports.merchantGetAllFoodCategories = (req, res) => {
     logging: (sql, queryObject) =>{
       logger.info(sql, queryObject);
     },
-    attributes: ['id', 'catName', 'catIcon'],
   })
     .then(foodCategories => {
       logger.info(`Request status: ${res.status(200)} data ${foodCategories}`);
