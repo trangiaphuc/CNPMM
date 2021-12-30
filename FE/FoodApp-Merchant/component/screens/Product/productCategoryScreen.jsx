@@ -10,7 +10,8 @@ import {
     Dimensions,
     Image,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    Alert
 } from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import API from "../../services/api";
@@ -38,6 +39,74 @@ export default function productCategoryScreen({navigation, route}){
     useEffect(async() => {
         await fetchdataCategory();
     },[isFocused]);
+
+
+
+    const ButtonSet =(item)=>{
+        if(item.isShowing == true) {
+            return(
+                <TouchableOpacity onPress={() =>{
+                    API.post(`merchant/productcategory/update/${item.id}`,{isShowing: false},
+                    {
+                        headers:{
+                            'Content-Type': 'application/json',
+                            'x-access-token': userData.accessToken,
+                        },
+                    })
+                    .then(res => {
+                        if(res.status == 201){
+                            fetchdataCategory();
+                            Alert.alert('Thông báo', 'Cập nhật thành công')
+                        }
+                    }).catch(error => {
+                            alert('Error', error.res);
+                    });
+                }}>
+                    <Text style={{
+                        borderWidth: 0.5,
+                        paddingBottom: 5,
+                        paddingTop: 5,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        backgroundColor:'#FF0000',
+                        color:'#FFFFFF'
+                    }}>Vô hiệu hóa</Text>
+                </TouchableOpacity>
+            );
+        }
+        else {
+            return(
+                <TouchableOpacity onPress={() =>{
+                    API.post(`merchant/productcategory/update/${item.id}`,{isShowing: true},
+                    {
+                        headers:{
+                            'Content-Type': 'application/json',
+                            'x-access-token': userData.accessToken,
+                        },
+                    })
+                    .then(res => {
+                        if(res.status == 201){
+                            fetchdataCategory();
+                            Alert.alert('Thông báo', 'Cập nhật thành công')
+                        }
+                    }).catch(error => {
+                            alert('Error', error.res);
+                    });
+                }}>
+                    <Text style={{
+                        borderWidth: 0.5,
+                        paddingBottom: 5,
+                        paddingTop: 5,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        backgroundColor:'#FF0000',
+                        color:'#FFFFFF'
+                    }}>Hiển thị lại</Text>
+                </TouchableOpacity>
+            );
+        }
+        
+    }
     
     return (
         <SafeAreaView>
@@ -68,24 +137,27 @@ export default function productCategoryScreen({navigation, route}){
                 <ScrollView style={{height: '90%'}}>
                     {
                         category.map((item)=>
-                        <View key={item.id}>
+                        <TouchableOpacity key={item.id} onPress={() =>{navigation.navigate('updateProductCategoryScreen', {userData: userData, category: item})}}>
                             <Card containerStyle={{backgroundColor: '#FF9933', borderRadius: 5}}>
                                 <View style={{flexDirection: 'row'}}>
                                     <View style={{flex: 1}}>
                                         <Text>{item.catName}</Text>
                                     </View>
                                     <View>
-                                        <TouchableOpacity onPress={()=>{}}>
+                                        {
+                                            ButtonSet(item)
+                                        }
+                                        {/* <TouchableOpacity onPress={()=>{}}>
                                             <FontAwesome
                                                 name="trash"
                                                 color="#05375a"
                                                 size={20}
                                             />
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> */}
                                     </View>
                                 </View>
                             </Card>
-                        </View>
+                        </TouchableOpacity>
                         )
                     }
                 </ScrollView>

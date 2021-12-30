@@ -40,15 +40,28 @@ export default function productCategoryScreen({navigation, route}){
     },[setCategory, isFocused]);
 
     const ButtonSet=(item)=>{
-        return (
-            <TouchableOpacity onPress={()=>{}}>
-                <FontAwesome
-                    name="trash"
-                    color="#05375a"
-                    size={20}
-                />
-            </TouchableOpacity>
-        );
+        // //console.log(item.isShowing);
+        // if(item.isShowing == true)
+        // {
+        //     return (
+        //         <TouchableOpacity onPress={()=>{}}>
+        //             <View>
+        //                 <Text style={{
+        //                     borderWidth: 0.5,
+        //                     paddingLeft: 10,
+        //                     paddingRight: 10,
+        //                     paddingTop: 5,
+        //                     paddingBottom: 5,
+        //                     fontWeight: 'bold',
+        //                     backgroundColor:"#FF0000",
+        //                     color: '#FFFFFF'
+        //                 }}
+        //                 >Vô hiệu hóa</Text>
+        //             </View>
+        //         </TouchableOpacity>
+        //     );
+        // }
+        
     }
     
     return (
