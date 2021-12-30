@@ -23,18 +23,18 @@ module.exports = function(app){
     //merchant
     //
     app.get('/api/merchant/foodcategory/',
-    // [authJwt.verifyToken, authJwt.isMerchant], 
+    [authJwt.verifyToken, authJwt.isMerchant], 
     controller.merchantGetAllFoodCategories);
 
     //
     app.post('/api/merchant/foodcategory/addnew',
-    // [authJwt.verifyToken, authJwt.isMerchant], 
+    [authJwt.verifyToken, authJwt.isMerchant], 
     upload.single("file"),
     controller.merchantAddNewFoodCategory);
 
     //
     app.post('/api/merchant/foodcategory/update/:id',
-    // [authJwt.verifyToken, authJwt.isMerchant], 
+    [authJwt.verifyToken, authJwt.isMerchant], 
     upload.single("file"),
     controller.merchantUpdateFoodCategory);
 }

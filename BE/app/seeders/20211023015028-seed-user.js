@@ -6,6 +6,18 @@ module.exports = {
       'users',
       [
         {
+          username: "merchant",
+          email: "foodandcook@gmail.com",
+          password: "$2a$08$cHFz5pbx3rAHkUHN/kYAEew.kTrcIFWhZe0baFf5z998JJfSREflC",
+          firstname: "FoodAndCook",
+          lastname: "",
+          phone: "18001726",
+          birthday: "2000-01-01",
+          isActive: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
           username: "phuctg",
           email: "phuctg@gmail.com",
           password: "$2a$08$cHFz5pbx3rAHkUHN/kYAEew.kTrcIFWhZe0baFf5z998JJfSREflC",
@@ -13,6 +25,7 @@ module.exports = {
           lastname: "Phúc",
           phone: "0276601555",
           birthday: "2000-06-21",
+          isActive: true,
           createdAt: new Date(),
           updatedAt: new Date(),
         }
