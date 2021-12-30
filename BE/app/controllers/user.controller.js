@@ -149,7 +149,7 @@ var fs = require("fs");
               logging: (sql, queryObject) =>{
                 logger.info(sql, queryObject);
               },
-              password: req.body.password,
+              password: bcrypt.hashSync(req.body.password, 8),
               // where: {id: id}
             })
             .then(updatedRecord => {
