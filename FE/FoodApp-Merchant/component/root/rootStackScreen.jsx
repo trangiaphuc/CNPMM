@@ -21,7 +21,8 @@ import addNewProductScreen from '../screens/Product/addNewProductScreen';
 import addFoodCategoryScreen from '../screens/Food/addFoodCategoryScreen';
 import addNewFoodScreen from '../screens/Food/addNewFoodScreen';
 import updateFoodScreen from '../screens/Food/updateFoodScreen';
-import addNewProductCategoryScreen from '../screens/Product/addNewProductCategoryScreen'
+import addNewProductCategoryScreen from '../screens/Product/addNewProductCategoryScreen';
+import updateProductCategoryScreen from '../screens/Product/updateProductCategoryScreen'
 
 
 
@@ -49,6 +50,7 @@ const rootStackScreen = () => (
         <RootStack.Screen name ="addNewFoodScreen" component={addNewFoodScreen} options={{headerShown: false}}/>
         <RootStack.Screen name ="updateFoodScreen" component={updateFoodScreen} options={{headerShown: false}}/>
         <RootStack.Screen name ="addNewProductCategoryScreen" component={addNewProductCategoryScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name ="updateProductCategoryScreen" component={updateProductCategoryScreen} options={{headerShown: false}}/>
     </RootStack.Navigator>
 );
 
