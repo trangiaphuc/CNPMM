@@ -50,6 +50,10 @@ module.exports = function(app){
     [authJwt.verifyToken], 
     controller.getCancelledOrders);
     
+    //get all order history by userId
+    app.get('/api/merchant/order', 
+    [authJwt.verifyToken, authJwt.isMerchant], 
+    controller.merchantGetAllOrder);
     
     
 }

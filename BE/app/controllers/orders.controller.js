@@ -38,12 +38,9 @@ exports.getOrderHistoryByUserId = (req, res) =>{
       ]
     })
     .then(orders => {
-        orders.added = "added";
         if(orders){
             orders.forEach(order =>{
-                order.totalPrices = 'hello';
                 var orderDetails = order.orderDetails;
-                console.log(orderDetails)
                 var totalPrice = 0;
                 orderDetails.forEach(orderDetail => {
                     var unitPrice = orderDetail.price * orderDetail.quantity;
@@ -250,12 +247,9 @@ exports.getConfirmingOrders = (req, res) =>{
       ]
     })
     .then(orders => {
-        orders.added = "added";
         if(orders){
             orders.forEach(order =>{
-                order.totalPrices = 'hello';
                 var orderDetails = order.orderDetails;
-                console.log(orderDetails)
                 var totalPrice = 0;
                 orderDetails.forEach(orderDetail => {
                     var unitPrice = orderDetail.price * orderDetail.quantity;
@@ -312,12 +306,9 @@ exports.getCancelledOrders = (req, res) =>{
       ]
     })
     .then(orders => {
-        orders.added = "added";
         if(orders){
             orders.forEach(order =>{
-                order.totalPrices = 'hello';
                 var orderDetails = order.orderDetails;
-                console.log(orderDetails)
                 var totalPrice = 0;
                 orderDetails.forEach(orderDetail => {
                     var unitPrice = orderDetail.price * orderDetail.quantity;
@@ -374,12 +365,9 @@ exports.getDeliveryingOrders = (req, res) =>{
       ]
     })
     .then(orders => {
-        orders.added = "added";
         if(orders){
             orders.forEach(order =>{
-                order.totalPrices = 'hello';
                 var orderDetails = order.orderDetails;
-                console.log(orderDetails)
                 var totalPrice = 0;
                 orderDetails.forEach(orderDetail => {
                     var unitPrice = orderDetail.price * orderDetail.quantity;
@@ -436,12 +424,63 @@ exports.getDoneOrders = (req, res) =>{
       ]
     })
     .then(orders => {
-        orders.added = "added";
         if(orders){
             orders.forEach(order =>{
-                order.totalPrices = 'hello';
                 var orderDetails = order.orderDetails;
-                console.log(orderDetails)
+                var totalPrice = 0;
+                orderDetails.forEach(orderDetail => {
+                    var unitPrice = orderDetail.price * orderDetail.quantity;
+                    totalPrice = totalPrice + unitPrice;
+                });
+                totalPrice = totalPrice + order.deliveryMethod.fee;
+                order.setDataValue('totalPrice', totalPrice);
+            });
+            orders.reverse();
+            logger.info(`Request status: ${res.status(200)} data ${orders}`);
+            res.status(200).send({orders: orders});
+        }
+        else{
+            logger.info(`Request status: ${res.status(200)} data Empty!`);
+            res.status(200).send('Empty!');
+        }
+    })
+    .catch(err => {
+        logger.error(`Request status: ${res.status(500)}  error ${err}`);
+        res.status(500).send({message: err.message});
+    })
+}
+
+exports.merchantGetAllOrder = (req, res) =>{
+    const userId = req.params.userId;
+    Order.findAll({ 
+        logging: (sql, queryObject) =>{
+        logger.info(sql, queryObject);
+      },
+      include: [
+        {
+            model: Delivery,
+            attributes: ['id', 'deliveryMethod', 'fee']
+        },
+        {
+            model: PaymentMethod,
+            attributes: ['id', 'paymentType']
+        },
+        {
+            model: OrderDetail,
+            attributes: ['id', 'quantity', 'price'],
+            include: [
+                {
+                    model: Product,
+                    attributes: ['id', 'proName', 'quantityValue', 'quantityId']
+                }
+            ]
+        }
+      ]
+    })
+    .then(orders => {
+        if(orders){
+            orders.forEach(order =>{
+                var orderDetails = order.orderDetails;
                 var totalPrice = 0;
                 orderDetails.forEach(orderDetail => {
                     var unitPrice = orderDetail.price * orderDetail.quantity;
