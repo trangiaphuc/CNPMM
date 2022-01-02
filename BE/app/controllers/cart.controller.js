@@ -16,6 +16,7 @@ exports.getCartByUserId = (req, res) => {
           include:[
               {
                 model: CartDetail,
+                required: false,
                 include: [
                       {
                         model: Product,
@@ -28,75 +29,143 @@ exports.getCartByUserId = (req, res) => {
               }
           ]
     })
-    .then(data => {
+    .then(cart => {
         //neu co gio hang ti response ve
-        if(data){
-            var cartDetails = data.cartDetails;
+        
+        if(cart != null){
+            var cartDetails = cart.cartDetails;
             cartDetails.forEach(cartDetail => {
                 var product = cartDetail.product;
-                
+                        
                 const image = fs.readFileSync(
-                __basedir + product.productImage
+                    __basedir + product.productImage
                 );
                 var base64Image = Buffer.from(image).toString("base64");
-                product.productImage = "data:image/png;base64,"+base64Image;
-
-            })
-            logger.info(`Request: status: ${res.status(200)}  data ${data}`);
-            data.cartDetails.reverse();
-            
-            res.status(200).send({cart: data});
+                product.productImage = "cart:image/png;base64,"+base64Image;
+                }
+            )
+            res.status(200).send({cart: cart});
         }
         else{
-            //chua co thi tao gio hang moi
             Cart.create({
-                logging: (sql, queryObject) =>{
-                    logger.info(sql, queryObject);
-                },
+                 logging: (sql, queryObject) =>{
+                     logger.info(sql, queryObject);
+                 },
 
-                userId: userId,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            })
-            .then(cart =>{
-                //tra ve dio hang rong
-                Cart.findOne({
-                    logging: (sql, queryObject) =>{
-                        logger.info(sql, queryObject);
-                      },
-                      where: {userId: cart.userId},
-                      include:[
-                          {
+                 userId: userId,
+                 createdAt: new Date(),
+                 updatedAt: new Date(),
+             })
+             .then(cart =>{
+                 //tra ve dio hang rong
+                 Cart.findOne({
+                     logging: (sql, queryObject) =>{
+                         logger.info(sql, queryObject);
+                       },
+                       where: {userId: cart.userId},
+                       include:[
+                           {
                             model: CartDetail,
+                            required: false,
                             include: [
-                                  {
-                                    model: Product,
-                                  }
-                            ],
-                            where: {
-                                isBuy: false,
-                                isDeleted: false,
-                            }
-                          }
-                      ]
-                })
-                .then(data => {
-                    if(data)
-                    {
-                        //bao la gio hang vua duoc tao
-                        // logger.info(`Request status: ${res.status(200)}  data ${data}`);
-                        res.status(201).send({cart: data});
-                    }
-                })
-                .catch(err => {
-                    logger.error(`Request status: ${res.status(500)}  error ${err}`);
-                    res.status(500).send({
-                        message:
-                        err.message
-                    });
-                });
-            })
+                                   {
+                                     model: Product,
+                                   }
+                             ],
+                             where: {
+                                 isBuy: false,
+                                 isDeleted: false,
+                             }
+                           }
+                       ]
+                 })
+                 .then(cart => {
+                     if(cart != null) {
+                         res.status(200).send({cart: cart});
+                     }
+                 })
+                 .catch(err => {
+                 logger.error(`Request status: ${res.status(500)}  error ${err}`);
+                     res.status(500).send({
+                         message:
+                         err.message
+                     });
+                 });
+             })
         }
+        //  if(cart != null)
+        // {
+        //      if(cart.cartDetails != null)
+        //      {     
+        //          var cartDetails = cart.cartDetails;
+        //              cartDetails.forEach(cartDetail => {
+        //                  var product = cartDetail.product;
+                        
+        //                  const image = fs.readFileSync(
+        //                  __basedir + product.productImage
+        //                  );
+        //                  var base64Image = Buffer.from(image).toString("base64");
+        //                  product.productImage = "cart:image/png;base64,"+base64Image;
+
+        //              }
+        //          )
+                
+        //      }
+        //      logger.info(`Request: status: ${res.status(200)}  cart ${cart}`);
+        //      cart.cartDetails.reverse();
+                
+        //      res.status(200).send({cart: cart});
+        // }
+        // else{
+        //      //chua co thi tao gio hang moi
+        //      Cart.create({
+        //          logging: (sql, queryObject) =>{
+        //              logger.info(sql, queryObject);
+        //          },
+
+        //          userId: userId,
+        //          createdAt: new Date(),
+        //          updatedAt: new Date(),
+        //      })
+        //      .then(cart =>{
+        //          //tra ve dio hang rong
+        //         Cart.findOne({
+        //              logging: (sql, queryObject) =>{
+        //                  logger.info(sql, queryObject);
+        //                },
+        //                where: {userId: cart.userId},
+        //             //    include:[
+        //             //        {
+        //             //          model: CartDetail,
+        //             //         include: [
+        //             //                {
+        //             //                  model: Product,
+        //             //               }
+        //             //          ],
+        //             //        where: {
+        //             //              isBuy: false,
+        //             //              isDeleted: false,
+        //             //         }
+        //             //        }
+        //             //    ]
+        //          })
+        //          .then(cart => {
+        //              if(cart!= null)
+        //              {
+        //                  //bao la gio hang vua duoc tao
+        //                  // logger.info(`Request status: ${res.status(200)}  cart ${cart}`);
+        //                 res.status(201).send({cart: cart});
+        //              }
+        //          })
+        //          .catch(err => {
+        //         logger.error(`Request status: ${res.status(500)}  error ${err}`);
+        //              res.status(500).send({
+        //                  message:
+        //                  err.message
+        //         });
+        //         });
+        //     })
+        // }
     })
     .catch(err => {
         logger.error(`Request status: ${res.status(500)}  error ${err}`);
