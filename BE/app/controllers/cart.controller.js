@@ -212,92 +212,96 @@ exports.addCartItem = (req, res) => {
 
 exports.editCartItem = (req, res) => {
     const userId = req.params.userId;
-    const cartDetailId = req.params.cartItemId;
+    // const cartDetailId = req.params.cartItemId;
+    const listEditCartItemId  = req.query.listEditCartItemId;
 
-    //check thong tin gio hang cua khach hang
-    Cart.findOne({ 
-        logging: (sql, queryObject) =>{
-            logger.info(sql, queryObject);
-        },
-        where: {
-              userId: userId
-        },
-    })
-    .then(cart =>{
-        //neu gio hang const
-        //thong tin khach hang dung
-        if(cart)
-        {
-            CartDetail.findOne( {
-                    logging: (sql, queryObject) =>{
-                    logger.info(sql, queryObject);
-                },
-                    where: {
-                        id: cartDetailId,
-                        isDeleted: false,
-                    }
-                },
-            )
-            .then(cartDetail=>{
-            //update gio hang
-                if(cartDetail)
-                {                
-                    cartDetail.update({
+    listEditCartItemId.forEach(cartItem =>
+    {   
+         //check thong tin gio hang cua khach hang
+        Cart.findOne({ 
+            logging: (sql, queryObject) =>{
+                logger.info(sql, queryObject);
+            },
+            where: {
+                userId: userId
+            },
+        })
+        .then(cart =>{
+            //neu gio hang const
+            //thong tin khach hang dung
+            if(cart)
+            {
+                CartDetail.findOne( {
                         logging: (sql, queryObject) =>{
-                            logger.info(sql, queryObject);
-                        },
-                        quantity: req.body.quantity,
-                        isBuy: req.body.isBuy,
-                    })
-                    .then(updatedItem =>{
-                        //neu update thanh 0 item
-                        //delete cart item
-                        if(updatedItem.quantity == 0){
-                            updatedItem.update({
-                                logging: (sql, queryObject) =>{
-                                    logger.info(sql, queryObject);
-                                },
-                                isDeleted: true,
-                            })
-                            .then(() =>{
-                                res.status(200).send({message: "Sucess!"});
-                            })
-                            .catch(err => {
-                                logger.error(`Request status: ${res.status(500)}  error ${err}`);
-                                res.status(500).send({
-                                    message:
-                                    err.message
+                        logger.info(sql, queryObject);
+                    },
+                        where: {
+                            id: cartItem.id,
+                            isDeleted: false,
+                        }
+                    },
+                )
+                .then(cartDetail=>{
+                //update gio hang
+                    if(cartDetail)
+                    {                
+                        cartDetail.update({
+                            logging: (sql, queryObject) =>{
+                                logger.info(sql, queryObject);
+                            },
+                            quantity: req.body.quantity,
+                            isBuy: req.body.isBuy,
+                        })
+                        .then(updatedItem =>{
+                            //neu update thanh 0 item
+                            //delete cart item
+                            if(updatedItem.quantity == 0){
+                                updatedItem.update({
+                                    logging: (sql, queryObject) =>{
+                                        logger.info(sql, queryObject);
+                                    },
+                                    isDeleted: true,
+                                })
+                                .then(() =>{
+                                    res.status(200).send({message: "Sucess!"});
+                                })
+                                .catch(err => {
+                                    logger.error(`Request status: ${res.status(500)}  error ${err}`);
+                                    res.status(500).send({
+                                        message:
+                                        err.message
+                                    });
                                 });
+                            }
+                            else{
+                                res.status(200).send({message: "Success!"});
+                            }
+                        })
+                        .catch(err => {
+                            logger.error(`Request status: ${res.status(500)}  error ${err}`);
+                            res.status(500).send({
+                                message:
+                                err.message
                             });
-                        }
-                        else{
-                            res.status(200).send({message: "Success!"});
-                        }
-                    })
-                    .catch(err => {
-                        logger.error(`Request status: ${res.status(500)}  error ${err}`);
-                        res.status(500).send({
-                            message:
-                            err.message
                         });
+                    }
+                    else{
+                        res.status(404).send({message: "Cart Item not found"})
+                    }
+                })
+                .catch(err => {
+                    logger.error(`Request status: ${res.status(500)}  error ${err}`);
+                    res.status(500).send({
+                        message:
+                        err.message
                     });
-                }
-                else{
-                    res.status(404).send({message: "Cart Item not found"})
-                }
-            })
-            .catch(err => {
-                logger.error(`Request status: ${res.status(500)}  error ${err}`);
-                res.status(500).send({
-                    message:
-                    err.message
                 });
-            });
-        }
-        else{
-            logger.error(`${new Date()}: Request: status: ${res.status(404)}  error User not found`);
-            res.status(404).send({message: "User not found!"})
-        }
+            }
+            else{
+                logger.error(`${new Date()}: Request: status: ${res.status(404)}  error User not found`);
+                res.status(404).send({message: "User not found!"})
+            }
+        })
     })
 
 }
