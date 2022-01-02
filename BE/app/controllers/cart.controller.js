@@ -213,7 +213,7 @@ exports.addCartItem = (req, res) => {
 exports.editCartItem = (req, res) => {
     const userId = req.params.userId;
     // const cartDetailId = req.params.cartItemId;
-    const listEditCartItemId  = req.query.listEditCartItemId;
+    const listEditCartItemId  = req.body.listEditCartItemId;
 
     listEditCartItemId.forEach(cartItem =>
     {   

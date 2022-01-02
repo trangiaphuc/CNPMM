@@ -19,7 +19,7 @@ module.exports = function(app){
     [authJwt.verifyToken],
     controller.addCartItem);
     //get edit cart detail  
-    app.put('/api/cart/:userId/editCartItem/', 
+    app.post('/api/cart/:userId/editCartItem/', 
     [authJwt.verifyToken], 
     controller.editCartItem);
     //delete cart detail 
