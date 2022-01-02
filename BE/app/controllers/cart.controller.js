@@ -249,8 +249,8 @@ exports.editCartItem = (req, res) => {
                             logging: (sql, queryObject) =>{
                                 logger.info(sql, queryObject);
                             },
-                            quantity: req.body.quantity,
-                            isBuy: req.body.isBuy,
+                            quantity: cartItem.quantity,
+                            isBuy: cartItem.isBuy,
                         })
                         .then(updatedItem =>{
                             //neu update thanh 0 item
