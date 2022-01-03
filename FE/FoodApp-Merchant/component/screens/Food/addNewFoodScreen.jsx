@@ -30,10 +30,16 @@ export default function addNewFoodScreen({navigation, route}){
     //const [initImage, setInitImage]=useState([]);
     const[num, setNum]=useState(1);
     const[selectedValueCatName, setSelectedCatName]=useState(1);
+    const[selectedValueProduct, setSelectedValueProduct]= useState(1);
     let form =new FormData();
     const[foodName, setFoodName]=useState([]);
     const[foodDescription, setFoodDescription]=useState([]);
     const[foodCalories, setFoodCalories]=useState(null);
+    const[searchProduct, setSearchPeoduct]=useState([]);
+   
+    for(let i=0; i< searchProduct.length; i++){
+        console.log(searchProduct[i].proName);
+    }
 
 
     const fetchdataCategory = async() => {
@@ -98,6 +104,7 @@ export default function addNewFoodScreen({navigation, route}){
         }
         setInputFields(values);
     }
+    
     const handleMaterial =(index, val, name)=>{
         const valuesMaterial =[...inputFieldsMaterial];
         if(name === 'foodMaterialName'){
@@ -145,21 +152,24 @@ export default function addNewFoodScreen({navigation, route}){
     //form.append('foodMaterials', inputFieldsMaterial);
     //form.append('foodCookSteps', inputFields);
     const addNewFood=()=>{
+       
         //console.log(JSON.stringify(form));
         //console.log('foodMaterials',inputFieldsMaterial);
         const data={
             foodMaterials: inputFieldsMaterial,
             foodCookSteps: inputFields
         }
-        
+        //console.log(data);
         API.post('merchant/foods/addnewfood',form,
         {
             headers:{
                 'Content-Type': 'multipart/form-data',
+                'x-access-token': userData.accessToken
             },
 
         })
         .then(res => {
+            console.log(res.data);
             if(res.status===201){
                 API.post(`merchant/foods/addnewfood/detail/${res.data.data.id}`,data,
                     {
@@ -170,6 +180,7 @@ export default function addNewFoodScreen({navigation, route}){
 
                     })
                     .then(res => {
+                        //console.log(res)
                         Alert.alert('Thông báo','Thêm thành công');
                     }).catch(error => {
                             console.log('Error', error.res);
@@ -179,6 +190,9 @@ export default function addNewFoodScreen({navigation, route}){
         }).catch(error => {
                 console.log('Error', error.res);
         });
+    }
+    const onValueChange=(itemValue) => {
+        console.log(itemValue);
     }
     return (
         <SafeAreaView>
@@ -270,6 +284,7 @@ export default function addNewFoodScreen({navigation, route}){
                                             //value={inputFields.id}
                                             onChangeText={(val)=>handleMaterial(index, val, 'foodMaterialName')}
                                         />
+                                        
                                     </View>
                                     <View style={{flex: 3}}>
                                         <TextInput

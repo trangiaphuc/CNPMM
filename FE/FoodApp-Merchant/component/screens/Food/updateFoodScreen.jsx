@@ -39,6 +39,7 @@ export default function addNewFoodScreen({navigation, route}){
     const[meterial, setMeterial]=useState([]);
     const[step, setStep]=useState([]);
     const[selectedValueCatName, setSelectedCatName]=useState();
+    
 
 
 
@@ -222,6 +223,7 @@ export default function addNewFoodScreen({navigation, route}){
                         defaultValue={data.foodName}
                     />
                 </Card>
+                
                 <Card>
                     <Text style={{fontWeight: 'bold', fontSize: 15}}>Mô tả</Text>
                     <TextInput
@@ -410,5 +412,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold'
     },
-    
+    picker:{
+        marginLeft: 15,
+        marginRight: 15,
+    }
 });

@@ -13,13 +13,14 @@ import {useIsFocused } from '@react-navigation/native';
 export default function confirmingOrderTab({navigation, route}){
 
     const{userData, userInfo} = route.params;
+    //console.log(userData.id);
     const isFocused = useIsFocused();
     const [dataConfirm, setDataConfirm]=useState([]);
     
     var ConfirmingOrders = [];
     
     const getUserOrder = async () =>{
-        const result = await API.get(`order/${userData.id}`,
+        const result = await API.get(`merchant/order`,
         {
             headers:{
                 'Content-Type': 'application/json',
@@ -28,7 +29,6 @@ export default function confirmingOrderTab({navigation, route}){
         });
         setDataConfirm(result.data.orders)
         //console.log(result.data.orders);
-        
     }
     useEffect(() => {
         getUserOrder();
@@ -88,8 +88,6 @@ export default function confirmingOrderTab({navigation, route}){
                    )
                }
             </ScrollView>
-           
-           
         </View>
     )
 

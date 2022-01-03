@@ -18,7 +18,7 @@ export default function DoneOrdersTab({navigation, route}){
     var DoneOrders = [];
     
     const getUserOrder = async () =>{
-        const result = await API.get(`order/${userData.id}`, 
+        const result = await API.get(`merchant/order`, 
         {
             headers:{
                 'Content-Type': 'application/json',

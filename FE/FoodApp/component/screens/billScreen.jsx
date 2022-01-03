@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image} from "react-native";
+import {View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image, Alert} from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import axios from "axios";
 import{
@@ -20,23 +20,24 @@ export default function billScreen({navigation, route}){
     const[data, setData]=useState([]);
     const[paymentMethod, setPaymentMethod]=useState([]);
     const[deliveryMethod, setDeliveryMethod]=useState([]);
-    const{userData, product}=route.params;
+    const{userData}=route.params;
+    const [product, setProduct]=useState([]);
+    //console.log(product);
     const[pickerValue, setPickerValue]=useState(1);
     const[pickerValueDelivery, setPickerValueDelivery]=useState(1);
     var order=[];
-    //console.log(product.product.price);
-    //console.log(paymentMethod);
-    // if(product.length !==0){
-    //     console.log(product.product.price);
-    //     console.log(product.quantity);
-
-    // }
+    var productId=[];
+    for (let i=0; i< product.length; i++){
+        productId.push(product[i].id);
+    }
+    //console.log(productId);
+  
     var itemPrice=[];
     for(let i=0; i< product.length; i++){
         itemPrice.push(product[i].product.price*product[i].quantity);
         
     }
-    let tong=0;
+    let tong=15000;
     for(let i=0; i< itemPrice.length; i++){
         tong=tong + itemPrice[i];
     }
@@ -82,9 +83,23 @@ export default function billScreen({navigation, route}){
             setDeliveryMethod(result.data.deliveries);
             
         }
+        const fetchdataProduct = async() => {
+            const result = await API.get(`cart/${userData.id}`,
+            {
+                headers:{
+                    'Content-Type': 'application/json',
+                    'x-access-token': userData.accessToken
+                    
+                },
+            });
+            //console.log(result.data.cart.cartDetails.quantity);
+            setProduct(result.data.cart.cartDetails);
+            //console.log(result.data.cart.cartDetails);
+        }
 
         useEffect(() => {
             fetchdata();
+            fetchdataProduct();
             fetchdataPaymentMethod();
             fetchdataDeliveryMethod();
         },[setData]);
@@ -116,11 +131,34 @@ export default function billScreen({navigation, route}){
                 })
                 .then(res => {
                     if (res.status===200){
-                        alert("Đặt hàng thành công");
+                        var listCart = [];
+                        productId.forEach(item =>{
+                            listCart.push({
+                                'id': item,
+                                'isBuy': true,
+                            });
+                        });
+                        API.post(`cart/${userData.id}/editCartItem/`,{listEditCartItemId: listCart},
+                                {
+                                    headers:{
+                                        'Content-Type': 'application/json',
+                                        'x-access-token': userData.accessToken,
+                                    },
+                                })
+                                .then(res => {
+                                    console.log(res.data);
+                                }).catch(error => {
+                                        console.log(error.res);
+                                });
+                        
+
+                        Alert.alert('Thông báo','Đặt hàng thành công');
+                        //navigation.navigate('darBoardScreen',{screen: 'Cart', userData: userData, status: true, listCart: listCart})
+                        
                     }
 
                 }).catch(error => {
-                        alert('Error', error.res);
+                        Alert.alert('Thông báo', 'Đặt hàng thất bại');
                 });
         }
 
@@ -129,7 +167,7 @@ export default function billScreen({navigation, route}){
         <View>
             <View style={styles.return}>
                 <View style={styles.returnIcon}>
-                    <TouchableOpacity onPress={()=>{navigation.goBack();}}>
+                    <TouchableOpacity onPress={()=>{navigation.goBack()}}>
                         <FontAwesome
                             name="arrow-left"
                             color="#05375a"
@@ -182,7 +220,7 @@ export default function billScreen({navigation, route}){
                                 </ScrollView>
                             </View>
                             
-                            <View style={{backgroundColor:'#DCDCDC', height: 280, borderRadius: 20}}>
+                            <View style={{backgroundColor:'#DCDCDC', height: 320, borderRadius: 20}}>
                                 <View style={styles.paymentMethod}>
                                     <Text style={{marginLeft:15, fontSize: 20, fontWeight: 'bold'}}>Phương thức thanh toán</Text>
                                     <Picker
@@ -218,9 +256,15 @@ export default function billScreen({navigation, route}){
                                     </Picker>
                                 </View>
                                 <View style={{flexDirection: 'row'}}>
+                                    <Text style={{marginLeft:15, fontSize: 20, fontWeight: 'bold', flex: 2}}>Phí ship</Text>
+                                    <View  style={{flex:1, justifyContent: 'center'}}>
+                                        <Text style={{fontSize: 20,color:'#FF0000'}}>15000đ</Text>
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row'}}>
                                     <Text style={{marginLeft:15, fontSize: 20, fontWeight: 'bold', flex: 2}}>Tổng tiền</Text>
                                     <View  style={{flex:1, justifyContent: 'center'}}>
-                                        <Text style={{fontSize: 20}}>{tong+'đ'}</Text>
+                                        <Text style={{fontSize: 20, color: '#FF0000'}}>{tong+15000+'đ'}</Text>
                                     </View>
                                 </View>
                                 <View style={styles.footer}>
@@ -260,7 +304,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     footer:{
-        marginTop: 10,
+        marginTop: 5,
         marginRight: 15,
         
         justifyContent: 'center',
@@ -304,7 +348,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     paymentMethod:{
-        marginTop: 10,
+        marginTop: 2,
         
     },
     picker:{

@@ -33,7 +33,7 @@ module.exports = function(app) {
   controller.merchantGetAllUser)
 
     //change user password
-    app.post("/api/merchant/changepassword/:id", [authJwt.verifyToken], controller.changepassword);
+    app.post("/api/merchant/changepassword/:id", [authJwt.verifyToken,authJwt.isMerchant], controller.changepassword);
 
 // // test ROLE
 //   app.get("/api/test/all", controller.allAccess);

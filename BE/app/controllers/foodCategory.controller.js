@@ -112,12 +112,12 @@ exports.merchantAddNewFoodCategory = (req, res) =>{
 
 exports.merchantUpdateFoodCategory = (req, res) =>{
   try{    
-    if (req.file == undefined) {
-      return res.send(`You must select a file.`);
-    }
-    const foodCategoryIcon = fs.readFileSync(
-      __basedir + "/resources/static/assets/uploads/" + req.file.filename
-    );
+    // if (req.file == undefined) {
+    //   return res.send(`You must select a file.`);
+    // }
+    // const foodCategoryIcon = fs.readFileSync(
+    //   __basedir + "/resources/static/assets/uploads/" + req.file.filename
+    // );
     FoodCategory.findOne({
       logging: (sql, queryObject) =>{
         logger.info(sql, queryObject);
@@ -130,18 +130,18 @@ exports.merchantUpdateFoodCategory = (req, res) =>{
           logger.info(sql, queryObject);
         },
         catName: req.body.catName,
-        catIcon: "/resources/static/assets/icon/foodCategoryIcon/" + req.file.filename,
+        //catIcon: "/resources/static/assets/icon/foodCategoryIcon/" + req.file.filename,
         isShowing: req.body.isShowing,
         createdAt: new Date(),
         updatedAt: new Date(),
       })
       .then(foodCategory =>{
         if(foodCategory){
-          fs.writeFileSync(
-            __basedir + "/resources/static/assets/icon/foodCategoryIcon/" + req.file.filename,
-            // image.data
-            foodCategoryIcon
-          );
+          // fs.writeFileSync(
+          //   __basedir + "/resources/static/assets/icon/foodCategoryIcon/" + req.file.filename,
+          //   // image.data
+          //   foodCategoryIcon
+          // );
           logger.info(`Request status: ${res.status(201)} Created!`);
           res.status(201).send({message: "Success!", data: foodCategory})
         }

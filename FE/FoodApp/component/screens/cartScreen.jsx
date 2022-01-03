@@ -16,14 +16,43 @@ import{
 } from 'react-native-paper';
 
 export default function historyScreen({navigation, route}){
-    const{userData}=route.params;
+    const{userData, status, listCart}=route.params;
     const[cart, setCart]=useState([]);
-    const[quantity, setQuantity]= useState([]);
+    const[quantityValue, setQuantityValue]= useState([]);
     const isFocused = useIsFocused();
+    
+    //console.log(listCart);
+    
    
-
+    // const onChange=(value, id)=>{
+        
+    //     //console.log(id);
+    //     var listCartItem =[];
+    //     listCartItem=cart;
+    //     //var id=-1;
+    //     //console.log(value);
+    //     //console.log(listCartItem);
+    //     for (let i=0; i<listCartItem.length; i++){
+    //         //console.log(listCartItem[i]);
+    //         if(listCartItem[i].id==id){
+    //             listCartItem[i].quantity=value;
+    //             //console.log(listCartItem[i])
+    //         }
+            
+    //     }
+    //     for (let i=0; i<listCartItem.length; i++){
+            
+    //         console.log(listCartItem[i].quantity);
+    //     }
+    //     setCart(listCartItem);
+    //     //console.log(id)
+    //     //console.log('ListCartItem',listCartItem[id].quantity);
+    //     //console.log(value);
+    //     //setCart(value);
+    // }
 
     const fetchdata = async() => {
+        //console.log('Before fetch data')
         const result = await API.get(`cart/${userData.id}`,
         {
             headers:{
@@ -34,21 +63,36 @@ export default function historyScreen({navigation, route}){
         });
         //console.log(result.data.cart.cartDetails.quantity);
         setCart(result.data.cart.cartDetails);
+        //console.log('fetchdata');
+        //console.log(result.data.cart.cartDetails);
     }
 
-    useEffect(() => {
-        fetchdata();
-    },[setCart]);
-
-    useEffect(() => {
-        fetchdata();
-    },[isFocused])
-
+ 
    
-  
-        const onChange=(value)=>{
-            setQuantity(value);
-        }
+    // const updateCartItem=()=>{
+    //     console.log('update');
+    //     if(status==true){
+    //         //console.log(listCart);
+            // API.post(`cart/${userData.id}/editCartItem/`,{listEditCartItemId: listCart},
+            //                     {
+            //                         headers:{
+            //                             'Content-Type': 'application/json',
+            //                             'x-access-token': userData.accessToken,
+            //                         },
+            //                     })
+            //                     .then(res => {
+                                    
+
+                
+            //                     }).catch(error => {
+            //                             console.log(error.res);
+            //                     });
+    //     }
+    // }
+    useEffect(() => {
+        //await updateCartItem();
+        fetchdata();
+    },[setCart, isFocused])
 
     return(
         
@@ -81,16 +125,16 @@ export default function historyScreen({navigation, route}){
                                 </View>
                                 <View style={{flex: 4}}>
                                     <Text style={{fontWeight: 'bold', marginBottom: 5}}>{item.product.proName}</Text>
-                                    {/* <Card.Title>{item.product.proName}</Card.Title> */}
-                                    <Text>{'Số lượng: ' + item.quantity}</Text>
                                     {/* <NumericInput
-                                        minValue={0}
-                                        maxValue={50}
-                                        initValue={item.quantity}
-                                        step={1}
-                                        totalHeight={40}
-                                        onChange={(value) =>onChange(value)}
-                                        rounded/> */}
+                                                    minValue={1}
+                                                    maxValue={50}
+                                                    step={1}
+                                                    value={item.quantity}
+                                                    totalHeight={40}
+                                                    onChange={(value) =>onChange(value, item.id)}
+                                                    rounded/> */}
+                                    <Text>{'Số lượng: ' + item.quantity}</Text>
+                                   
                                 </View>
                                 <View style={styles.deleteItem}>
                                     <TouchableOpacity onPress={()=>{

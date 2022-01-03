@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image} from "react-native";
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import {Card} from "react-native-elements";
@@ -77,9 +77,15 @@ export default function ordersDetailBillScreen({navigation, route}){
                         <Text style={{marginLeft: 40}}>{orders.deliveryMethod.deliveryMethod}</Text>
                     </View>
                     <View style={{flexDirection: 'row'}}>
+                        <Text style={{marginLeft:15, fontSize: 20, fontWeight: 'bold', flex: 2}}>Phí ship</Text>
+                        <View  style={{flex:1, justifyContent: 'center'}}>
+                            <Text style={{fontSize: 20, color: '#FF0000'}}>15000đ</Text>
+                        </View>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
                         <Text style={{marginLeft:15, fontSize: 20, fontWeight: 'bold', flex: 2}}>Tổng tiền</Text>
                         <View  style={{flex:1, justifyContent: 'center'}}>
-                            <Text style={{fontSize: 20}}>{orders.totalPrice}</Text>
+                            <Text style={{fontSize: 20, color: '#FF0000'}}>{orders.totalPrice+'đ'}</Text>
                         </View>
                     </View>
                 </View>

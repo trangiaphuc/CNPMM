@@ -15,7 +15,7 @@ import API from "../services/api";
 export default function foodDetailScreen({route, navigation}){
     const {foodId, userData}=route.params;
 
-    console.log("HUY111111",foodId);
+    //console.log("HUY111111",foodId);
 
 
     const[data, setData]=useState([]);

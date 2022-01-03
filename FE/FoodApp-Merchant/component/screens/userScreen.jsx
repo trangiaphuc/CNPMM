@@ -59,48 +59,8 @@ export default function userScreen({navigation, route}){
         },[setData, setOrders,isFocused]);
 
 
-        
-        const chooseImage = async () => {
-            // No permissions request is necessary for launching the image library
-            let result = await ImagePicker.launchImageLibraryAsync({
-              mediaTypes: ImagePicker.MediaTypeOptions.All,
-              allowsEditing: false,
-              aspect: [4, 3],
-              quality: 1,
-            });
-        
-            //console.log(result);
-        
-            if (!result.cancelled) {
-                    let form =new FormData();
-                    let file = {
-                        name:'avatar.jpg',
-                        uri: result.uri,
-                        type: "image/jpeg",
-                    }
-                    form.append('file', file);
-
-
-                    API.post('upload',form,
-                    {
-                        headers:{
-                            'Content-Type': 'multipart/form-data',
-                        },
-
-                    })
-                    .then(res => {
-                        console.log(res.data);
-                    }).catch(error => {
-                            console.log('Error', error.res);
-                    });
-
-            }
-            
-        };
 
     return(
-       
-
         <SafeAreaView>
             <View style={styles.return}>
                 
@@ -135,11 +95,7 @@ export default function userScreen({navigation, route}){
                 </View>
             </View>
             <View style={styles.userInfoSection}>
-                <View style={styles.row}>
-                    <TouchableOpacity onPress={chooseImage}>
-                        <Icon name="camera" size={20}/>
-                    </TouchableOpacity>
-                </View>
+                
                 <View style={styles.row}>
                     <Icon name="map-marker-radius" size={20}/>
                     <Text style={styles.text}>Viet Nam</Text>
@@ -181,28 +137,16 @@ export default function userScreen({navigation, route}){
                 </TouchableRipple>
             </View>
             <View style={styles.menuWrapper}>
-                <TouchableRipple onPress={()=>{}}>
-                    <View style={styles.menuItem}>
-                        <Icon name="heart-outline" color="#FE6347" size={25}/>
-                        <Text style={styles.menuItemText}>Your Favourites</Text>
-                    </View>
-                </TouchableRipple>
-                <TouchableRipple onPress={()=>{}}>
-                    <View style={styles.menuItem}>
-                        <Icon name="credit-card" color="#FE6347" size={25}/>
-                        <Text style={styles.menuItemText}>Payment</Text>
-                    </View>
-                </TouchableRipple>
-                <TouchableRipple onPress={()=>{}}>
-                    <View style={styles.menuItem}>
-                        <Icon name="account-check-outline" color="#FE6347" size={25}/>
-                        <Text style={styles.menuItemText}>Support</Text>
-                    </View>
-                </TouchableRipple>
                 <TouchableRipple onPress={()=>{navigation.navigate('updateUserProfileScreen',{ userData : data})}}>
                     <View style={styles.menuItem}>
                         <Icon name="cog-outline" color="#FE6347" size={25}/>
                         <Text style={styles.menuItemText}>Cập nhật thông tin cá nhân</Text>
+                    </View>
+                </TouchableRipple>
+                <TouchableRipple onPress={()=>{navigation.navigate('changePasswordScreen',{userData: userData})}}>
+                    <View style={styles.menuItem}>
+                        <Icon name="cog-outline" color="#FE6347" size={25}/>
+                        <Text style={styles.menuItemText}>Đổi mật khẩu</Text>
                     </View>
                 </TouchableRipple>
                 <TouchableRipple onPress={()=>{navigation.navigate('signInScreen')}}>

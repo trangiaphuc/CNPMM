@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, Dimensions,Image, TouchableOpacity, TextInput} from "react-native";
+import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, Alert,Image, TouchableOpacity, TextInput} from "react-native";
 
 
 import {Card} from "react-native-elements";
@@ -105,7 +105,8 @@ export default function confirmingOrderTab({navigation, route}){
                                             .then(response => {
                                                 if(response.status===200)
                                                 {
-                                                    alert("Hủy đơn hàng thành công");
+                                                    Alert.alert('Thông báo','Hủy đơn thành công')
+                                                    getUserOrder();
                                                 }
                                             }).catch(error => {
                                                     console.log(error);

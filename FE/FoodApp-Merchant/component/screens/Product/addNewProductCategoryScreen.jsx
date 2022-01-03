@@ -36,23 +36,30 @@ export default function addFoodCategoryScreen({navigation, route}){
             catName: dataAddNewCat.catName,
             isShowing: true
         }
-        //console.log(data);
-        API.post('merchant/productcategory/addnew',data,
+        if(dataAddNewCat.catName ==='')
         {
-            headers:{
-                'Content-Type': 'application/json',
-                'x-access-token': userData.accessToken
-            },
+            Alert.alert('Thông báo','Vui lòng nhập dữ liệu');
+        }
+        else{
+            API.post('merchant/productcategory/addnew',data,
+            {
+                headers:{
+                    'Content-Type': 'application/json',
+                    'x-access-token': userData.accessToken
+                },
 
-        })
-        .then(res => {
-            if(res.status===201){
-                Alert.alert('Thông báo', "Thêm thành công");
-            }
-            //navigation.goBack();
-        }).catch(error => {
-                console.log('Error', error.res);
-        });
+            })
+            .then(res => {
+                if(res.status===201){
+                    Alert.alert('Thông báo', "Thêm thành công");
+                }
+                //navigation.goBack();
+            }).catch(error => {
+                    console.log('Error', error.res);
+            });
+        }
+        
+        
     }
 
 

@@ -46,9 +46,12 @@ export default function signIn({navigation}){
                 })
                 .then(response => {
                     if (response.accessToken !== null){
-                        //navigation.navigate('favoriteFoodScreen', { response: response.data});
-                        navigation.navigate('darBoardScreen', { userData: response.data});
-                        
+                        if(response.data.roles.includes('ROLE_MERCHANT'))
+                        {
+                            navigation.navigate('darBoardScreen', { userData: response.data});
+                        } else {
+                            Alert.alert("Thông báo", "Bạn không có quyền");
+                        }
                     }
                     else if (response.accessToken === null){
                         alert("Login Failed");

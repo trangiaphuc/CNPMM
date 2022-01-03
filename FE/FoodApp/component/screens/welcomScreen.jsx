@@ -27,6 +27,7 @@ import {useIsFocused } from '@react-navigation/native';
 export default function welcomScreen({navigation, route}){
     const{userData}=route.params;
     const[data, setData]=useState([]);
+    const[dataFa, setDataFa]=useState([]);
     const[favorites, setFavorites]=useState([]);
     const isFocused = useIsFocused();
     
@@ -46,66 +47,29 @@ export default function welcomScreen({navigation, route}){
         });
         //console.log(result.data.information);
         setData(result.data.information);
-        //console.log(result.data.information.favoriteFoodCategory);
-        //console.log(result.data.information);
-        
-    }
-    const fetchFavorite = async() => {
-        const result = await API.get(`user/${userData.id}/getFavorite/`,
-        {
-            headers:{
-                'Content-Type': 'application/json',
-                'x-access-token': userData.accessToken
-
-            },
-        });
-        //console.log('Huy',result.data.FavoriteFoodCategory);
-        setFavorites(result.data.FavoriteFoodCategory);
-        //console.log(favorites.length);
-
-
-
-    }
-    
-  
-        const fetchDataFavorite = async() => {
-            //console.log(data.favoriteFoodCategory);
-          
+        setDataFa(result.data.information.favoriteFoodCategory);
+        if(result.data.information.favoriteFoodCategory.length>0){
             try{
-                const result = await API.post("foods/favorite", {listFavoriteFoodCategory: data.favoriteFoodCategory},
+                const listFavFood = await API.post("foods/favorite", {listFavoriteFoodCategory: result.data.information.favoriteFoodCategory},
                 {
                     headers:{
                         'Content-Type': 'application/json',
                         'x-access-token': userData.accessToken
                     },
                 });
-                setDataFavorites(result.data.favoriteFoods);
-                //console.log("3");
-        
+                setDataFavorites(listFavFood.data.favoriteFoods);
+                //console.log(listFavFood.data.favoriteFoods);
             } catch (err) {console.log(err);}
         }
+        
+        
+    }
+
     useEffect(async() => {
         await fetchdata();
-        await fetchFavorite();
-        await fetchDataFavorite();
-    },[setData, setFavorites, isFocused]);
-  
+    },[isFocused]);
 
-
-
-    // useEffect(() => {
-    //     fetchFavorite().then(()=>{fetchDataFavorite().then(()=>{console.log('inner');}).catch(()=>{console.log('HHHHH')});}).catch((err) => {console.log(err)});
-    //     console.log("run");
-    // },[isFocused]);
-
-    // useEffect(() => {
-    //     fetchDataFavorite();
-    // },[isFocused]);
-
-  
-
-
-    if(favorites.length===0){
+    if(dataFa.length===0){
         return (
             <View>
                 <View style={styles.containerTitle}>
@@ -152,7 +116,7 @@ export default function welcomScreen({navigation, route}){
                 <View>
                     <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
                  
-                    <TouchableOpacity onPress={()=>{navigation.navigate('favoriteFoodScreen',{userData: userData})}}>
+                    <TouchableOpacity onPress={()=>{navigation.navigate('updateFavoriteFoodScreen',{userData: userData})}}>
                    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                         <Text style={styles.addFavoriteFood}>Thêm món ăn yêu thích</Text>
                         <View>
@@ -214,8 +178,6 @@ export default function welcomScreen({navigation, route}){
                 </View>
                 <View style={styles.card}>
                     <Text style={styles.caption}>Danh mục món ăn yêu thích</Text>
-                    
-                    
                     <View>
                     <FlatList
                         horizontal={true}
@@ -240,29 +202,7 @@ export default function welcomScreen({navigation, route}){
                         
                         />
                     </View>
-                    
-                    
-                    {/* <View style={{marginBottom: 300}}>
-                        <ScrollView>
-                            {
-                            dataFavorites.map((item) => 
-                                <SafeAreaView key ={item.id}>
-                                    <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {userData: userData, foodId: item.id})}}>
-                                        <Card>
-                                            <Card.Image source={{uri: item.foodImage}}/>
-                                            <Card.Divider/>
-                                            
-                                            <View style={styles.food}>
-                                                <Text style={styles.textFood}>{item.foodName}</Text>
-                                            </View>
-                                            <Card.Divider/>
-                                        </Card>
-                                    </TouchableOpacity>
-                                </SafeAreaView>
-                            )
-                            }
-                        </ScrollView>
-                    </View> */}
+
                 </View>
             </View>
         );

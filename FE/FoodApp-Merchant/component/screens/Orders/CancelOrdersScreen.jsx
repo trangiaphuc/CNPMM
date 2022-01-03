@@ -19,7 +19,7 @@ export default function CancelOrdersTab({navigation, route}){
     var CancelOrders = [];
     
     const getUserOrder = async () =>{
-        const result = await API.get(`order/${userData.id}`,
+        const result = await API.get(`merchant/order`,
         {
             headers:{
                 'Content-Type': 'application/json',

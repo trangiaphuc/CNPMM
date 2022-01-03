@@ -41,7 +41,7 @@ exports.getCartByUserId = (req, res) => {
                     __basedir + product.productImage
                 );
                 var base64Image = Buffer.from(image).toString("base64");
-                product.productImage = "cart:image/png;base64,"+base64Image;
+                product.productImage = "data:image/png;base64,"+base64Image;
                 }
             )
             res.status(200).send({cart: cart});

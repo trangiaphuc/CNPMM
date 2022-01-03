@@ -44,7 +44,7 @@ export default function userScreen({navigation, route}){
         const renderItem=({item})=>{
             const itemFood =()=>{
                 
-                API.get(`foods/category/${item.id}`,
+                API.get(`merchant/foods/category/${item.id}`,
                 {
                     headers:{
                         'Content-Type': 'application/json',
@@ -86,6 +86,9 @@ export default function userScreen({navigation, route}){
             });
         
     }
+    
+
+    
     const searchFood =()=>{
         //alert(dataSearch.textSearch);
         
@@ -219,17 +222,17 @@ export default function userScreen({navigation, route}){
                 <TouchableOpacity onPress={()=>{navigation.navigate('foodDetailScreen', {userData: userData, foodId: item.id})}}>
                     <View style={styles.container_food}>
                         <Avatar.Image source={{uri:item.foodImage}} size={70}/>
-                        <View style={{flex: 15}}>
+                        <View style={{flex: 9}}>
                             <Text style={styles.textFoodTitle}>{item.foodName}</Text>
                             
                             
                         </View>
                         
                         <View style={{flex: 1, marginTop: 13}}>
-                            <FontAwesome
-                                name="angle-right"
-                                color="#05375a"
-                                size={20}
+                        <FontAwesome
+                                    name="angle-right"
+                                    color="#05375a"
+                                    size={20}
                                 />
                         </View>
                     </View>

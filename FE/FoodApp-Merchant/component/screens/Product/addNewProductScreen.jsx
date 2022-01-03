@@ -123,24 +123,36 @@ export default function updateUserProfile({navigation, route}){
     //console.log(form);
     
     const submitAddNewProduct = ()  =>{
-        //console.log(form);
-        //console.log(selectedValueCatName);
-        API.post('merchant/products/addnewproduct',form,
-        {
-            headers:{
-                'Content-Type': 'multipart/form-data',
-                'x-access-token': userData.accessToken,
-            },
+        if(dataAddNewPro.proName !== '' 
+        && dataAddNewPro.description !=='' 
+        && dataAddNewPro.quantity !=='' 
+        && dataAddNewPro.brand !==''
+        && dataAddNewPro.origin !==''
+        && dataAddNewPro.manual !==''
+        && dataAddNewPro.preserve !==''
+        && dataAddNewPro.price !==''
+        ){
+            API.post('merchant/products/addnewproduct',form,
+            {
+                headers:{
+                    'Content-Type': 'multipart/form-data',
+                    'x-access-token': userData.accessToken,
+                },
 
-        })
-        .then(res => {
-            if(res.status===201){
-                Alert.alert('Thông báo', "Thêm thành công");
-            }
-            //navigation.goBack();
-        }).catch(error => {
-                console.log('Error', error.res);
-        });
+            })
+            .then(res => {
+                if(res.status===201){
+                    Alert.alert('Thông báo', "Thêm thành công");
+                }
+                //navigation.goBack();
+            }).catch(error => {
+                    console.log('Error', error.res);
+            });
+        }
+        else{
+            Alert.alert('Thông báo','Vui lòng nhập đầy đủ thông tin')
+        }
+        
     }
 
     return(

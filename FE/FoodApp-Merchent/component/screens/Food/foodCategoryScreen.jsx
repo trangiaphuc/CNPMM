@@ -21,7 +21,6 @@ export default function productCategoryScreen({navigation, route}){
     const{userData}=route.params;
     const[category, setCategory]=useState([]);
     const isFocused = useIsFocused();
-    let form = new FormData();
     
 
     const fetchdataCategory = async() => {
@@ -41,76 +40,19 @@ export default function productCategoryScreen({navigation, route}){
     },[setCategory, isFocused]);
 
     const ButtonSet=(item)=>{
-        
-        
-        if(item.isShowing == true)
-        {
-            
-            return (
-                <TouchableOpacity onPress={()=>{
-                    API.post(`merchant/foodcategory/update/${item.id}`,{isShowing: false},
-                    {
-                        headers:{
-                            'Content-Type': 'application/json',
-                            'x-access-token': userData.accessToken
-                        },
-
-                    }).then((res)=>{
-                        console.log(res.data);
-                        fetchdataCategory();
-                    }).catch((error)=>{
-                        console.log(error.res);
-                    })
-                }}>
-                    <View>
-                        <Text style={{
-                            borderWidth: 0.5,
-                            paddingLeft: 10,
-                            paddingRight: 10,
-                            paddingTop: 5,
-                            paddingBottom: 5,
-                            fontWeight: 'bold',
-                            backgroundColor:"#FF0000",
-                            color: '#FFFFFF'
-                        }}
-                        >Vô hiệu hóa</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        }
-        else{
-            return (
-                <TouchableOpacity onPress={()=>{
-                    API.post(`merchant/foodcategory/update/${item.id}`,{isShowing: true},
-                    {
-                        headers:{
-                            'Content-Type': 'application/json',
-                            'x-access-token': userData.accessToken
-                        },
-
-                    }).then((res)=>{
-                        console.log(res.data);
-                        fetchdataCategory();
-                    }).catch((error)=>{
-                        console.log(error.res);
-                    })
-                }}>
-                    <View>
-                        <Text style={{
-                            borderWidth: 0.5,
-                            paddingLeft: 10,
-                            paddingRight: 10,
-                            paddingTop: 5,
-                            paddingBottom: 5,
-                            fontWeight: 'bold',
-                            backgroundColor:"#FF0000",
-                            color: '#FFFFFF'
-                        }}
-                        >Hiển thị lại</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        }
+        //console.log(item.isShowing);
+        // if(item.isShowing==1)
+        // {
+        //     return (
+        //         <TouchableOpacity onPress={()=>{}}>
+        //             <FontAwesome
+        //                 name="trash"
+        //                 color="#05375a"
+        //                 size={20}
+        //             />
+        //         </TouchableOpacity>
+        //     );
+        // }
         
     }
     

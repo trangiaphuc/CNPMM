@@ -56,21 +56,27 @@ export default function addFoodCategoryScreen({navigation, route}){
     form.append('isShowing', true);
 
     const addCategory=()=>{
-        API.post('merchant/foodcategory/addnew',form,
-        {
-            headers:{
-                'Content-Type': 'multipart/form-data',
-            },
+        if(dataAddNewCat.catName===''){
+            Alert.alert('Thông báo','Vui lòng nhập dữ liệu');
+        }
+        else{
+            API.post('merchant/foodcategory/addnew',form,
+            {
+                headers:{
+                    'Content-Type': 'multipart/form-data',
+                },
 
-        })
-        .then(res => {
-            if(res.status===201){
-                Alert.alert('Thông báo', "Thêm thành công");
-            }
-            //navigation.goBack();
-        }).catch(error => {
-                console.log('Error', error.res);
-        });
+            })
+            .then(res => {
+                if(res.status===201){
+                    Alert.alert('Thông báo', "Thêm thành công");
+                }
+                //navigation.goBack();
+            }).catch(error => {
+                    console.log('Error', error.res);
+            });
+        }
+        
     }
 
 

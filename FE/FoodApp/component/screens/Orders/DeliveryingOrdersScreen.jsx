@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import {View, Text, TextStyle, SafeAreaView, StyleSheet, ScrollView, FlatList, Dimensions,Image, TouchableOpacity, TextInput} from "react-native";
+import {View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
 
 
 import {Card} from "react-native-elements";

@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import API from "../services/api";
 import * as ImagePicker from 'expo-image-picker';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function foodDetailScreen({route, navigation}){
     const {foodId, userData}=route.params;
@@ -20,6 +21,7 @@ export default function foodDetailScreen({route, navigation}){
     const[step, setStep]=useState([]);
     const[image, setImage]=useState([]);
     let form =new FormData();
+    const isFocused = useIsFocused();
 
   
 
@@ -78,9 +80,85 @@ export default function foodDetailScreen({route, navigation}){
 
     useEffect(() => {
         fetchdata();
-    },[setData]);
+    },[setData, isFocused]);
 
    
+    const ButtonSetFood =()=>{
+        if(data.isShowing==true){
+            return(
+                <TouchableOpacity style={{alignItems: 'center'}} onPress={() =>{
+                    API.post(`merchant/foods/update/${data.id}`,
+                    {
+                        foodName: data.foodName,
+                        foodDescription: data.foodDescription,
+                        foodCalories: data.foodCalories,
+                        isShowing: false,
+                        foodCategory: data.foodCategory,
+                        foodMaterials: data.foodMaterials,
+                        foodCookSteps: data.foodCookSteps,
+                    },
+                            {
+                                headers:{
+                                    'Content-Type': 'application/json',
+                                    'x-access-token': userData.accessToken,
+                                },
+                            })
+                            .then(res => {
+                                Alert.alert('Thông báo', 'Cập nhật thành công');
+                                fetchdata();
+                            }).catch(error => {
+                                    Alert.alert('Error', error.res);
+                            });
+                }}>
+                    <Text style={{borderWidth:0.5,
+                    paddingBottom: 3,
+                    paddingTop: 3,
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    backgroundColor:'#FF0000',
+                    color:'#FFFFFF'
+                    }}>Vô hiệu hóa</Text>
+                </TouchableOpacity>
+            );
+        }
+        else{
+            return(
+                <TouchableOpacity style={{alignItems: 'center'}} onPress={() =>{
+                    API.post(`merchant/foods/update/${data.id}`,
+                    {
+                        foodName: data.foodName,
+                        foodDescription: data.foodDescription,
+                        foodCalories: data.foodCalories,
+                        isShowing: true,
+                        foodCategory: data.foodCategory,
+                        foodMaterials: data.foodMaterials,
+                        foodCookSteps: data.foodCookSteps,
+                    },
+                            {
+                                headers:{
+                                    'Content-Type': 'application/json',
+                                    'x-access-token': userData.accessToken,
+                                },
+                            })
+                            .then(res => {
+                                Alert.alert('Thông báo', 'Cập nhật thành công');
+                                fetchdata();
+                            }).catch(error => {
+                                    Alert.alert('Error', error.res);
+                            });
+                }}>
+                    <Text style={{borderWidth:0.5,
+                    paddingBottom: 3,
+                    paddingTop: 3,
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    backgroundColor:'#FF0000',
+                    color:'#FFFFFF'
+                    }}>Hiển thị lại</Text>
+                </TouchableOpacity>
+            );
+        }
+    }
     
     return(
         
@@ -134,7 +212,7 @@ export default function foodDetailScreen({route, navigation}){
 
             <Text style={[styles.textMeterial,{marginTop: 10}]}>2. Các bước thực hiện</Text>
 
-            <View style={{marginBottom: 70}}>
+            <View style={{marginBottom: 20}}>
                 {
                     step.map((item) => {
                         return (
@@ -155,6 +233,9 @@ export default function foodDetailScreen({route, navigation}){
                     })
 
                 }
+            </View>
+            <View style={{marginBottom: 10}}>
+                {ButtonSetFood()}
             </View>
             
             </ScrollView>
