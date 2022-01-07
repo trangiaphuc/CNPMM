@@ -6,6 +6,7 @@ module.exports = {
       'products',
       [ 
         {
+          //1
           proName: "Ba rọi heo khay 500 gram",
           proDescription: "Ba rọi heo của thương hiệu CP đạt các tiêu chuẩn về an toàn toàn thực phẩm, đảm bảo chất lượng, độ tươi ngon. Thịt heo mềm, vân nạc, mỡ rõ ràng nên rất phù hợp làm nguyên liệu để nấu thịt kho hột vịt, thịt nướng BBQ. Có thể dùng điện thoại quét mã QR trên tem sản phẩm để kiểm tra nguồn gốc.",
           quantityValue: 500,
@@ -23,6 +24,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //2
           proName: "Cốt lết heo có xương khay 300 gram",
           proDescription: "Cốt lết heo có xương G được đóng gói và bảo quản đạt các tiêu chuẩn về an toàn toàn thực phẩm. Bản thịt to, vân mỡ mỏng tạo độ béo nhẹ cho miếng thịt nên thường dùng để nướng, ram, chiên áp chảo.... Có thể dùng điện thoại quét mã QR trên tem sản phẩm để kiểm tra nguồn gốc.",
           quantityValue: 300,
@@ -40,6 +42,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //3
           proName: "Xương ống heo khay 350 gram",
           proDescription: "Là phần thịt kèm với xương ống, thường được dùng để nấu nước ngọt cho canh hoặc món nước như nui, hủ tiếu,.. sau khi hầm thịt mềm, ăn rất ngon.",
           quantityValue: 350,
@@ -57,6 +60,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //4
           proName: "Ba rọi heo khay 300g",
           proDescription: "Ba rọi heo G được đóng gói và bảo quản đạt các tiêu chuẩn về an toàn thực phẩm. Tỉ lệ nạc mỡ xen kẽ hoàn hảo, thịt nhiều hơn mỡ nên thường dùng để kho với trứng, luộc, chiên hoặc nướng. Có thể dùng điện thoại quét mã QR trên tem sản phẩm để kiểm tra nguồn gốc.",
           quantityValue: 300,
@@ -74,6 +78,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //5
           proName: "Đuôi heo Meat Master khay 400g (6-8 miếng)",
           proDescription: "Đuôi heo là bộ phận chứa nhiều chất dinh dưỡng và collagen nhất của con heo, rất tốt cho sức khoẻ con người. Đuôi heo Meat Master không chỉ được sản xuất với những quy định nghiêm ngặt, mang đến chất lượng sản phẩm tuyệt vời mà còn có giá thành phải chăng cho mọi nhà.",
           quantityValue: 400,
@@ -91,6 +96,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //6
           proName: "Đùi tỏi gà túi 500g (2-4 đùi)",
           proDescription: "Đùi tỏi gà được đóng gói và bảo quản theo những tiêu chuẩn nghiêm ngặt về vệ sinh và an toàn thực phẩm, đảm bảo về chất lượng, độ tươi và ngon của thực phẩm, xuất xứ rõ ràng. Đùi gà to, thịt ngọt, chắc phù hợp để chế biến đùi gà tẩm bột chiên, gà xào sả ớt hoặc gà chiên nước mắm.",
           quantityValue: 500,
@@ -108,6 +114,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //7
           proName: "Gà dai nguyên con nhập khẩu đông lạnh túi 1.2-1.5kg",
           proDescription: "Gà dai nhập khẩu được đóng gói và bảo quản theo những tiêu chuẩn nghiêm ngặt về vệ sinh và an toàn thực phẩm. Gà dai nguyên con nhập khẩu đông lạnh vẫn giữ được phần thịt gà dai, thơm, ngọt nên thường dùng để hầm nấu canh, súp hoặc cháo, giúp người dùng bảo quản lâu hơn.",
           quantityValue: 1.5,
@@ -125,6 +132,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //8
           proName: "Cánh gà túi 500g (2-4 cánh)",
           proDescription: "Cánh gà của Bách Hóa Xanh được đóng gói và bảo quản theo những tiêu chuẩn nghiêm ngặt về vệ sinh và an toàn thực phẩm, đảm bảo về chất lượng, độ tươi và ngon của thực phẩm, xuất xứ rõ ràng. Cánh gà chắc thịt, ngọt nhiều dinh dưỡng phù hợp cho chế biến món cánh gà chiên nước mắm, gà xào sa tế.",
           quantityValue: 500,
@@ -142,6 +150,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //9
           proName: "Hộp 6 trứng vịt T.Food 6 trứng",
           proDescription: "Hộp 6 trứng vịt của T.Food được đóng gói và bảo quản theo những tiêu chuẩn nghiêm ngặt về vệ sinh và an toàn thực phẩm, đảm bảo về chất lượng của thực phẩm. Trứng vịt to tròn, đều. Bạn có thể luộc chín trứng vịt chế biến thành một số món ăn như: thịt kho trứng, cơm chiên trứng, khổ qua xào trứng,...",
           quantityValue: 1,
@@ -159,6 +168,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //10
           proName: "Hộp 10 trứng gà tươi Happy Egg",
           proDescription: "Hộp 10 trứng gà tươi của Happy Egg được đóng gói và bảo quản theo những tiêu chuẩn nghiêm ngặt về vệ sinh và an toàn thực phẩm, đảm bảo về chất lượng của thực phẩm. Trứng gà to tròn, đều. Trứng gà thì bạn có thể luộc chín chế biến thành một số món ăn khác như: thịt kho trứng, cơm chiên trứng,...",
           quantityValue: 1,
@@ -176,6 +186,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //11
           proName: "Cá hồi đông lạnh túi 300g (1-2 miếng)",
           proDescription: "Với thịt cá ngọt, béo ngậy, tươi rói, cá hồi thường được các chị em chọn làm nguyên liệu chính cho các bữa ăn. Cá hồi đông lạnh giúp bảo quản lâu hơn mà thịt cá vẫn chắc, không bở mà vẫn giữ nguyên vị đậm đà.",
           quantityValue: 1,
@@ -192,7 +203,7 @@ module.exports = {
           productImage: "/resources/static/assets/images/product/ca-hoi-dong-lanh-tui-300g.jpeg", 
           isSelling: true
         },
-        {
+        {//12
           proName: "Mực nang túi 200g",
           proDescription: "Mực nang có thân to, thớ thịt dày, có vị ngọt và giòn hơn các loại mực khác. Vì thế mực nang là nguyên liệu chế biến nhiều món ăn ngon, một số món đặc biệt trong gia đình là mực xào chua ngọt, mực xào sa tế, mực chiên giòn,.... Mua về chế biến cho cả nhà ăn thử ngay nhé.",
           quantityValue: 1,
@@ -210,6 +221,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //13
           proName: "Mực lá đại dương túi 300g",
           proDescription: "Là loại hải sản có vị ngọt, giòn, dễ ăn và dinh dưỡng vô cùng. Mực lá thường được chế biến thành rất nhiều món ăn khác nhau như cháo mực, mực nướng, mực xào sa tế,... Mực lá Bách hoá XANH tươi ngon, hàng nhập mới mỗi ngày",
           quantityValue: 300,
@@ -227,6 +239,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //14
           proName: "Hàu sống nguyên con túi 1kg",
           proDescription: "Hàu là một loại thực phẩm rất giàu chất bổ và dinh dưỡng, đặc biệt là chứa nhiều kẽm và mang đến những lợi ích tốt cho sức khoẻ. Hàu sống tại Bách hoá XANH luôn được đảm bảo hàng tươi ngon, nguồn cung chất lượng, đem đến những bữa ăn tuyệt vời cho mọi nhà.",
           quantityValue: 1,
@@ -245,6 +258,7 @@ module.exports = {
         },
         //productCategory 2
         {
+          //15
           proName: "Giá đậu xanh túi 300g",
           proDescription: "Giá đậu xanh của Bách hóa Xanh được nuôi trồng và đóng gói theo những tiêu chuẩn nghiêm ngặt, bảo đảm các tiêu chuẩn xanh - sach, chất lượng và an toàn với người dùng. Giá giòn, ngọt thường được dùng làm rau ăn kèm cho các món có nước như bún, phở hoặc nấu canh chua, xào với thịt.",
           quantityValue: 300,
@@ -262,6 +276,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //16
           proName: "Tỏi cô đơn Huy Vũ gói 250g",
           proDescription: "Tỏi cô đơn Huy Vũ gói 250g tại Bách hoá XANH với củ tỏi to, ngon, tỏi là một gia vị không thể thiếu trong căn bếp của mỗi nhà, tỏi giúp dậy mùi thơm, tăng thêm hương vị cho các món ăn, nhờ đó giúp các món ăn thêm hấp dẫn. Tỏi là một loại gia vị không thể thiếu trong gian bếp của mỗi nhà. Tỏi không những giúp làm tăng hương vị cho món ăn mà còn có nhiều tác dụng trong việc phòng, điều trị một số bệnh hiệu quả. Tỏi cô đơn hay còn được gọi là tỏi một tép, tỏi một nhánh, tỏi mồ côi, tỏi đơn, loại tỏi này được tạo thành do sự đột biến trong quá trình sinh trưởng. Chúng chỉ phát triển được một tép thay vì đẻ ra nhiều tép. ",
           quantityValue: 250,
@@ -279,6 +294,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //17
           proName: "Rau má bịch 200g",
           proDescription: "Rau má bịch 200g tươi ngon vô cùng, nấu được nhiều món ngon và mang lại nhiều lợi ích hữu dụng trong làm đẹp mà chị em nào cũng thích. Rau má xay sinh tố thì mát, đẹp da, rau má đắp mặt nạ thì giúp trị mụn, có thể nói đây là món rau không thể thiếu trong bếp của các chị em.",
           quantityValue: 200,
@@ -296,6 +312,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //18
           proName: "Bông cải trắng túi 500g",
           proDescription: "Bông cải trắng của Bách hóa Xanh được nuôi trồng và đóng gói theo những tiêu chuẩn nghiêm ngặt, bảo đảm các tiêu chuẩn xanh - sach, chất lượng và an toàn với người dùng. Hàm lượng dinh dưỡng cao, vị giòn ngọt nên thường được dùng để chế biến các món xào hoặc luộc, giúp tăng cường miễn dịch.",
           quantityValue: 500,
@@ -313,6 +330,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //19
           proName: "Xà lách xoong túi 500g",
           proDescription: "Xà lách xoong túi 500g tại Bách hoá XANH tươi xanh và thơm ngon vô cùng. Loại xà lách xoong này tươi xanh, đem nấu canh với thịt tôm siêu bắt cơm và được rất nhiều người ưa chuộng luôn",
           quantityValue: 500,
@@ -330,6 +348,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //20
           proName: "Bí đỏ hồ lô túi 700g",
           proDescription: "Còn gọi là bí đỏ hạt đậu, đây là giống bí có ruột rất đặc, ít hả ăn dẻo và ngọt. Bí hồ lô chứa nhiều chất dinh dưỡng và mang lại nhiều lợi ích cho sức khoẻ. Bí hồ lô có thể chế biến thành nhiều món ăn ngon như: sữa bí, canh bí, súp bí,... món nào cũng đều thơm ngon.",
           quantityValue: 700,
@@ -347,6 +366,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //21
           proName: "Ớt chuông xanh túi 300g (1-3 trái)",
           proDescription: "Có kích thước to và có nhiều màu sắc khác nhau như: xanh, vàng, đỏ... Ớt chuông này không có vị cay gắt như các loại ớt thông thường khác mà có vị giòn nên thích hợp cho các món xào, ăn sống. Loại ớt này còn chứa nhiều khoáng chất và vitamin tốt cho cơ thể.",
           quantityValue: 300,
@@ -364,6 +384,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //22
           proName: "Ớt chuông đỏ túi 300g (1-2 quả)",
           proDescription: "Ớt chuông đỏ có kích thước to và có nhiều màu sắc khác nhau như: xanh, vàng, đỏ... Ớt chuông đỏ này không có vị cay gắt như các loại ớt thông thường khác mà có vị giòn nên thích hợp cho các món xào, ăn sống. Loại ớt này còn chứa nhiều khoáng chất và vitamin tốt cho cơ thể.",
           quantityValue: 300,
@@ -381,6 +402,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //23
           proName: "Cà chua túi 500g (7-9 trái)",
           proDescription: "Là loại rau củ rất tốt cho sức khoẻ của người sử dụng, loại rau củ này không những giúp bổ sung chất dinh dưỡng cần thiết cho cơ thể mà chúng có giúp làm đẹp da cho phái nữ. Cà chua có thể ăn sống hoặc chế biến các món ăn cũng rất ngon.",
           quantityValue: 500,
@@ -398,6 +420,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //24
           proName: "Dưa leo baby khay 500g (10-12 trái)",
           proDescription: "Dưa leo baby là một giống dưa mới, được trồng khá nhiều ở nước ta, đây là một loại rau củ rất ngon, gần như là quen thuộc trong tất cả bữa ăn ở mọi gia đình. Dưa leo chứa rất nhiều chất dinh dưỡng và vitamin rất tốt cho cơ thể. Ngoài ra, dưa leo còn có thể dụng để làm đẹp cũng rất hiệu quả.",
           quantityValue: 500,
@@ -415,6 +438,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //25
           proName: "Nấm đùi gà túi 200g (2-4 cái)",
           proDescription: "Nấm đùi gà của Bách hóa Xanh được nuôi trồng và đóng gói theo những tiêu chuẩn nghiêm ngặt, bảo đảm các tiêu chuẩn xanh - sach, chất lượng và an toàn với người dùng. Nấm giòn dai, ngọt thịt, nhiều dinh dưỡng thường được dùng cho các món xào, chiên giòn hoặc nướng ăn kèm với các loại xốt chấm.",
           quantityValue: 200,
@@ -433,6 +457,7 @@ module.exports = {
         },
         //productCategory 3
         {
+          //26
           proName: "Hủ tiếu Nam Vang Cung Đình gói 78g",
           proDescription: "Bữa ăn cực tiện lợi và thơm ngon. Hủ tiếu Nam Vang Cung Đình gói 78g là sản phẩm hủ tiếu ăn liền của Cung Đình hương vị hủ tiếu Nam Vang đặc trưng thấm đều trong từng sợi hủ tiếu dai ngon đậm đà cực đã cùng mùi hương hấp dẫn lôi cuốn không thể chối từ",
           quantityValue: 78,
@@ -450,6 +475,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //27
           proName: "Thùng 30 gói phở gà Cung Đình Hà Nội 68g",
           proDescription: "Phở có sợi to, đẹp, khá là thơm và có gói nước cốt xương hầm, vị đậm vị. Thùng 30 gói phở gà Cung Đình Hà Nội 68g (có gói nước cốt xương hầm) thơm ngon, đậm đà kích thích vị giác. Phở Cung Đình chất lượng là lựa chọn sáng suốt cho bữa sáng chất lượng.",
           quantityValue: 1,
@@ -467,6 +493,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //28
           proName: "Thùng 24 ly miến cua Vifon 50g",
           proDescription: "Là sản phẩm miến ăn liền tiện cho cho những ngày bận rộn cần một bữa ăn nhanh gọn và dinh dưỡng. 24 ly miến cua Vifon 50g với sợi miến dai đặc biệt hòa quyện cùng nước súp Vifon vị cua đậm đà cực quyến rũ hấp dẫn không thể chối từ",
           quantityValue: 1,
@@ -484,6 +511,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //29
           proName: "Bánh đa cua Vifon tô 125g (có gói riêu cua thật)",
           proDescription: "Bánh đa từng sợi dai ngon hòa quyện trong nước súp vị cua Vifon đậm đà cùng gói riêu cua thật chất lượng cùng mùi hương hấp dẫn.  Bánh đa cua Vifon tô 125g mang đến cho bạn bữa ăn tiện lợi nhanh chóng đơn giản mà vẫn đầy đủ dinh dưỡng. Sản phẩm cam kết chất lượng và an toàn",
           quantityValue: 125,
@@ -501,6 +529,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //30
           proName: "Bánh gạo cắt lát tokpokki Matamun gói 600g",
           proDescription: "Bánh gạo dạng gói chất lượng, dai ngon từ thương hiệu Matamun được sản xuất tại Hàn Quốc. Bánh gạo cắt lát tokpokki Matamun gói 600g tiện lợi cho bạn trổ tài sáng tạo chế biến các món ăn hấp dẫn như sốt cay, sốt phô mi, nấu lẩu,...Sản phẩm cam kết chính hãng và an toàn",
           quantityValue: 600,
@@ -519,6 +548,7 @@ module.exports = {
         },
         //productCategory 4:
         {
+          //31
           proName: "Muối I-ốt Bạc Liêu gói 500g",
           proDescription: "Là loại muối đã được sấy khô, hạt trắng mịn đến từ muối Bạc Liêu. Muối i-ốt Bạc Liêu gói 500g có màu sắc và vị mặn đặc trưng, được dùng làm phụ gia trực tiếp trong các bếp ăn. bổ sung i-ốt giúp phòng chống các rối loạn do thiếu i-ốt, phát triển trí tuệ và tăng cường sức khỏe.",
           quantityValue: 500,
@@ -536,6 +566,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //32
           proName: "Tiêu chín đỏ Phú Quốc DH Foods Natural có nắp xay 45g",
           proDescription: "Tiêu chín đỏ có vị thơm và cay nồng thích hợp để chế biến nhiều món ăn từ các món kho đến món xào hay nấu canh… Tiêu chín đỏ Phú Quốc Natural DH Foods hũ có cối xay 45ggiúp các món ăn thêm trọn vị. Hũ thuỷ tinh có nắp xay tiện lợi, tinh tế, giúp bảo chất chất lượng tốt hơn. ",
           quantityValue: 45,
@@ -553,6 +584,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //33
           proName: "Đường mía thượng hạng Biên Hòa gói 1kg",
           proDescription: "Sản phẩm ứng dụng công nghệ tiên tiến, chiết ép lượng đường từ những cây mía tốt nhất, không sử dụng hóa chất tẩy trắng. Đường mía thượng hạng Biên Hòa có vị ngọt dịu, thơm ngon, hấp dẫn, có màu trắng tự nhiên, dễ hòa tan, do đó có thể dùng chế biến nhiều món ăn, pha chế nhiều loại đồ uống khác.",
           quantityValue: 1000,
@@ -570,6 +602,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //34
           proName: "Dầu thực vật Tường An Cooking Oil chai 1 lít",
           proDescription: "Là dầu ăn chiết xuất dầu olein nguyên chất, giàu Omega 3,6,9 và Vitamin A, E có lợi cho cơ thể. Dầu thực vật Tường An Cooking Oil chai 1 lít được áp dụng công nghệ tinh luyện của dầu ăn Tường An kết hợp với phương pháp tinh luyện vật lý trên các dây chuyền sản xuất hiện đại.",
           quantityValue: 1000,
@@ -587,6 +620,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //35
           proName: "Hạt nêm ngọt tôm thơm thịt Chinsu gói 800g",
           proDescription: "Sự kết hợp tinh túy giữa vị ngọt thanh tự nhiên từ tôm và đậm thơm xương thịt cho mọi món canh, kho, xào ngọt tự nhiên, ngon tròn vị. Sản phẩm mang đến vị ngọt thanh từ thịt tôm và đậm thơm xương thịt cấu tạo hạt nhỏ, dễ tan giúp thấm nhanh, nâng vị mọi món ăn nước dùng trong, vị ngọt thanh.",
           quantityValue: 800,
@@ -604,6 +638,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //36
           proName: "Bột ngọt Ajinomoto gói 454g",
           proDescription: "Được sản xuất bằng phương pháp lên men tự nhiên từ nguyên liệu thiên nhiên như mật mía đường và tinh bột khoai mì. Bột ngọt hạt lớn Ajinomoto 454g là một gia vị được sử dụng rộng rãi trong chế biến món ăn ở gia đình, quán ăn, nhà hàng và trong công nghiệp chế biến thực phẩm, giúp món ăn hấp dẫn hơn",
           quantityValue: 454,
@@ -621,6 +656,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //37
           proName: "Nước chấm Nam Ngư Đệ Nhị chai 900ml",
           proDescription: "",
           quantityValue: 78,
@@ -638,6 +674,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //38
           proName: "Muối ớt chanh vị wasabi Fadely chai 200g",
           proDescription: "Là sản phẩm quen thuộc trong bữa ăn hằng ngày đến từ thương hiệu Fadely. Muối ớt chanh wasabi Fadely chai 200g là loại nước chấm mang hương vị chua chua từ chanh, cay cay từ trái ớt xiêm xanh sẽ đánh thức vị hải sản tươi ngon, bùng nổ vị giác ngay từ lần chấm đầu tiên.",
           quantityValue: 200,
@@ -655,6 +692,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //39
           proName: "Nước chấm Nam Ngư Đệ Nhị chai 900ml",
           proDescription: "Nước mắm là gia vị không thể thiếu để giúp món ăn thêm đậm đà. Nước chấm Nam Ngư đệ nhị chai 900ml với thành phần cá cơm tươi ngon cùng với công thức pha chế đặc biệt, mang đến hương vị thơm ngon, đậm đà. Nước chấm Nam Ngư mang đến những bữa ăn trọn vẹn, đảm bảo an toàn cho gia đình.",
           quantityValue: 900,
@@ -672,6 +710,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //40
           proName: "Tương ớt Chinsu chai 250g",
           proDescription: "Được chế tác từ những trái ớt đỏ chín cây với hương thơm nồng của tỏi cùng sự biến tấu tinh tế của các loại gia vị để chiết rót nên từng dòng tương ớt sóng sánh, thơm cay tròn vị, quyện chặt vào từng món ăn. Chai nhỏ giúp gia đình dễ dàng bảo quản và giữ được chất lượng tốt hơn.",
           quantityValue: 250,
@@ -690,6 +729,7 @@ module.exports = {
         },
         //productCategory 5:
         {
+          //41
           proName: "Xúc xích heo hảo hạng Pinku Oji gói 175g",
           proDescription: "Xúc xích thơm  ngon, đậm vị thịt heo  Xúc xích heo hảo hạng Pinku Oji gói 175g dinh dưỡng, tiện lợi dễ mang theo bên mình. Xúc xích Oji có thể ăn trực tiếp hoặc ăn kèm với những thức ăn khác như bánh mì, mì tôm, bánh pizza,... cũng rất hấp dẫn",
           quantityValue: 175,
@@ -707,6 +747,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //42
           proName: "Bột rau câu giòn Bà Bảy gói 25g",
           proDescription: "Sản phẩm được đóng thành gói dễ sử dụng như xé, mở,... với khối lương 25g nhưng lượng rau câu tạo ra không ít, đủ cho gia đình thưởng thức. Bột rau câu giòn Bà Bảy gói 25g để đem đến cho chúng ta gói sản phẩm tiện lợi chỉ mất 10 phút là có ngay món ngon thưởng thức rồi đấy.",
           quantityValue: 25,
@@ -724,6 +765,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //43
           proName: "Sương sáo đen VinaThạch gói 50g",
           proDescription: "Với nguyên liệu an toàn, tự nhiên từ  bột sương sáo đen, bột năng,...Bột sương sáo đen VinaThạchh tiện dụng, hương vị thơm ngon, thanh mát.  Bột sương sáo VinaThạch tiện lợi, an toàn và dễ chế biến thành món ăn thanh mát mùa hè.",
           quantityValue: 50,
@@ -741,6 +783,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //44
           proName: "Bột gạo New Grade gói 400g",
           proDescription: "Là sản phẩm nổi tiếng của Thái Lan được nhiều người tin tưởng về chất lượng của nó nên khách hàng có thể an tâm sử dụng với 100% từ bột gạo. Bột gạo New Grade gói 400g là nguyên liệu cho các món bánh giò, bánh đúc, bánh cuốn,...",
           quantityValue: 400,
@@ -758,6 +801,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //45
           proName: "Bột mì đa dụng Địa Cầu gói 500g",
           proDescription: "Bột mì đa dụng Địa Cầu chuyên để làm các loại bánh bông lan, cookies, bánh bích qui, bánh mì các loại, bánh tiêu, bánh quẩy và bột tẩm chiên cho các loại gà, hải sản, rau củ quả,...Bột mì đa dụng Địa Cầu gói 500g tiện lợi, cho bạn thỏa sức nấu nướng.",
           quantityValue: 500,
@@ -775,6 +819,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //46
           proName: "Bột năng Tài Ký gói 1kg",
           proDescription: "Tiện lợi, bột được tẩm gia vị vừa phải, sánh mịn, thơm ngon. Mua Bột năng Tài Ký gói 1kg có thể làm nguyên liệu cho nhiều loại bánh như bánh bột lọc, hoặc làm nguyên liệu sệt các món chè, súp. Bột năng Tài Ký chất lượng, an toàn",
           quantityValue: 1000,
@@ -792,6 +837,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //47
           proName: "Bột baking soda Arm & Hammer hộp 454g",
           proDescription: "",
           quantityValue: 454,
@@ -809,6 +855,7 @@ module.exports = {
           isSelling: true
         },
         {
+          //48
           proName: "Bột chiên Tempura Dali Food gói 150g",
           proDescription: "Bột chiên Tempura Dali Food gói 150g tiện dụng, được căn chỉnh hoàn hảo, cho món chiên giòn rụm thơm ngon. Không chỉ rau, củ, trái cây, bột tempura cũng có thể dùng để chế biến hải sản vô cùng tươi ngon, đặc biệt là món tôm sú tempura ngon đúng điệu với qua những bước vô cùng đơn giản",
           quantityValue: 150,
