@@ -135,6 +135,12 @@ export default function userScreen({navigation, route}){
                         <Text style={styles.menuItemText}>Danh mục món ăn yêu thích</Text>
                     </View>
                 </TouchableRipple>
+                <TouchableRipple onPress={()=>{navigation.navigate('marketNoteScreen', {userData: userData})}}>
+                    <View style={styles.menuItem}>
+                        <Icon name="bookmark-outline" color="#FE6347" size={25}/>
+                        <Text style={styles.menuItemText}>Quản lý ghi chú</Text>
+                    </View>
+                </TouchableRipple>
                 <TouchableRipple onPress={()=>{navigation.navigate('updateUserProfileScreen',{ userData : data})}}>
                     <View style={styles.menuItem}>
                         <Icon name="cog-outline" color="#FE6347" size={25}/>

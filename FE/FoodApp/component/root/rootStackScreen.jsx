@@ -17,6 +17,7 @@ import userOrderManagementScreen from '../screens/userOrderManagementScreen';
 import ordersDetailBillScreen from '../screens/Orders/orderDetailBillScreen';
 import foodMaterialsScreen from '../screens/foodMeterialScreen';
 import changePasswordScreen from '../screens/changePasswordScreen';
+import marketNoteScreen from '../screens/marketNoteScreen';
 
 const RootStack = createStackNavigator();
 
@@ -37,6 +38,7 @@ const rootStackScreen = () => (
         <RootStack.Screen name="ordersDetailBillScreen" component={ordersDetailBillScreen} options={{headerShown: false}}/>
         <RootStack.Screen name="foodMaterialsScreen" component={foodMaterialsScreen} options={{headerShown: false}}/>
         <RootStack.Screen name="changePasswordScreen" component={changePasswordScreen} options={{headerShown: false}}/>
+        <RootStack.Screen name="marketNoteScreen" component={marketNoteScreen} options={{headerShown: false}}/>
     </RootStack.Navigator>
 );
 

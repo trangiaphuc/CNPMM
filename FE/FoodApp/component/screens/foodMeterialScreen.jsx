@@ -55,7 +55,7 @@ export default function foodMeterialScreen({navigation, route}){
                 </View>
             </View>
             <View style={{flexDirection: 'column'}}>
-                <View style={{height: '55%'}}>
+                <View style={{height: '50%'}}>
                     <Text style={styles.textMeterial}>1. Nguyên liệu cần chuẩn bị</Text>
                     <ScrollView>
                         {
@@ -70,7 +70,42 @@ export default function foodMeterialScreen({navigation, route}){
                         }
                     </ScrollView>
                 </View>
-                <View style={{height: '40%'}}>
+                <TouchableOpacity style={{alignItems: 'center'}} onPress={() =>{
+                    var marketNote = [];
+                    var today = new Date();
+                    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+                    extractNote.forEach(item=>{
+                        marketNote.push({
+                            "marketNoteText": item.foodMaterialName,
+                            "remindDate": date,
+                            "isDone": false,
+                            "isDelete": false
+                        })
+                    })
+                    API.post(`marketnote/${userData.id}/add/`,{listMarketNoteItems: marketNote},
+                        {
+                             headers:{
+                                    'Content-Type': 'application/json',
+                                    'x-access-token': userData.accessToken,
+                                },
+                        })
+                        .then(res => {
+                            if(res.status===201)
+                            {
+                                Alert.alert("Thông báo","Thêm vào note thành công");
+                            }
+                        }).catch(error => {
+                                alert('Error', error.res);
+                        });
+                }}>
+                    <Text style={{borderWidth:0.5, paddingLeft: 30, paddingRight: 30,
+                        paddingBottom: 2,
+                        paddingTop:2,
+                        backgroundColor: '#FF4B3A',
+                        borderRadius: 3,
+                        color: '#FFFFFF'}}>Thêm vào note</Text>
+                </TouchableOpacity>
+                <View style={{height: '42%'}}>
                     <Text style={styles.textMeterial}>2. Nguyên liệu có sẳn tại cửa hàng</Text>
                     <ScrollView>
                         {
