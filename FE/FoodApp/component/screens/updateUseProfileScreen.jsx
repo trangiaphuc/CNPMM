@@ -90,7 +90,7 @@ export default function updateUserProfile({navigation, route}){
             },
         })
         .then(res =>{
-            console.log(res);
+            //console.log(res);
             if(res.status == 500){
                 alert('Thất bại', 'Lỗi Server!')
             }

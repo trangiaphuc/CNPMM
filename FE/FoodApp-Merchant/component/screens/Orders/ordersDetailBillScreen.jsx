@@ -144,7 +144,7 @@ export default function ordersDetailBillScreen({navigation, route}){
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.textAddress}>Địa chỉ: </Text>
-                        <Text>{userInfo.address}</Text>
+                        <Text style={{flex: 1}}>{orders.addressDelivery}</Text>
                     </View>
                 </View>
                 <View style={styles.containerProduct}>

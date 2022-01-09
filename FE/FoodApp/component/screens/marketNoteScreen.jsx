@@ -51,21 +51,7 @@ export default function marketNoteScreen({navigation, route}){
                         alert('Error', error.res);
                 });
     }
-    // const EditNoteNotDone =(id)=>{
-    //     //alert(id);
-    //         API.post(`marketnote/${userData.id}/edit/${id}`,{isDone: true},
-    //             {
-    //                 headers:{
-    //                     'Content-Type': 'application/json',
-    //                     'x-access-token': userData.accessToken,
-    //                 },
-    //             })
-    //             .then(res => {
-    //                 fetchDataMarketNoteList();
-    //             }).catch(error => {
-    //                     alert('Error', error.res);
-    //             });
-    // }
+    
 
     const SetCardNote=(item)=>{
         if(item.isDone==0){
@@ -77,7 +63,18 @@ export default function marketNoteScreen({navigation, route}){
                             <Text>{'Ngày thêm: '+item.remindDate}</Text>
                         </View>
                         <TouchableOpacity style={{flex: 1.5, justifyContent: 'center'}} onPress={()=>{
-                    
+                            API.post(`marketnote/${userData.id}/edit/${item.id}`,{isDone: true},
+                            {
+                                headers:{
+                                    'Content-Type': 'application/json',
+                                    'x-access-token': userData.accessToken,
+                                },
+                            })
+                            .then(res => {
+                                fetchDataMarketNoteList();
+                            }).catch(error => {
+                                    alert('Error', error.res);
+                            });
                         }}>
                             <FontAwesome
                                 name="check"
@@ -104,7 +101,20 @@ export default function marketNoteScreen({navigation, route}){
                             <Text style={{fontSize: 15, fontWeight: 'bold'}}>{item.marketNoteText}</Text>
                             <Text>{'Ngày thêm: '+item.remindDate}</Text>
                         </View>
-                        <TouchableOpacity style={{flex: 1.5, justifyContent: 'center'}} onPress={()=>{}}>
+                        <TouchableOpacity style={{flex: 1.5, justifyContent: 'center'}} onPress={()=>{
+                            API.post(`marketnote/${userData.id}/edit/${item.id}`,{isDone: false},
+                            {
+                                headers:{
+                                    'Content-Type': 'application/json',
+                                    'x-access-token': userData.accessToken,
+                                },
+                            })
+                            .then(res => {
+                                fetchDataMarketNoteList();
+                            }).catch(error => {
+                                alert('Error', error.res);
+                            });
+                        }}>
                             <FontAwesome
                                 name="times-circle"
                                 color="#05375a"

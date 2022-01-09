@@ -38,7 +38,7 @@ export default function addNewFoodScreen({navigation, route}){
     const[searchProduct, setSearchPeoduct]=useState([]);
    
     for(let i=0; i< searchProduct.length; i++){
-        console.log(searchProduct[i].proName);
+        //console.log(searchProduct[i].proName);
     }
 
 
@@ -169,7 +169,7 @@ export default function addNewFoodScreen({navigation, route}){
 
         })
         .then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             if(res.status===201){
                 API.post(`merchant/foods/addnewfood/detail/${res.data.data.id}`,data,
                     {
@@ -192,7 +192,7 @@ export default function addNewFoodScreen({navigation, route}){
         });
     }
     const onValueChange=(itemValue) => {
-        console.log(itemValue);
+        //console.log(itemValue);
     }
     return (
         <SafeAreaView>

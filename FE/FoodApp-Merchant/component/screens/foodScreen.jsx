@@ -125,7 +125,7 @@ export default function userScreen({navigation, route}){
                             />
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.returnTextSearch}>Tìm kiếm món ăn</Text>
+                    
                    
                 </View>
                 <ScrollView>
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     },
     returnTextSearch:{
         marginTop: 25,
-        marginLeft: 85,
+        marginLeft: 65,
         fontWeight: 'bold',
         fontSize: 20,
         color: '#05375a'
