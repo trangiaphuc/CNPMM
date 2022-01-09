@@ -25,8 +25,8 @@ module.exports = function(app){
     [authJwt.verifyToken],
     controller.deleteMarketNote);
 
-    //delete
-    app.put('/api/marketnote/:userId/edit/:marketNoteId', 
+    //Edit
+    app.post('/api/marketnote/:userId/edit/:marketNoteId', 
     [authJwt.verifyToken],
     controller.editNote);
 
