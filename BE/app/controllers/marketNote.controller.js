@@ -109,6 +109,7 @@ exports.deleteMarketNote = (req, res) =>{
 exports.editNote = (req, res) =>{
     
     const userId = req.params.userId;
+    const marketNoteId = req.params.marketNoteId
     MarketNote.findOne({
         logging: (sql, queryObject) =>{
             logger.info(sql, queryObject);
@@ -116,6 +117,7 @@ exports.editNote = (req, res) =>{
         where: {
             userId: userId, 
             isDeleted: false,
+            id: marketNoteId,
         }
     })
     .then(marketNote =>{
