@@ -61,6 +61,7 @@ export default function foodDetailScreen({route, navigation}){
                 {
                     headers:{
                         'Content-Type': 'multipart/form-data',
+                        'x-access-token': userData.accessToken,
                     },
 
                 })
