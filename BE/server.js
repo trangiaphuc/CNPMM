@@ -4,14 +4,14 @@ const app = express();
 const db = require("./app/models");
 const logger = require("./app/winston/winston");
 
-var corsOptions = {
-  origin: "http://localhost:19006",
-};
+// var corsOptions = {
+//   origin: "http://localhost:19006",
+// };
 
 global.__basedir = __dirname;
 
 //use cors middleware
-app.use(cors(corsOptions));
+app.use(cors());
 // app.use(cors());
 // app.options("*", cors());
 //app.use(cors());
