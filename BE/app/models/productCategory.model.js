@@ -1,10 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
     const ProductCategory = sequelize.define("productCategories", {
         catName: {
-             type: Sequelize.STRING,
+             type: Sequelize.TEXT,
         },
         catIcon: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         isShowing: {
             type: Sequelize.BOOLEAN,

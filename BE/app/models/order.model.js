@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Order = sequelize.define("orders", {
         addressDelivery: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
         },
         deliveryAt:{
             type: Sequelize.DATEONLY,

@@ -2,10 +2,10 @@ module.exports = (sequelize, Sequelize) => {
     const FoodMaterial = sequelize.define("foodMaterials", {
 
         foodMaterialName:{
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         quantityDescription:{
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         quantityValue:{
             type: Sequelize.FLOAT

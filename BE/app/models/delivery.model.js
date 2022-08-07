@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Delivery = sequelize.define("deliveryMethods", {
         deliveryMethod:{
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         fee: {
             type: Sequelize.FLOAT

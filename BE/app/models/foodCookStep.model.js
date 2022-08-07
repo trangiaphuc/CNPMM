@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
         },
         stepDescription: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
     });
     return FoodCookStep;

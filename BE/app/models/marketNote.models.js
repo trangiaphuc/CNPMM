@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const MarketNote = sequelize.define("marketNotes", {
       marketNoteText: {
-          type: Sequelize.STRING
+          type: Sequelize.TEXT
       },
       remindDate:{
           type: Sequelize.DATEONLY

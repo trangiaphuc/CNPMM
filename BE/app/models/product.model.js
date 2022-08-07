@@ -1,10 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
     const Product = sequelize.define("products", {
         proName: {
-            type : Sequelize.STRING,
+            type : Sequelize.TEXT,
         },
         proDescription: {
-            type : Sequelize.STRING,
+            type : Sequelize.TEXT,
         },
         quantityValue: {
             type: Sequelize.FLOAT
@@ -13,10 +13,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.FLOAT,
         },
         brand: {
-            type : Sequelize.STRING,
+            type : Sequelize.TEXT,
         },
         origin: {
-            type : Sequelize.STRING
+            type : Sequelize.TEXT
         },//noi san xuat
         productAt:{
             type : Sequelize.DATEONLY
@@ -25,13 +25,13 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.STRING
         },
         manual:{
-            type : Sequelize.STRING
+            type : Sequelize.TEXT
         },
         preserve: {
-            type : Sequelize.STRING
+            type : Sequelize.TEXT
         },
         productImage: {
-            type : Sequelize.STRING
+            type : Sequelize.TEXT
         },
         isSelling: {
             type : Sequelize.BOOLEAN

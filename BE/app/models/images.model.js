@@ -1,16 +1,16 @@
 module.exports = (sequelize, Sequelize) => {
     const Image = sequelize.define("image", {
       type: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       alt: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       path: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
     });
     return Image;
