@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import { Avatar, Title, Caption, TouchableRipple } from "react-native-paper";
 import { Card } from "react-native-elements";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import API from "../services/api";
 

@@ -8,9 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import axios from "axios";
-import { Avatar, Title, Caption, TouchableRipple } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import API from "../services/api";
 import { useIsFocused } from "@react-navigation/native";
 import { Card } from "react-native-elements";

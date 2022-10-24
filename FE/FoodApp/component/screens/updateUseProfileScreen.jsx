@@ -11,14 +11,14 @@ import {
   Alert,
   Image,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import axios from "axios";
 //import signInScreen from "./signInScreen";
-import darBoardScreen from "./darBoardScreen";
+
 import API from "../services/api";
-import ComboBox from "react-native-combobox";
+
 
 export default function updateUserProfile({ navigation, route }) {
   const { userData } = route.params;

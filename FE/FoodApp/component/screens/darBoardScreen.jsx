@@ -1,15 +1,12 @@
 import React from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import homeScreen from "../screens/homeScreen";
 import userScreen from "../screens/userScreen";
 import foodScreen from "./foodScreen";
 import cartScreen from "./cartScreen";
 import welcomScreen from "./welcomScreen";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 const Tab = createBottomTabNavigator();
 const darBoardScreen = ({ route, navigation }) => {

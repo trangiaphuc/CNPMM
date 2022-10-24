@@ -11,12 +11,10 @@ import {
   Form,
   Alert,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
-import axios from "axios";
-import darBoardScreen from "./darBoardScreen";
-import welcomScreen from "./welcomScreen";
+
 import API from "../services/api";
 //import { error } from "../../../../BE/app/winston/winston";
 //import authServices from "../../services/authServices";

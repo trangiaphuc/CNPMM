@@ -10,10 +10,9 @@ import {
   RefreshControl,
   ScrollView,
 } from "react-native";
-import axios from "axios";
+
 import { Card } from "react-native-elements";
-import { CheckBox } from "react-native-elements";
-import NumericInput from "react-native-numeric-input";
+
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useIsFocused } from "@react-navigation/native";
 import API from "../services/api";

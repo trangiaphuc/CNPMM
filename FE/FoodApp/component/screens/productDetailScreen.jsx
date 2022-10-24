@@ -10,7 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { Card } from "react-native-elements";
-import axios from "axios";
+
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState, useEffect } from "react";
 import API from "../services/api";

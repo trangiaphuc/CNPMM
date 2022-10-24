@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +16,6 @@
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.3",
     "mysql2": "^2.3.2",
-    "nodemon": "^2.0.16",
     "save": "^2.5.0",
     "seed": "^0.4.4",
     "sequelize": "^6.21.3",
@@ -24,6 +23,7 @@
     "winston-daily-rotate-file": "^4.5.5"
   },
   "devDependencies": {
+    "nodemon": "^2.0.20",
     "sequelize-cli": "^6.4.1"
   }
 }

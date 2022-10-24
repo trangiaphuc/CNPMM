@@ -12,11 +12,11 @@ import {
   Item,
   Alert,
 } from "react-native";
-import axios from "axios";
+
 import { Card } from "react-native-elements";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import RNRestart from "react-native-restart";
+
 import NumericInput from "react-native-numeric-input";
 import API from "../services/api";
 
