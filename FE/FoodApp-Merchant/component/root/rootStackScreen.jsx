@@ -53,6 +53,7 @@ import CLFavouriteFoodsScreen from "../screensClient/CLFoods/CLFavouriteFoodsScr
 import CLFoodsDetailScreen from "../screensClient/CLFoods/CLFoodsDetailScreen";
 import CLFoodsMaterialScreen from "../screensClient/CLFoods/CLFoodsMaterialScreen";
 import CLProductDetailScreen from "../screensClient/CLProducts/CLProductDetailScreen";
+import CLBillScreen from "../screensClient/CLCart/CLBillScreen";
 
 const RootStack = createStackNavigator();
 
@@ -303,6 +304,11 @@ const rootStackScreen = () => (
     <RootStack.Screen
       name="CLProductDetailScreen"
       component={CLProductDetailScreen}
+      options={{ headerShown: false }}
+    />
+    <RootStack.Screen
+      name="CLBillScreen"
+      component={CLBillScreen}
       options={{ headerShown: false }}
     />
   </RootStack.Navigator>

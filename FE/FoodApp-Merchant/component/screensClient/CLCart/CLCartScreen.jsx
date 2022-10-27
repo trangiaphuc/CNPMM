@@ -188,7 +188,7 @@ export default function historyScreen({ navigation, route }) {
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("billScreen", {
+            navigation.navigate("CLBillScreen", {
               userData: userData,
               product: cart,
             });

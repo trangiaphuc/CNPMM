@@ -49,6 +49,7 @@
     "react-native-numeric-input": "^1.9.0",
     "react-native-pager-view": "^5.4.9",
     "react-native-paper": "^4.11.1",
+    "react-native-public-ip": "^1.0.2",
     "react-native-refresh-control": "^2.1.0",
     "react-native-restart": "0.0.22",
     "react-native-safe-area-context": "^3.3.2",
