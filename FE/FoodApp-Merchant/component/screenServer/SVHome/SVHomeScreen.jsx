@@ -285,7 +285,7 @@ export default function SVHomeScreen({ navigation, route }) {
             height: 160,
             marginRight: 35,
             marginLeft: 35,
-            marginTop: 45,
+            marginTop: 70,
           }}
         >
           <TouchableOpacity>
@@ -362,9 +362,9 @@ export default function SVHomeScreen({ navigation, route }) {
         <View
           style={{
             flexDirection: "row",
-            alignItems: "center",
+            alignItems: "flex-end",
             justifyContent: "center",
-            marginBottom: 5,
+            marginBottom: 10,
           }}
         >
           <FontAwesome name="copyright" color="#ffffff" size={30} />
@@ -398,9 +398,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRadius: 20,
     zIndex: -1,
-    marginTop: 135,
     justifyContent: "center",
-    alignItems: "flex-end",
+    marginTop: 163,
   },
   returnIcon: {
     flex: 0.7,
