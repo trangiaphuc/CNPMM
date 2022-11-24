@@ -10,15 +10,17 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { getInfo, getOrder } from "../../services/callAPI";
-
+import { LinearGradient } from "expo-linear-gradient";
 import { Avatar, Title, Caption, TouchableRipple } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useIsFocused } from "@react-navigation/native";
+
 export default function userScreen({ navigation, route }) {
   const { userData } = route.params;
   const [data, setData] = useState([]);
   const [orders, setOrders] = useState([]);
   const isFocused = useIsFocused();
+  const [loading, setLoading] = useState(true);
   //console.log(orders);
   // const[lengthOrder, setLengthOrder] = useState([]);
 
@@ -68,50 +70,76 @@ export default function userScreen({ navigation, route }) {
                     style={{ width: 70, height: 70 }}
                   />
         </View> */}
-        <View style={styles.userInfoSection}>
-          <View style={{ flexDirection: "row", marginTop: 15 }}>
-            <Avatar.Image
-              source={{
-                uri: data.userAvatar,
+        <View>
+          <View
+            style={{
+              borderRadius: 15,
+              margin: 10,
+              backgroundColor: "#FE6347",
+            }}
+          >
+            <View
+              style={{
+                borderWidth: 2,
+                margin: 10,
+                borderRadius: 20,
+                borderColor: "#ffffff",
+                backgroundColor: "#FE6347",
               }}
-              size={80}
-            />
-            <View style={{ marginLeft: 20 }}>
-              <Title
-                style={[
-                  styles.title,
-                  {
+            >
+              <View style={styles.userInfoSection}>
+                <View
+                  style={{
+                    flexDirection: "row",
                     marginTop: 15,
-                    marginBottom: 5,
-                  },
-                ]}
-              >
-                {data.firstname + " " + data.lastname}
-              </Title>
-              <Caption style={styles.caption}>@{data.username}</Caption>
+                    marginBottom: 10,
+                  }}
+                >
+                  <Avatar.Image
+                    source={{
+                      uri: data.userAvatar,
+                    }}
+                    size={80}
+                  />
+                  <View style={{ marginLeft: 20 }}>
+                    <Title
+                      style={[
+                        styles.title,
+                        {
+                          marginTop: 15,
+                          marginBottom: 5,
+                        },
+                      ]}
+                    >
+                      {data.firstname + " " + data.lastname}
+                    </Title>
+                    <Caption style={styles.caption}>@{data.username}</Caption>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.userInfoSection}>
+                <View style={styles.row}>
+                  <Icon name="map-marker-radius" size={20} color="#ffffff" />
+                  <Text style={styles.text}>Viet Nam</Text>
+                </View>
+                <View style={styles.row}>
+                  <Icon name="phone" size={20} color="#ffffff" />
+                  <Text style={styles.text}>{data.phone}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Icon name="email" size={20} color="#ffffff" />
+                  <Text style={styles.text}>{data.email}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Icon name="calendar-account" size={20} color="#ffffff" />
+                  <Text style={styles.text}>{data.birthday}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Icon name="map-marker" size={20} color="#ffffff" />
+                  <Text style={styles.text}>{data.address}</Text>
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-        <View style={styles.userInfoSection}>
-          <View style={styles.row}>
-            <Icon name="map-marker-radius" size={20} />
-            <Text style={styles.text}>Viet Nam</Text>
-          </View>
-          <View style={styles.row}>
-            <Icon name="phone" size={20} />
-            <Text style={styles.text}>{data.phone}</Text>
-          </View>
-          <View style={styles.row}>
-            <Icon name="email" size={20} />
-            <Text style={styles.text}>{data.email}</Text>
-          </View>
-          <View style={styles.row}>
-            <Icon name="calendar-account" size={20} />
-            <Text style={styles.text}>{data.birthday}</Text>
-          </View>
-          <View style={styles.row}>
-            <Icon name="map-marker" size={20} />
-            <Text style={styles.text}>{data.address}</Text>
           </View>
         </View>
         <View style={{ borderWidth: 0.5, alignItems: "center" }}>
@@ -226,19 +254,21 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 10,
+    color: "#ffffff",
   },
   userInfoSection: {
-    paddingHorizontal: 30,
-    marginBottom: 25,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    color: "#ffffff",
   },
   caption: {
     fontSize: 14,
     lineHeight: 14,
     fontWeight: "500",
+    color: "#ffffff",
   },
   row: {
     flexDirection: "row",

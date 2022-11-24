@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -9,9 +9,24 @@ import {
   TextInput,
   Form,
   Alert,
+  ScrollView,
 } from "react-native";
+import { Card } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-export default function CLMarketNoteScreen({ navigation }) {
+import { getNote } from "../../services/callAPI";
+export default function CLMarketNoteScreen({ navigation, route }) {
+  const { userData } = route.params;
+  const [noteData, setNoteData] = useState([]);
+  //console.log(noteData);
+  const getNoteData = async () => {
+    const result = await getNote(userData);
+    if (result.status == 200) {
+      setNoteData(result.data.marketNotes);
+    }
+  };
+  useEffect(async () => {
+    await getNoteData();
+  }, [setNoteData]);
   return (
     <View>
       <View style={styles.return}>
@@ -26,6 +41,16 @@ export default function CLMarketNoteScreen({ navigation }) {
         </View>
         <Text style={styles.returnText}>Ghi chú</Text>
       </View>
+      <ScrollView style={{ height: "100%" }}>
+        {noteData.map((item) => (
+          <View key={item.id}>
+            <Card>
+              <Text>{item.marketNoteText}</Text>
+              <Text>{item.remindDate}</Text>
+            </Card>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }
