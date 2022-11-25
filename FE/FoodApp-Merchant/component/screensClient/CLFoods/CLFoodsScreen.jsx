@@ -225,6 +225,7 @@ export default function userScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
+    padding: 3,
     marginLeft: 3,
     borderWidth: 1,
     borderRadius: 20,

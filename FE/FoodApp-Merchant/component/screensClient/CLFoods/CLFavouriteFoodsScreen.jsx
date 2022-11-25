@@ -36,7 +36,6 @@ export default function CLFavouriteFoodsScreen({ navigation, route }) {
 
   useEffect(async () => {
     await fetchFavouriteCategory();
-
     await fetchdata();
   }, [setListCatFav, setData]);
 

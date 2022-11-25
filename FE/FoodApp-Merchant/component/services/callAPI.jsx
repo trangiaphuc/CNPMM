@@ -43,19 +43,6 @@ export const getOrder = async (userData) => {
     return err;
   }
 };
-export const getNote = async (userData) => {
-  try {
-    const response = await API.get(`marketnote/${userData.id}`, {
-      headers: {
-        // "Content-Type": "application/json",
-        "x-access-token": userData.accessToken,
-      },
-    });
-    return response;
-  } catch (err) {
-    return err;
-  }
-};
 //CLCartScreen
 export const getCartItem = async (userData) => {
   try {
@@ -70,6 +57,7 @@ export const getCartItem = async (userData) => {
     return err;
   }
 };
+
 export const addCartItem = async (userData, listItem) => {
   try {
     const response = await API.post(
@@ -84,6 +72,39 @@ export const addCartItem = async (userData, listItem) => {
         },
       }
     );
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const addNoteItem = async (userData, listItem) => {
+  try {
+    const response = await API.post(
+      `marketnote/${userData.id}/add/`,
+      {
+        listMarketNoteItems: listItem,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": userData.accessToken,
+        },
+      }
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
+export const getNote = async (userData) => {
+  try {
+    const response = await API.get(`marketnote/${userData.id}`, {
+      headers: {
+        // "Content-Type": "application/json",
+        "x-access-token": userData.accessToken,
+      },
+    });
     return response;
   } catch (err) {
     return err;

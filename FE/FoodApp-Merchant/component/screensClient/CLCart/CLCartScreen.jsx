@@ -94,7 +94,7 @@ export default function historyScreen({ navigation, route }) {
   useEffect(() => {
     //await updateCartItem();
     fetchdata();
-  }, [setCart, isFocused]);
+  }, [isFocused, setCart]);
 
   return (
     <View>

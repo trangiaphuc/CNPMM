@@ -40,9 +40,9 @@ export default function userScreen({ navigation, route }) {
     }
   };
 
-  useEffect(async () => {
-    await fetchdata();
-    await getUserOrder();
+  useEffect(() => {
+    fetchdata();
+    getUserOrder();
   }, [setData, setOrders, isFocused]);
 
   return (

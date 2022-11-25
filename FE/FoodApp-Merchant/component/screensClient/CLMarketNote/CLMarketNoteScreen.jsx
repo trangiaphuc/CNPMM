@@ -10,6 +10,7 @@ import {
   Form,
   Alert,
   ScrollView,
+  FlatList,
 } from "react-native";
 import { Card } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -24,9 +25,9 @@ export default function CLMarketNoteScreen({ navigation, route }) {
       setNoteData(result.data.marketNotes);
     }
   };
-  useEffect(async () => {
-    await getNoteData();
-  }, [setNoteData]);
+  useEffect(() => {
+    getNoteData();
+  }, []);
   return (
     <View>
       <View style={styles.return}>
@@ -41,16 +42,45 @@ export default function CLMarketNoteScreen({ navigation, route }) {
         </View>
         <Text style={styles.returnText}>Ghi chú</Text>
       </View>
-      <ScrollView style={{ height: "100%" }}>
+      <ScrollView
+        style={{ height: "92%", margin: 5 }}
+        horizontal
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          justifyContent: "center",
+        }}
+      >
+        <FlatList
+          data={noteData}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            return (
+              <Card
+                containerStyle={{
+                  height: 100,
+                  width: 180,
+                }}
+              >
+                <Text>{item.marketNoteText}</Text>
+                <Text>Huy</Text>
+              </Card>
+            );
+          }}
+          showsHorizontalScrollIndicator={false}
+          numColumns={2}
+        />
+      </ScrollView>
+      {/* <ScrollView style={{ height: "92%" }}>
         {noteData.map((item) => (
-          <View key={item.id}>
+          <View key={item.id} style={{}}>
             <Card>
               <Text>{item.marketNoteText}</Text>
               <Text>{item.remindDate}</Text>
             </Card>
           </View>
         ))}
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 }

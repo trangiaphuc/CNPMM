@@ -35,7 +35,7 @@ export default function SVManageProductCat({ navigation, route }) {
   };
   useEffect(async () => {
     await fetchdataCategory();
-  }, [isFocused]);
+  }, [isFocused, setCategory]);
 
   const ButtonSet = (item) => {
     if (item.isShowing == true) {

@@ -67,7 +67,7 @@ export default function SVHomeScreen({ navigation, route }) {
   useEffect(() => {
     fetchdata();
     getUserOrder();
-  }, [setUserInfo, isFocused]);
+  }, [setUserInfo, isFocused, setDataLengthConfirm, setDataLengthDelivery]);
   return (
     <View>
       <LinearGradient

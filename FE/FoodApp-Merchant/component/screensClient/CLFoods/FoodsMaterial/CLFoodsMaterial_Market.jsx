@@ -56,7 +56,7 @@ export default function CLFoodsMaterial_Market({ navigation, route }) {
   };
   useEffect(() => {
     fetchExtract();
-  }, []);
+  }, [setExtractCart]);
 
   return (
     <View style={{ height: "100%" }}>

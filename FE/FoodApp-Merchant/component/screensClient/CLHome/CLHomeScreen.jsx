@@ -68,7 +68,7 @@ export default function CLHomeScreen({ navigation, route }) {
 
   useEffect(async () => {
     await fetchdata();
-  }, [isFocused]);
+  }, [isFocused, setData, setDataFa]);
 
   if (dataFa.length === 0) {
     return (

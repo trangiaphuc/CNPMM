@@ -19,14 +19,15 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { getProductCat, getItemProductCat } from "../../services/callAPI";
 import NumericInput from "react-native-numeric-input";
 import API from "../../services/api";
+import { addCartItem } from "../../services/callAPI";
 
 export default function homeScreen({ navigation, route }) {
   const { userData } = route.params;
-
+  const numColumns = 2;
   const [data, setData] = useState([]);
-
+  const [quantityValue, setQuantityValue] = useState(0);
   const [productCategory, setProductCategory] = useState([]);
-  const [quantityValue, setQuantityValue] = useState([]);
+
   const [dataSearch, setDataSearch] = React.useState({
     textSearch: "",
   });
@@ -94,15 +95,36 @@ export default function homeScreen({ navigation, route }) {
     );
   };
 
-  const onChange = (value) => {
-    setQuantityValue(value);
-  };
+  // const onChange = (value) => {
+  //   setQuantityValue(value);
+  // };
 
   const textInputChange = (val) => {
     setDataSearch({
       ...dataSearch,
       textSearch: val,
     });
+  };
+  const onchange = (value) => {
+    // const quantityValue = value;
+    // console.log(quantityValue);
+    // //const [quantityValue, setQuantityValue] = useState(0);
+    setQuantityValue(value);
+  };
+
+  const formatData = (data, numColumns) => {
+    const numberOfFullRows = Math.floor(data.length / numColumns);
+
+    let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+    while (
+      numberOfElementsLastRow !== numColumns &&
+      numberOfElementsLastRow !== 0
+    ) {
+      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
+      numberOfElementsLastRow++;
+    }
+
+    return data;
   };
 
   const searchProduct = () => {
@@ -284,9 +306,8 @@ export default function homeScreen({ navigation, route }) {
             keyExtractor={(item) => item.id}
           />
         </ScrollView>
-      </View>
 
-      {/* <FlatList
+        {/* <FlatList
                 data={productCategory}
                 renderItem={({}) =>(
                     <View
@@ -303,96 +324,122 @@ export default function homeScreen({ navigation, route }) {
                 numColumns={2}
                 keyExtractor = {(item) => item.id}/> */}
 
-      <FlatList
-        data={productCategory}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("CLProductDetailScreen", {
-                productId: item.id,
-                userData: userData,
-              });
-            }}
-          >
-            <Card>
-              <Card.Title>{item.proName}</Card.Title>
-              <Card.Divider />
-              <Card.Image source={{ uri: item.productImage }} />
-
-              <View style={{ flex: 1, flexDirection: "row", padding: 10 }}>
-                <Text style={styles.price}>Giá:</Text>
-                <Text style={{ flex: 2 }}>{item.price}đ/kg</Text>
-              </View>
-              <Card.Divider />
-
-              <View style={styles.button}>
-                <View style={{ marginRight: 20 }}>
-                  <NumericInput
-                    minValue={1}
-                    maxValue={50}
-                    step={1}
-                    totalHeight={40}
-                    onChange={(value) => onChange(value)}
-                    rounded
-                  />
-                </View>
-                <View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (quantityValue !== 0) {
-                        API.post(
-                          `cart/${userData.id}/addCartItem`,
-                          {
-                            listCartItems: [
-                              { productId: item.id, quantity: quantityValue },
-                            ],
-                          },
-                          {
-                            headers: {
-                              "Content-Type": "application/json",
-                              "x-access-token": userData.accessToken,
-                            },
-                          }
-                        )
-                          .then((res) => {
-                            if (res.status === 201) {
-                              Alert.alert("Thông báo", res.data.message);
-
-                              //navigation.params.resetData();
-                              // RNRestart.Restart();
-                            }
-                          })
-                          .catch((error) => {
-                            //alert('Error', error.res);
-                            console.log(error.res);
-                          });
-                      } else {
-                        Alert.alert(
-                          "Thông báo",
-                          "Vui lòng chọn số lượng sản phẩm"
-                        );
-                      }
+        <ScrollView
+          horizontal
+          style={{ height: "95%" }}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        >
+          <FlatList
+            data={formatData(productCategory, numColumns)}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("CLProductDetailScreen", {
+                      productId: item.id,
+                      userData: userData,
+                    });
+                  }}
+                >
+                  <Card
+                    containerStyle={{
+                      width: 190,
+                      height: 250,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginHorizontal: 5,
+                      marginVertical: 10,
                     }}
                   >
-                    <LinearGradient
-                      colors={["#FF4B3A", "#FF4B3A"]}
-                      style={styles.signIn}
-                    >
-                      <FontAwesome
-                        name="shopping-cart"
-                        color="#FFFFFF"
-                        size={20}
+                    <View>
+                      <Card.Title>{item.proName}</Card.Title>
+                      <Card.Divider />
+                      <Card.Image
+                        source={{ uri: item.productImage }}
+                        style={{
+                          width: 150,
+                          height: 70,
+                        }}
                       />
-                      <Text style={styles.textSign}>Thêm vào giỏ hàng</Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Card>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.id}
-      />
+                    </View>
+                    <Card.Divider />
+                    <View style={{ flexDirection: "row", marginLeft: 10 }}>
+                      <Text style={{ flex: 1 }}>Giá:</Text>
+                      <Text style={{ flex: 2 }}>{item.price}đ/kg</Text>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                        marginTop: 5,
+                      }}
+                    >
+                      <View>
+                        <NumericInput
+                          minValue={1}
+                          maxValue={50}
+                          step={1}
+                          totalHeight={30}
+                          totalWidth={80}
+                          onChange={(value) => onchange(value)}
+                          rounded
+                        />
+                      </View>
+                      <View>
+                        <TouchableOpacity
+                          onPress={async () => {
+                            if (quantityValue != 0) {
+                              var listItem = [];
+                              listItem.push({
+                                productId: item.id,
+                                quantity: quantityValue,
+                              });
+                              setQuantityValue(0);
+                              const result = await addCartItem(
+                                userData,
+                                listItem
+                              );
+                              if (result.status == 201) {
+                                Alert.alert(
+                                  "Thông báo",
+                                  "Thêm nguyên liệu vào giỏ hàng thành công"
+                                );
+                              }
+                            } else {
+                              Alert.alert(
+                                "Thông báo",
+                                "Vui lòng chọn lại số lượng"
+                              );
+                            }
+                          }}
+                          style={{
+                            backgroundColor: "#FF4B3A",
+                            borderRadius: 5,
+                          }}
+                        >
+                          <FontAwesome
+                            name="shopping-cart"
+                            color="#FFFFFF"
+                            size={20}
+                            style={{
+                              padding: 10,
+                            }}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </Card>
+                </TouchableOpacity>
+              );
+            }}
+            numColumns={numColumns}
+          />
+        </ScrollView>
+      </View>
     </View>
   );
 }
@@ -413,24 +460,24 @@ const styles = StyleSheet.create({
   },
   container_product: {
     marginTop: 5,
+    padding: 5,
     borderWidth: 1,
     borderColor: "#FF4B3A",
-    borderRadius: 50,
+    borderRadius: 20,
     marginBottom: 2,
     marginLeft: 3,
   },
   button: {
-    marginLeft: 30,
     flexDirection: "row",
   },
-  signIn: {
-    width: 170,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    flexDirection: "row",
-  },
+  // signIn: {
+  //   width: 170,
+  //   height: 40,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   borderRadius: 20,
+  //   flexDirection: "row",
+  // },
   textSign: {
     color: "white",
     fontWeight: "bold",
@@ -446,6 +493,7 @@ const styles = StyleSheet.create({
   productMargin: {
     marginLeft: 15,
     marginRight: 15,
+    marginBottom: 138,
   },
   search: {
     marginTop: 5,

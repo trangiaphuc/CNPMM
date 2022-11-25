@@ -39,7 +39,7 @@ export default function CLFoodsDetailScreen({ route, navigation }) {
 
   useEffect(() => {
     fetchdata();
-  }, [setData]);
+  }, [setData, setMeterial, setStep]);
 
   return (
     <View>
